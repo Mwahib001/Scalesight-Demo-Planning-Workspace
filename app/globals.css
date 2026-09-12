@@ -3,12 +3,18 @@
 :root {
   --background: #F6F8FB;
   --foreground: #162033;
+  --space-tight: 8px;
+  --space-compact: 12px;
+  --space-comfortable: 16px;
+  --space-section: 32px;
+  --space-page: 48px;
 }
 
 @theme inline {
   --color-canvas: #F6F8FB;
   --color-surface: #FFFFFF;
   --color-border: #E4E9F0;
+  --color-border-hover: #CBD5E1;
   --color-primary-navy: #10233F;
   --color-primary-blue: #2563EB;
   --color-text-primary: #162033;
@@ -24,4 +30,9 @@ body {
 
 button, input, select { font: inherit; }
 button { cursor: pointer; }
+.space-section { margin-top: var(--space-section); }
+.space-page { padding-top: var(--space-page); }
+.statement-list { display: grid; gap: var(--space-compact); }
+.statement-item { display: grid; grid-template-columns: 6px minmax(0, 1fr); gap: var(--space-tight); align-items: start; }
+.statement-marker { width: 6px; height: 6px; margin-top: 7px; border-radius: 9999px; background: #2563EB; }
 @media print { header, aside, .no-print { display: none !important; } main { padding: 0 !important; } }
