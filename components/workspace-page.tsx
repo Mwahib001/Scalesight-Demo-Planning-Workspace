@@ -402,18 +402,15 @@ function Weekly() {
         title="Weekly Planning Brief"
         subtitle="The decisions that require attention this week."
       />
-      <div className="grid gap-4 xl:grid-cols-3">
-        {cards.map((card, index) => (
-          <Link
-            key={card.title}
-            href={card.href}
-            onClick={(event) => {
-              event.preventDefault();
-              openPriority(card);
-            }}
-            className="group"
-          >
-            <Card className="flex h-full flex-col border-[#E4E9F0] bg-white p-5 shadow-none transition-colors duration-200 group-hover:border-[#CBD5E1]">
+
+      <div className="grid gap-4 xl:grid-cols-[1.6fr_1fr]">
+        {(() => {
+          const renderCard = (card, index) => (
+            <Card
+              className={`group flex h-full flex-col border-[#E4E9F0] bg-white shadow-none transition-all duration-200 hover:-translate-y-0.5 hover:border-[#CBD5E1] hover:shadow-[0_8px_20px_rgba(16,35,63,0.06)] ${
+                index === 0 ? "p-6" : "p-5"
+              }`}
+            >
               <div className="flex items-center justify-between gap-3">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#98A2B3]">
                   Priority {String(index + 1).padStart(2, "0")}
@@ -428,30 +425,83 @@ function Weekly() {
                 )}
               </div>
 
-              <h2 className="mt-5 max-w-[24rem] text-lg font-semibold leading-6 tracking-[-0.01em] text-[#10233F]">
+              <h2
+                className={`max-w-[24rem] font-semibold tracking-[-0.02em] text-[#10233F] ${
+                  index === 0
+                    ? "mt-6 text-2xl leading-8"
+                    : "mt-5 text-lg leading-6"
+                }`}
+              >
                 {card.title}
               </h2>
 
-              <div className="mt-5 space-y-3">
-                {card.rows.map((row) => (
-                  <div
-                    key={row[0]}
-                    className="border-l-2 border-[#D9E2EC] pl-3.5"
-                  >
-                    <p className="text-xs leading-5 text-[#667085]">
-                      {row[0]}{" "}
-                      <b className="tabular-nums font-semibold text-[#162033]">
-                        {row[1]}
-                      </b>
+              {index === 0 ? (
+                <>
+                  <div className="mt-7 border-y border-[#E4E9F0] py-6">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#98A2B3]">
+                      Weeks of cover
                     </p>
-                    <p className="mt-0.5 text-xs leading-5 text-[#98A2B3]">
-                      {row[2]}
+                    <p className="mt-3 text-[44px] font-semibold leading-none tracking-[-0.045em] tabular-nums text-[#B54708]">
+                      {
+                        card.rows.find(
+                          (row) => row[0] === "Weeks of cover",
+                        )?.[1]
+                      }
+                    </p>
+                    <p className="mt-3 text-sm text-[#667085]">
+                      {
+                        card.rows.find(
+                          (row) => row[0] === "Weeks of cover",
+                        )?.[2]
+                      }
                     </p>
                   </div>
-                ))}
-              </div>
 
-              <p className="mt-5 text-sm leading-5 text-[#475467]">
+                  <div className="mt-6 space-y-3">
+                    {card.rows
+                      .filter((row) => row[0] !== "Weeks of cover")
+                      .map((row) => (
+                        <div
+                          key={row[0]}
+                          className="border-l-2 border-[#D9E2EC] pl-3.5"
+                        >
+                          <p className="text-xs leading-5 text-[#667085]">
+                            {row[0]}{" "}
+                            <b className="tabular-nums font-semibold text-[#162033]">
+                              {row[1]}
+                            </b>
+                          </p>
+                          <p className="mt-0.5 text-xs leading-5 text-[#98A2B3]">
+                            {row[2]}
+                          </p>
+                        </div>
+                      ))}
+                  </div>
+                </>
+              ) : (
+                <div className="mt-5 space-y-3">
+                  {card.rows.map((row) => (
+                    <div
+                      key={row[0]}
+                      className="border-l-2 border-[#D9E2EC] pl-3.5"
+                    >
+                      <p className="text-xs leading-5 text-[#667085]">
+                        {row[0]}{" "}
+                        <b className="tabular-nums font-semibold text-[#162033]">
+                          {row[1]}
+                        </b>
+                      </p>
+                      <p className="mt-0.5 text-xs leading-5 text-[#98A2B3]">
+                        {row[2]}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <p
+                className={`${index === 0 ? "mt-7" : "mt-5"} text-sm leading-5 text-[#475467]`}
+              >
                 {card.note}
               </p>
 
@@ -460,9 +510,34 @@ function Weekly() {
                 <ArrowRight size={16} strokeWidth={1.75} />
               </span>
             </Card>
-          </Link>
-        ))}
+          );
+
+          const linkFor = (card, index) => (
+            <Link
+              key={card.title}
+              href={card.href}
+              onClick={(event) => {
+                event.preventDefault();
+                openPriority(card);
+              }}
+              className="group"
+            >
+              {renderCard(card, index)}
+            </Link>
+          );
+
+          return (
+            <>
+              {linkFor(cards[0], 0)}
+              <div className="flex flex-col gap-4">
+                {linkFor(cards[1], 1)}
+                {linkFor(cards[2], 2)}
+              </div>
+            </>
+          );
+        })()}
       </div>
+
       <div className="space-section">
         <Card className="grid gap-0 overflow-hidden border-[#E4E9F0] bg-white p-0 shadow-none sm:grid-cols-2 xl:grid-cols-4">
           {[
@@ -515,6 +590,7 @@ function Weekly() {
           production orders
         </p>
       </div>
+
       <Card className="space-section overflow-hidden border-[#E4E9F0] bg-white p-0 shadow-none">
         <div className="border-b border-[#E4E9F0] px-5 py-4">
           <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#98A2B3]">
