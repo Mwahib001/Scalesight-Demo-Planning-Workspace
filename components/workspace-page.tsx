@@ -88,13 +88,18 @@ function PageTitle({
   subtitle: string;
   action?: React.ReactNode;
 }) {
+  const isAdvisorBrief = title === "Alias Advisor Brief";
   return (
-    <div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+    <div className={`mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end ${
+      isAdvisorBrief
+        ? "border-b-2 border-[#E5A000] pb-5"
+        : "hero-band rounded-[14px] px-5 py-6 sm:px-7"
+    }`}>
       <div>
-        <h1 className="text-[32px] font-bold leading-10 tracking-[-0.025em] text-[#10233F]">
+        <h1 className={`font-display text-[32px] font-semibold leading-10 tracking-[-0.025em] ${isAdvisorBrief ? "text-[#10233F]" : "text-white"}`}>
           {title}
         </h1>
-        <p className="mt-1 text-sm leading-5 text-[#667085]">{subtitle}</p>
+        <p className={`mt-1 text-sm leading-5 ${isAdvisorBrief ? "text-[#667085]" : "text-white/65"}`}>{subtitle}</p>
       </div>
       {action}
     </div>
@@ -405,14 +410,16 @@ function Weekly() {
 
       <div className="grid gap-4 xl:grid-cols-[1.6fr_1fr]">
         {(() => {
-          const renderCard = (card, index) => (
+          const renderCard = (card: (typeof cards)[number], index: number) => (
             <Card
-              className={`group flex h-full flex-col border-[#E4E9F0] bg-white shadow-none transition-all duration-200 hover:-translate-y-0.5 hover:border-[#CBD5E1] hover:shadow-[0_8px_20px_rgba(16,35,63,0.06)] ${
-                index === 0 ? "p-6" : "p-5"
+              className={`group flex h-full flex-col shadow-none transition-all duration-200 hover:-translate-y-0.5 ${
+                index === 0
+                  ? "hero-band border-[#10233F] p-6 text-white"
+                  : "border-[#E4E9F0] bg-white p-5 hover:border-[#CBD5E1] hover:shadow-[0_8px_20px_rgba(16,35,63,0.06)]"
               }`}
             >
               <div className="flex items-center justify-between gap-3">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#98A2B3]">
+                <p className={`text-[11px] font-semibold uppercase tracking-[0.12em] ${index === 0 ? "text-[#E5A000]" : "text-[#98A2B3]"}`}>
                   Priority {String(index + 1).padStart(2, "0")}
                 </p>
 
@@ -426,7 +433,7 @@ function Weekly() {
               </div>
 
               <h2
-                className={`max-w-[24rem] font-semibold tracking-[-0.02em] text-[#10233F] ${
+                className={`max-w-[24rem] font-semibold tracking-[-0.02em] ${index === 0 ? "text-white" : "text-[#10233F]"} ${
                   index === 0
                     ? "mt-6 text-2xl leading-8"
                     : "mt-5 text-lg leading-6"
@@ -437,18 +444,18 @@ function Weekly() {
 
               {index === 0 ? (
                 <>
-                  <div className="mt-7 border-y border-[#E4E9F0] py-6">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#98A2B3]">
+                  <div className="mt-7 border-y border-white/12 py-6">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#E5A000]">
                       Weeks of cover
                     </p>
-                    <p className="mt-3 text-[44px] font-semibold leading-none tracking-[-0.045em] tabular-nums text-[#B54708]">
+                    <p className="font-display mt-3 text-[56px] font-medium leading-none tracking-[-0.045em] tabular-nums text-[#E5A000]">
                       {
                         card.rows.find(
                           (row) => row[0] === "Weeks of cover",
                         )?.[1]
                       }
                     </p>
-                    <p className="mt-3 text-sm text-[#667085]">
+                    <p className="mt-3 text-sm text-white/65">
                       {
                         card.rows.find(
                           (row) => row[0] === "Weeks of cover",
@@ -463,15 +470,15 @@ function Weekly() {
                       .map((row) => (
                         <div
                           key={row[0]}
-                          className="border-l-2 border-[#D9E2EC] pl-3.5"
+                          className="border-l-2 border-white/20 pl-3.5"
                         >
-                          <p className="text-xs leading-5 text-[#667085]">
+                          <p className="text-xs leading-5 text-white/65">
                             {row[0]}{" "}
-                            <b className="tabular-nums font-semibold text-[#162033]">
+                            <b className="tabular-nums font-semibold text-white">
                               {row[1]}
                             </b>
                           </p>
-                          <p className="mt-0.5 text-xs leading-5 text-[#98A2B3]">
+                          <p className="mt-0.5 text-xs leading-5 text-white/55">
                             {row[2]}
                           </p>
                         </div>
@@ -500,19 +507,19 @@ function Weekly() {
               )}
 
               <p
-                className={`${index === 0 ? "mt-7" : "mt-5"} text-sm leading-5 text-[#475467]`}
+                className={`${index === 0 ? "mt-7 text-white/65" : "mt-5 text-[#475467]"} text-sm leading-5`}
               >
                 {card.note}
               </p>
 
-              <span className="mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-semibold text-[#2563EB] transition-colors group-hover:text-[#1D4ED8]">
+              <span className={`mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-semibold transition-colors ${index === 0 ? "border-t border-white/12 text-[#E5A000]" : "text-[#2563EB] group-hover:text-[#1D4ED8]"}`}>
                 {card.cta}
                 <ArrowRight size={16} strokeWidth={1.75} />
               </span>
             </Card>
           );
 
-          const linkFor = (card, index) => (
+          const linkFor = (card: (typeof cards)[number], index: number) => (
             <Link
               key={card.title}
               href={card.href}
@@ -696,8 +703,7 @@ function Forecast() {
           action={<SkuSelect />}
         />
 
-        <Card className="overflow-hidden border-[#E4E9F0] bg-white p-0 shadow-none">
-          <div className="grid gap-0 sm:grid-cols-2 xl:grid-cols-5">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-[1.35fr_repeat(4,1fr)]">
             {[
               [
                 "Next 4 Weeks",
@@ -713,33 +719,26 @@ function Forecast() {
               ["Upside Scenario", "+27.5%", "not a promise"],
               ["Confidence", "Moderate", "analyst-reviewed"],
             ].map(([label, value, detail], i) => (
-              <div
+              <Card
                 key={label}
-                className={`relative px-5 py-5 ${
-                  i > 0
-                    ? "border-t border-[#E4E9F0] sm:border-t-0 sm:border-l"
-                    : ""
+                className={`relative p-5 shadow-none ${
+                  i === 0
+                    ? "hero-band border-[#10233F] sm:row-span-2 xl:row-auto"
+                    : "border-[#E4E9F0] bg-white"
                 }`}
               >
-                {i === 2 && (
-                  <span
-                    aria-hidden
-                    className="absolute inset-y-5 left-0 hidden w-0.5 rounded-full bg-[#2563EB] sm:block"
-                  />
-                )}
-
-                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#98A2B3]">
+                <p className={`text-[10px] font-semibold uppercase tracking-[0.14em] ${i === 0 ? "text-[#E5A000]" : "text-[#98A2B3]"}`}>
                   {label}
                 </p>
-                <p className="mt-3 text-xl font-semibold tracking-[-0.025em] text-[#10233F]">
+                <p className={`${i === 0 ? "font-display text-[52px] font-medium leading-none text-[#E5A000]" : "text-xl font-semibold text-[#10233F]"} mt-3 tracking-[-0.025em]`}>
                   {value}
                 </p>
-                <p className="mt-1 text-xs text-[#667085]">{detail}</p>
-              </div>
+                <p className={`mt-1 text-xs ${i === 0 ? "text-white/65" : "text-[#667085]"}`}>{detail}</p>
+              </Card>
             ))}
-          </div>
-        </Card>
+        </div>
 
+        <div className="grid gap-6 xl:grid-cols-[1.6fr_1fr]">
         <Card className="overflow-hidden border-[#E4E9F0] bg-white p-0 shadow-none">
           <div className="flex items-center justify-between border-b border-[#E4E9F0] px-5 py-4">
             <div>
@@ -762,7 +761,7 @@ function Forecast() {
         </Card>
 
         <Card className="border-[#E4E9F0] bg-white p-5 shadow-none">
-          <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
+          <div className="grid gap-6 xl:grid-cols-1">
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#98A2B3]">
                 Advisor interpretation
@@ -792,6 +791,7 @@ function Forecast() {
             </div>
           </div>
         </Card>
+        </div>
 
         <div className="border-t border-[#E4E9F0] pt-5">
           <div className="flex flex-wrap gap-2">
@@ -939,13 +939,13 @@ function Inventory() {
             aria-label="Close drawer"
             className="absolute inset-0 bg-[#10233F]/[.24]"
           />
-          <aside className="absolute right-0 top-0 h-full w-full max-w-[400px] overflow-auto bg-white p-6 shadow-[-4px_0_24px_rgba(16,35,63,0.12)]">
-            <div className="flex items-start justify-between">
+          <aside className="absolute right-0 top-0 h-full w-full max-w-[400px] overflow-auto bg-white shadow-[-4px_0_24px_rgba(16,35,63,0.12)]">
+            <div className="hero-band flex items-start justify-between px-6 py-5">
               <div>
-                <p className="text-xs font-medium text-[#667085]">
+                <p className="text-xs font-medium text-white/65">
                   Inventory Detail
                 </p>
-                <h2 className="mt-1 text-xl font-bold text-[#10233F]">
+                <h2 className="font-display mt-1 text-xl font-semibold text-white">
                   {selected.name}
                 </h2>
               </div>
@@ -953,11 +953,16 @@ function Inventory() {
                 variant="icon"
                 aria-label="Close inventory detail"
                 onClick={() => setOpen(false)}
+                className="border border-[#E5A000]/40 bg-transparent text-[#E5A000] hover:bg-white/10"
               >
                 <X size={16} strokeWidth={1.75} />
               </Button>
             </div>
-            <dl className="mt-6 divide-y divide-[#E4E9F0] text-sm tabular-nums">
+            <div className="mx-6 mt-5 border-l-2 border-[#E5A000] bg-[#FFF9E8] px-4 py-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#A16207]">Projected stockout</p>
+              <p className="mt-1 font-semibold text-[#10233F]">Oct 14, 2026</p>
+            </div>
+            <dl className="mx-6 mt-5 divide-y divide-[#E4E9F0] text-sm tabular-nums">
               {facts.map(([label, value]) => (
                 <div
                   className="flex items-center justify-between gap-4 py-3"
@@ -972,10 +977,10 @@ function Inventory() {
                 </div>
               ))}
             </dl>
-            <div className="space-section">
+            <div className="mx-6 space-section">
               <InventoryProjection sku={selected} />
             </div>
-            <div className="mt-4 border-t border-[#E4E9F0] pt-4">
+            <div className="mx-6 mt-4 border-t border-[#E4E9F0] pb-6 pt-4">
               <p className="text-sm font-semibold text-[#10233F]">
                 Projected safety-stock breach: Oct 5, 2026
               </p>
@@ -1213,8 +1218,8 @@ function Scenario() {
         </Card>
 
         <div className="min-w-0 space-y-5">
-          <Card className="overflow-hidden border-[#E4E9F0] bg-white p-0 shadow-none">
-            <div className="border-b border-[#E4E9F0] px-5 py-4">
+          <div>
+            <div className="mb-4">
               <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#98A2B3]">
                 Scenario output
               </p>
@@ -1224,7 +1229,7 @@ function Scenario() {
               </p>
             </div>
 
-            <div className="grid gap-0 sm:grid-cols-2 xl:grid-cols-5">
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-[1.35fr_repeat(4,1fr)]">
               {[
                 [
                   "Current Stockout",
@@ -1255,16 +1260,16 @@ function Scenario() {
                   false,
                   false,
                 ],
-              ].map(([label, value, detail, primary, danger], i) => (
-                <div
-                  className={`relative p-5 ${
-                    i > 0
-                      ? "border-t border-[#E4E9F0] sm:border-t-0 sm:border-l"
-                      : ""
+              ].map(([label, value, detail, primary, danger]) => (
+                <Card
+                  className={`relative p-5 shadow-none ${
+                    label === "Scenario Stockout"
+                      ? "hero-band border-[#10233F] sm:row-span-2 xl:row-auto"
+                      : "border-[#E4E9F0] bg-white"
                   }`}
                   key={String(label)}
                 >
-                  {Boolean(primary) && (
+                  {Boolean(primary) && label !== "Scenario Stockout" && (
                     <span
                       aria-hidden
                       className={`absolute inset-y-5 left-0 hidden w-0.5 rounded-full sm:block ${
@@ -1273,7 +1278,13 @@ function Scenario() {
                     />
                   )}
 
-                  {label === "Safety Coverage" ? (
+                  {label === "Scenario Stockout" ? (
+                    <>
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#E5A000]">{label}</p>
+                      <p className="font-display mt-3 text-[52px] font-medium leading-none tracking-[-0.04em] text-[#E5A000]">{value}</p>
+                      <p className="mt-3 border-t border-white/12 pt-3 text-xs text-white/65">{detail}</p>
+                    </>
+                  ) : label === "Safety Coverage" ? (
                     <>
                       <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#98A2B3]">
                         {label}
@@ -1296,10 +1307,10 @@ function Scenario() {
                       danger={Boolean(danger)}
                     />
                   )}
-                </div>
+                </Card>
               ))}
             </div>
-          </Card>
+          </div>
 
           <Card className="relative overflow-hidden border-[#E4E9F0] bg-white p-5 shadow-none">
             <span
@@ -1754,7 +1765,7 @@ function Managed() {
         <div className="relative grid gap-3 xl:grid-cols-5">
           <div
             aria-hidden
-            className="absolute left-[10%] right-[10%] top-[29px] hidden h-px bg-gradient-to-r from-[#BFDBFE] via-[#2563EB] to-[#BFDBFE] xl:block"
+            className="absolute left-[10%] right-[10%] top-[29px] hidden h-1 rounded-full bg-[#10233F] xl:block"
           />
 
           {flow.map(([title, body, result], i) => (
@@ -1766,11 +1777,7 @@ function Managed() {
             >
               <div className="flex items-start justify-between gap-3">
                 <span
-                  className={`relative z-10 inline-flex h-9 w-9 items-center justify-center rounded-full text-xs font-semibold ring-4 ring-white ${
-                    i === flow.length - 1
-                      ? "bg-[#2563EB] text-white"
-                      : "bg-[#EFF6FF] text-[#2563EB]"
-                  }`}
+                  className="relative z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#10233F] text-xs font-semibold text-[#E5A000] ring-4 ring-white"
                 >
                   0{i + 1}
                 </span>
@@ -2001,26 +2008,26 @@ function Assumptions() {
               </span>
             </div>
 
-            <div className="relative bg-[#F8FBFF] p-5 sm:p-6">
+            <div className="hero-band relative p-5 sm:p-6">
               <span
                 aria-hidden
-                className="absolute inset-y-0 left-0 w-1 bg-[#2563EB]"
+                className="absolute inset-y-0 left-0 w-1 bg-[#E5A000]"
               />
 
               <div className="flex items-center gap-3 pl-2">
-                <span className="h-2 w-2 rounded-full bg-[#2563EB]" />
-                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#1D4ED8]">
+                <span className="h-2 w-2 rounded-full bg-[#E5A000]" />
+                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#E5A000]">
                   With Distributor Launch
                 </p>
               </div>
 
-              <p className="mt-5 max-w-xl pl-2 text-[15px] font-medium leading-7 text-[#10233F]">
+              <p className="mt-5 max-w-xl pl-2 text-[15px] font-medium leading-7 text-white">
                 Maintain the production plan until early launch demand becomes
                 visible, then reassess. The business event materially changes
                 the recommendation.
               </p>
 
-              <div className="mt-6 ml-2 h-1 w-16 rounded-full bg-[#2563EB]" />
+              <div className="mt-6 ml-2 h-1 w-16 rounded-full bg-[#E5A000]" />
             </div>
           </div>
 
