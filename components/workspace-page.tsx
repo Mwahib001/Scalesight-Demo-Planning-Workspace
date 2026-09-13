@@ -613,71 +613,136 @@ function Forecast() {
         : "+12.4%";
   return (
     <>
-      <PageTitle
-        title="Demand Forecast"
-        subtitle="Forward demand by SKU with scenario-based planning."
-        action={<SkuSelect />}
-      />
-      <Card className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
-        {[
-          ["Next 4 Weeks", `${formatUnits(nextFour)} units`, ""],
-          ["Next 8 Weeks", `${formatUnits(nextEight)} units`, ""],
-          ["Base Growth", growth, "planning assumption"],
-          ["Upside Scenario", "+27.5%", "not a promise"],
-          ["Confidence", "Moderate", "analyst-reviewed"],
-        ].map(([label, value, detail], i) => (
-          <div
-            className={`${i > 0 ? "border-t border-[#E4E9F0] pt-4 sm:border-t-0 sm:border-l sm:pl-4 xl:border-l xl:pl-4" : ""}`}
-            key={label}
-          >
-            <Metric label={label} value={value} detail={detail} primary />
+      <div className="space-y-6">
+        <PageTitle
+          title="Demand Forecast"
+          subtitle="Forward demand by SKU with scenario-based planning."
+          action={<SkuSelect />}
+        />
+
+        <Card className="overflow-hidden border-[#E4E9F0] bg-white p-0 shadow-none">
+          <div className="grid gap-0 sm:grid-cols-2 xl:grid-cols-5">
+            {[
+              [
+                "Next 4 Weeks",
+                `${formatUnits(nextFour)} units`,
+                "near-term demand",
+              ],
+              [
+                "Next 8 Weeks",
+                `${formatUnits(nextEight)} units`,
+                "planning horizon",
+              ],
+              ["Base Growth", growth, "planning assumption"],
+              ["Upside Scenario", "+27.5%", "not a promise"],
+              ["Confidence", "Moderate", "analyst-reviewed"],
+            ].map(([label, value, detail], i) => (
+              <div
+                key={label}
+                className={`relative px-5 py-5 ${
+                  i > 0
+                    ? "border-t border-[#E4E9F0] sm:border-t-0 sm:border-l"
+                    : ""
+                }`}
+              >
+                {i === 2 && (
+                  <span
+                    aria-hidden
+                    className="absolute inset-y-5 left-0 hidden w-0.5 rounded-full bg-[#2563EB] sm:block"
+                  />
+                )}
+
+                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#98A2B3]">
+                  {label}
+                </p>
+                <p className="mt-3 text-xl font-semibold tracking-[-0.025em] text-[#10233F]">
+                  {value}
+                </p>
+                <p className="mt-1 text-xs text-[#667085]">{detail}</p>
+              </div>
+            ))}
           </div>
-        ))}
-      </Card>
-      <Card className="space-section">
-        <ForecastChart />
-      </Card>
-      <Card className="space-section">
-        <p className="text-sm leading-6">
-          Recent sales momentum is persistent enough to raise the base demand
-          assumption. Inventory coverage should therefore be evaluated against
-          the revised demand range rather than the previous flat-growth plan.
-        </p>
-        <div className="my-4 border-t border-[#E4E9F0]" />
-        <h2 className="text-lg font-semibold text-[#10233F]">
-          Why the Citrus forecast changed
-        </h2>
-        <div className="mt-3">
-          <StatementList
-            items={[
-              "Recent velocity increased.",
-              "Wholesale orders exceeded plan.",
-              "Seasonal demand remains supportive.",
-              "No known production constraint appears in the historical data.",
-            ]}
-          />
-        </div>
-      </Card>
-      <div className="space-section">
-        <div className="flex flex-wrap gap-2">
-          {[
-            "Conservative (+3%)",
-            "Base (+12%)",
-            "Growth (+25%)",
-            "Promotion (+40%)",
-          ].map((item, i) => (
-            <span
-              className={`rounded-lg border px-3 py-2 text-sm ${i === 1 ? "border-[#2563EB] bg-[#2563EB]/[.08] text-[#10233F]" : "border-[#E4E9F0]"}`}
-              key={item}
-            >
-              {item}
+        </Card>
+
+        <Card className="overflow-hidden border-[#E4E9F0] bg-white p-0 shadow-none">
+          <div className="flex items-center justify-between border-b border-[#E4E9F0] px-5 py-4">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#98A2B3]">
+                Demand outlook
+              </p>
+              <h2 className="mt-1 text-base font-semibold tracking-[-0.01em] text-[#10233F]">
+                Forecast range by week
+              </h2>
+            </div>
+
+            <span className="hidden rounded-md border border-[#E4E9F0] bg-[#FAFBFC] px-2.5 py-1.5 text-[11px] font-medium text-[#667085] sm:inline-flex">
+              Citrus Vodka Soda
             </span>
-          ))}
+          </div>
+
+          <div className="p-5">
+            <ForecastChart />
+          </div>
+        </Card>
+
+        <Card className="border-[#E4E9F0] bg-white p-5 shadow-none">
+          <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#98A2B3]">
+                Advisor interpretation
+              </p>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-[#475467]">
+                Recent sales momentum is persistent enough to raise the base
+                demand assumption. Inventory coverage should therefore be
+                evaluated against the revised demand range rather than the
+                previous flat-growth plan.
+              </p>
+            </div>
+
+            <div className="border-t border-[#E4E9F0] pt-5 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+              <h2 className="text-base font-semibold tracking-[-0.01em] text-[#10233F]">
+                Why the Citrus forecast changed
+              </h2>
+              <div className="mt-3">
+                <StatementList
+                  items={[
+                    "Recent velocity increased.",
+                    "Wholesale orders exceeded plan.",
+                    "Seasonal demand remains supportive.",
+                    "No known production constraint appears in the historical data.",
+                  ]}
+                />
+              </div>
+            </div>
+          </div>
+        </Card>
+
+        <div className="border-t border-[#E4E9F0] pt-5">
+          <div className="flex flex-wrap gap-2">
+            {[
+              "Conservative (+3%)",
+              "Base (+12%)",
+              "Growth (+25%)",
+              "Promotion (+40%)",
+            ].map((item, i) => (
+              <span
+                key={item}
+                className={`rounded-md border px-3 py-2 text-xs font-medium transition-colors ${
+                  i === 1
+                    ? "border-[#2563EB] bg-[#EFF6FF] text-[#1D4ED8]"
+                    : "border-[#E4E9F0] bg-white text-[#667085]"
+                }`}
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+
+          <p className="mt-3 text-xs leading-5 text-[#667085]">
+            ScaleSight uses scenario planning to support decisions rather than
+            relying on a single forecast.
+          </p>
         </div>
-        <p className="mt-3 text-xs text-[#667085]">
-          ScaleSight uses scenario planning to support decisions rather than
-          relying on a single forecast.
-        </p>
       </div>
     </>
   );
@@ -903,168 +968,357 @@ function Scenario() {
         subtitle="Test how growth and operational changes affect inventory decisions."
         action={<SkuSelect />}
       />
-      <div className="grid gap-5 xl:grid-cols-[320px_1fr]">
-        <Card>
-          <h2 className="text-lg font-semibold text-[#10233F]">
-            Scenario inputs
-          </h2>
-          <div className="mt-5 space-y-5">
-            {slider(
-              "Demand Uplift",
-              "growthRate",
-              0,
-              0.5,
-              0.01,
-              (value) => `${Math.round(value * 100)}%`,
-            )}
-            {slider(
-              "Production Lead Time",
-              "leadTimeWeeks",
-              4,
-              10,
-              1,
-              (value) => `${value} weeks`,
-            )}
-            {slider(
-              "Shrink / Loss",
-              "shrinkRate",
-              0,
-              0.08,
-              0.01,
-              (value) => `${Math.round(value * 100)}%`,
-            )}
-            <label className="block text-sm font-medium">
-              Incoming Production
+
+      <div className="grid gap-6 xl:grid-cols-[300px_1fr]">
+        <Card className="h-fit border-[#E4E9F0] bg-white p-0 shadow-none">
+          <div className="border-b border-[#E4E9F0] px-5 py-5">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#98A2B3]">
+                  Planning controls
+                </p>
+
+                <h2 className="mt-1.5 text-base font-semibold tracking-[-0.01em] text-[#10233F]">
+                  Scenario inputs
+                </h2>
+              </div>
+
+              <span className="rounded-md bg-[#F6F8FB] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#667085]">
+                Live model
+              </span>
+            </div>
+          </div>
+
+          <div className="space-y-6 px-5 py-5">
+            {(
+              [
+                [
+                  "Demand Uplift",
+                  "growthRate",
+                  0,
+                  0.5,
+                  0.01,
+                  (value: number) => `${Math.round(value * 100)}%`,
+                ],
+                [
+                  "Production Lead Time",
+                  "leadTimeWeeks",
+                  4,
+                  10,
+                  1,
+                  (value: number) => `${value} weeks`,
+                ],
+                [
+                  "Shrink / Loss",
+                  "shrinkRate",
+                  0,
+                  0.08,
+                  0.01,
+                  (value: number) => `${Math.round(value * 100)}%`,
+                ],
+              ] as const
+            ).map(([label, key, min, max, step, format]) => (
+              <label className="block" key={key}>
+                <span className="flex items-center justify-between gap-3">
+                  <span className="text-sm font-medium text-[#344054]">
+                    {label}
+                  </span>
+
+                  <span className="rounded-md bg-[#F6F8FB] px-2 py-1 text-xs font-semibold tabular-nums text-[#10233F]">
+                    {format(scenario[key])}
+                  </span>
+                </span>
+
+                <input
+                  className="mt-4 h-1.5 w-full cursor-pointer appearance-none rounded-full bg-[#E4E9F0] accent-[#2563EB]"
+                  type="range"
+                  min={min}
+                  max={max}
+                  step={step}
+                  value={scenario[key]}
+                  onChange={(event) =>
+                    updateScenario({
+                      [key]: Number(event.target.value),
+                    })
+                  }
+                />
+
+                <span className="mt-2 flex justify-between text-[10px] text-[#98A2B3]">
+                  <span>{format(min)}</span>
+                  <span>{format(max)}</span>
+                </span>
+              </label>
+            ))}
+
+            <label className="block border-t border-[#E4E9F0] pt-5">
+              <span className="flex items-center justify-between gap-3">
+                <span className="text-sm font-medium text-[#344054]">
+                  Incoming Production
+                </span>
+
+                <span className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#98A2B3]">
+                  Units
+                </span>
+              </span>
+
               <input
-                className="mt-2 block h-9 w-full rounded-lg border border-[#E4E9F0] px-3"
+                className="mt-3 h-10 w-full rounded-md border border-[#D0D5DD] bg-white px-3 text-sm font-medium tabular-nums text-[#10233F] outline-none transition-colors placeholder:text-[#98A2B3] focus:border-[#2563EB] focus:ring-2 focus:ring-[#BFDBFE]"
                 type="number"
                 min="0"
                 max="50000"
                 value={scenario.incomingUnits}
                 onChange={(event) =>
-                  updateScenario({ incomingUnits: Number(event.target.value) })
+                  updateScenario({
+                    incomingUnits: Number(event.target.value),
+                  })
                 }
               />
             </label>
-            {[
-              ["Promotion", "promotionEnabled"],
-              ["Distributor Launch", "distributorEnabled"],
-            ].map(([label, key]) => (
-              <label
-                className="flex justify-between border-t border-[#E4E9F0] pt-4 text-sm font-medium"
-                key={key}
-              >
-                {label}
-                <input
-                  type="checkbox"
-                  className="h-4 w-4 accent-[#10233F]"
-                  checked={Boolean(
-                    scenario[key as "promotionEnabled" | "distributorEnabled"],
-                  )}
-                  onChange={(event) =>
-                    updateScenario({ [key]: event.target.checked })
-                  }
-                />
-              </label>
-            ))}
-            <Button variant="tertiary" onClick={resetScenario} className="px-0">
-              <RotateCcw size={16} strokeWidth={1.75} />
+
+            <div className="space-y-3 border-t border-[#E4E9F0] pt-5">
+              {(
+                [
+                  ["Promotion", "promotionEnabled"],
+                  ["Distributor Launch", "distributorEnabled"],
+                ] as const
+              ).map(([label, key]) => {
+                const checked = Boolean(scenario[key]);
+
+                return (
+                  <label
+                    className={`flex cursor-pointer items-center justify-between rounded-md border px-3.5 py-3 transition-colors ${
+                      checked
+                        ? "border-[#BFDBFE] bg-[#EFF6FF]"
+                        : "border-[#E4E9F0] bg-white hover:bg-[#FAFBFC]"
+                    }`}
+                    key={key}
+                  >
+                    <span className="text-sm font-medium text-[#344054]">
+                      {label}
+                    </span>
+
+                    <span
+                      className={`relative h-5 w-9 rounded-full transition-colors ${
+                        checked ? "bg-[#2563EB]" : "bg-[#D0D5DD]"
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        className="peer sr-only"
+                        checked={checked}
+                        onChange={(event) =>
+                          updateScenario({
+                            [key]: event.target.checked,
+                          })
+                        }
+                      />
+
+                      <span
+                        aria-hidden
+                        className={`absolute top-0.5 h-4 w-4 rounded-full bg-white shadow-sm transition-transform ${
+                          checked ? "translate-x-[18px]" : "translate-x-0.5"
+                        }`}
+                      />
+                    </span>
+                  </label>
+                );
+              })}
+            </div>
+
+            <Button
+              variant="tertiary"
+              onClick={resetScenario}
+              className="w-full justify-center border border-[#E4E9F0] px-3 py-2.5 text-[#667085] hover:border-[#CBD5E1] hover:bg-[#FAFBFC] hover:text-[#10233F]"
+            >
+              <RotateCcw size={15} strokeWidth={1.75} />
               Reset to Defaults
             </Button>
           </div>
         </Card>
-        <div>
-          <Card className="grid gap-0 p-0 sm:grid-cols-2 xl:grid-cols-5">
-            {[
-              ["Current Stockout", "4.2 weeks", "base estimate", false, false],
-              [
-                "Scenario Stockout",
-                displayCover(metrics.cover),
-                "risk accelerates",
-                true,
-                true,
-              ],
-              [
-                "Required Production",
-                `+${formatUnits(metrics.reorderGap)}`,
-                "illustrative units",
-                true,
-                false,
-              ],
-              ["Safety Coverage", "At risk", "below threshold", false, false],
-              [
-                "Capital Impact",
-                "+$18,600",
-                "Illustrative estimate",
-                false,
-                false,
-              ],
-            ].map(([label, value, detail, primary, danger], i) => (
-              <div
-                className={`${i > 0 ? "border-t border-[#E4E9F0] p-4 sm:border-t-0 sm:border-l" : "p-4"}`}
-                key={String(label)}
-              >
-                {label === "Safety Coverage" ? (
-                  <>
-                    <p className="text-xs text-[#667085]">{label}</p>
-                    <div className="mt-3">
-                      <RiskBadge risk={metrics.risk} label="At risk" />
-                    </div>
-                    <p className="mt-2 text-xs text-[#667085]">{detail}</p>
-                  </>
-                ) : (
-                  <Metric
-                    label={String(label)}
-                    value={String(value)}
-                    detail={String(detail)}
-                    primary={Boolean(primary)}
-                    danger={Boolean(danger)}
-                  />
-                )}
+
+        <div className="min-w-0 space-y-5">
+          <Card className="overflow-hidden border-[#E4E9F0] bg-white p-0 shadow-none">
+            <div className="border-b border-[#E4E9F0] px-5 py-4">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#98A2B3]">
+                Scenario output
+              </p>
+
+              <p className="mt-1 text-sm text-[#667085]">
+                Current model impact across the planning horizon
+              </p>
+            </div>
+
+            <div className="grid gap-0 sm:grid-cols-2 xl:grid-cols-5">
+              {[
+                [
+                  "Current Stockout",
+                  "4.2 weeks",
+                  "base estimate",
+                  false,
+                  false,
+                ],
+                [
+                  "Scenario Stockout",
+                  displayCover(metrics.cover),
+                  "risk accelerates",
+                  true,
+                  true,
+                ],
+                [
+                  "Required Production",
+                  `+${formatUnits(metrics.reorderGap)}`,
+                  "illustrative units",
+                  true,
+                  false,
+                ],
+                ["Safety Coverage", "At risk", "below threshold", false, false],
+                [
+                  "Capital Impact",
+                  "+$18,600",
+                  "Illustrative estimate",
+                  false,
+                  false,
+                ],
+              ].map(([label, value, detail, primary, danger], i) => (
+                <div
+                  className={`relative p-5 ${
+                    i > 0
+                      ? "border-t border-[#E4E9F0] sm:border-t-0 sm:border-l"
+                      : ""
+                  }`}
+                  key={String(label)}
+                >
+                  {Boolean(primary) && (
+                    <span
+                      aria-hidden
+                      className={`absolute inset-y-5 left-0 hidden w-0.5 rounded-full sm:block ${
+                        Boolean(danger) ? "bg-[#B54708]" : "bg-[#2563EB]"
+                      }`}
+                    />
+                  )}
+
+                  {label === "Safety Coverage" ? (
+                    <>
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#98A2B3]">
+                        {label}
+                      </p>
+
+                      <div className="mt-3">
+                        <RiskBadge risk={metrics.risk} label="At risk" />
+                      </div>
+
+                      <p className="mt-2 text-xs text-[#667085]">
+                        {String(detail)}
+                      </p>
+                    </>
+                  ) : (
+                    <Metric
+                      label={String(label)}
+                      value={String(value)}
+                      detail={String(detail)}
+                      primary={Boolean(primary)}
+                      danger={Boolean(danger)}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          <Card className="relative overflow-hidden border-[#E4E9F0] bg-white p-5 shadow-none">
+            <span
+              aria-hidden
+              className="absolute inset-y-0 left-0 w-1 bg-[#2563EB]"
+            />
+
+            <div className="pl-3">
+              <div className="flex items-center justify-between gap-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#98A2B3]">
+                  Recommendation
+                </p>
+
+                <span className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#2563EB]">
+                  Advisor view
+                </span>
               </div>
-            ))}
+
+              <p className="mt-2 max-w-3xl text-[15px] font-medium leading-6 text-[#10233F]">
+                {recommendation}
+              </p>
+            </div>
           </Card>
-          <Card className="space-section border-l-4 border-l-[#2563EB]">
-            <p className="text-[11px] font-semibold uppercase tracking-[.04em] text-[#667085]">
-              Recommendation
-            </p>
-            <p className="mt-2 text-[15px] font-medium leading-6 text-[#10233F]">
-              {recommendation}
-            </p>
-          </Card>
-          <Card className="space-section overflow-hidden p-0">
-            <table className="w-full text-left text-[13px] tabular-nums">
-              <thead className="bg-[#F6F8FB] text-[11px] uppercase tracking-[.04em] text-[#667085]">
-                <tr>
-                  {["Metric", "Current", "+15%", "+25%", "+40%"].map((item) => (
-                    <th className="p-3" key={item}>
-                      {item}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ["Weekly demand", "1,140", "1,311", "1,425", "1,596"],
-                  ["Usable weeks cover", "4.1", "3.6", "3.3", "2.9"],
-                  ["Safety breach", "Oct 5", "Sep 28", "Sep 22", "Sep 16"],
-                  ["Projected stockout", "Oct 14", "Oct 6", "Sep 30", "Sep 24"],
-                  ["Required production", "1,800", "2,050", "2,400", "3,100"],
-                  ["Risk level", "High", "High", "High", "Critical"],
-                ].map((row) => (
-                  <tr className="border-t border-[#E4E9F0]" key={row[0]}>
-                    {row.map((item, i) => (
-                      <td
-                        className={`p-3 ${i === 3 ? "bg-[#F6F8FB]" : ""}`}
-                        key={item}
-                      >
-                        {item}
-                      </td>
-                    ))}
+
+          <Card className="overflow-hidden border-[#E4E9F0] bg-white p-0 shadow-none">
+            <div className="flex items-center justify-between border-b border-[#E4E9F0] px-5 py-4">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#98A2B3]">
+                  Sensitivity analysis
+                </p>
+
+                <h2 className="mt-1 text-base font-semibold tracking-[-0.01em] text-[#10233F]">
+                  Growth scenarios
+                </h2>
+              </div>
+
+              <span className="hidden rounded-md bg-[#F6F8FB] px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#667085] sm:inline-flex">
+                Base case highlighted
+              </span>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[620px] text-left text-[13px] tabular-nums">
+                <thead className="bg-[#F6F8FB] text-[10px] font-semibold uppercase tracking-[0.12em] text-[#667085]">
+                  <tr>
+                    {["Metric", "Current", "+15%", "+25%", "+40%"].map(
+                      (item) => (
+                        <th className="whitespace-nowrap px-5 py-3" key={item}>
+                          {item}
+                        </th>
+                      ),
+                    )}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+
+                <tbody>
+                  {[
+                    ["Weekly demand", "1,140", "1,311", "1,425", "1,596"],
+                    ["Usable weeks cover", "4.1", "3.6", "3.3", "2.9"],
+                    ["Safety breach", "Oct 5", "Sep 28", "Sep 22", "Sep 16"],
+                    [
+                      "Projected stockout",
+                      "Oct 14",
+                      "Oct 6",
+                      "Sep 30",
+                      "Sep 24",
+                    ],
+                    ["Required production", "1,800", "2,050", "2,400", "3,100"],
+                    ["Risk level", "High", "High", "High", "Critical"],
+                  ].map((row) => (
+                    <tr
+                      className="border-t border-[#E4E9F0] transition-colors hover:bg-[#FAFBFC]"
+                      key={row[0]}
+                    >
+                      {row.map((item, i) => (
+                        <td
+                          className={`px-5 py-3.5 ${
+                            i === 0
+                              ? "font-medium text-[#344054]"
+                              : i === 3
+                                ? "bg-[#EFF6FF] font-semibold text-[#1D4ED8]"
+                                : item === "Critical"
+                                  ? "font-semibold text-[#B54708]"
+                                  : "text-[#667085]"
+                          }`}
+                          key={`${row[0]}-${item}`}
+                        >
+                          {item}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </Card>
         </div>
       </div>
