@@ -1360,114 +1360,240 @@ function Advisor() {
           </Button>
         }
       />
-      <p className="-mt-4 mb-8 text-sm text-[#667085]">
-        Harbor Coast Beverages | Planning Week: Sep 7–13, 2026
-      </p>
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold tracking-[-.015em] text-[#10233F]">
-          What Changed
-        </h2>
-        <Card className="mt-3 overflow-hidden p-0">
-          <table className="w-full text-left text-sm">
-            <tbody>
-              {statements.map(([sku, statement]) => (
-                <tr
-                  className="border-b border-[#E4E9F0] last:border-0"
-                  key={sku}
-                >
-                  <td className="w-[30%] p-4 font-semibold text-[#162033]">
-                    {sku}
-                  </td>
-                  <td className="p-4 leading-5 text-[#667085]">{statement}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+
+      <div className="mb-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-[#667085]">
+        <span className="font-medium text-[#162033]">
+          Harbor Coast Beverages
+        </span>
+        <span className="text-[#D0D5DD]">/</span>
+        <span>Planning Week: Sep 7–13, 2026</span>
+        <span className="ml-auto inline-flex items-center gap-2 rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1.5 text-xs font-semibold text-[#1D4ED8]">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#2563EB]" />
+          Advisor-ready
+        </span>
+      </div>
+
+      <Card className="relative mb-10 overflow-hidden border-[#D8E2EE] bg-white p-0 shadow-[0_8px_24px_rgba(16,35,63,0.05)]">
+        <div className="absolute inset-y-0 left-0 w-1 bg-[#2563EB]" />
+        <div className="grid gap-8 p-6 pl-7 sm:p-8 sm:pl-9 lg:grid-cols-[1fr_auto] lg:items-end">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#2563EB]">
+              Conversation anchor
+            </p>
+            <h2 className="mt-3 max-w-2xl text-2xl font-semibold leading-tight tracking-[-0.025em] text-[#10233F]">
+              Three decisions deserve attention before the next planning cycle.
+            </h2>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-[#667085]">
+              Use this brief to move from forecast movement to a focused client
+              conversation.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-4 lg:flex-col lg:items-end">
+            <span className="text-4xl font-semibold tracking-[-0.04em] text-[#10233F]">
+              {decisions.length}
+            </span>
+            <span className="text-xs font-medium text-[#667085]">
+              client decisions
+            </span>
+          </div>
+        </div>
+      </Card>
+
+      <section className="mb-10">
+        <div className="mb-4 flex items-end justify-between gap-4">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#98A2B3]">
+              01 / Signal review
+            </p>
+            <h2 className="mt-1.5 text-xl font-semibold tracking-[-0.02em] text-[#10233F]">
+              What Changed
+            </h2>
+          </div>
+          <span className="hidden text-xs text-[#98A2B3] sm:block">
+            Latest model movement
+          </span>
+        </div>
+
+        <Card className="overflow-hidden border-[#E4E9F0] bg-white p-0 shadow-none">
+          <div className="divide-y divide-[#E4E9F0]">
+            {statements.map(([sku, statement], index) => (
+              <div
+                className="group grid gap-3 px-5 py-5 transition-colors hover:bg-[#FAFBFC] sm:grid-cols-[30%_1fr] sm:items-center"
+                key={sku}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#F6F8FB] text-[11px] font-semibold text-[#667085]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="font-semibold text-[#162033]">{sku}</span>
+                </div>
+                <p className="pl-10 text-sm leading-6 text-[#667085] sm:pl-0">
+                  {statement}
+                </p>
+              </div>
+            ))}
+          </div>
         </Card>
       </section>
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold tracking-[-.015em] text-[#10233F]">
-          Why It Matters
-        </h2>
-        <div className="mt-3">
-          <StatementList
-            items={[
-              <>
-                <b>Citrus:</b> Inventory coverage is now shorter than production
-                lead time.
-              </>,
-              <>
-                <b>Berry:</b> Reducing production purely from historical demand
-                could leave the brand underprepared for the distributor launch.
-              </>,
-              <>
-                <b>Variety:</b> Campaign-driven demand could reduce available
-                stock before replacement inventory arrives.
-              </>,
-            ]}
-          />
+
+      <section className="mb-10">
+        <div className="mb-4">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#98A2B3]">
+            02 / Advisor interpretation
+          </p>
+          <h2 className="mt-1.5 text-xl font-semibold tracking-[-0.02em] text-[#10233F]">
+            Why It Matters
+          </h2>
         </div>
+
+        <Card className="border-[#E4E9F0] bg-[#FAFBFC] p-5 shadow-none sm:p-6">
+          <div className="space-y-4">
+            {[
+              [
+                "Citrus:",
+                "Inventory coverage is now shorter than production lead time.",
+              ],
+              [
+                "Berry:",
+                "Reducing production purely from historical demand could leave the brand underprepared for the distributor launch.",
+              ],
+              [
+                "Variety:",
+                "Campaign-driven demand could reduce available stock before replacement inventory arrives.",
+              ],
+            ].map(([label, text], index) => (
+              <div className="flex gap-4" key={label}>
+                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-[#2563EB]" />
+                <p className="text-sm leading-6 text-[#475467]">
+                  <b className="font-semibold text-[#162033]">{label}</b> {text}
+                </p>
+              </div>
+            ))}
+          </div>
+        </Card>
       </section>
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold tracking-[-.015em] text-[#10233F]">
-          Recommended Alias Discussion
-        </h2>
-        <div className="mt-3">
-          <StatementList
-            items={[
-              "Citrus — Confirm additional production this week.",
-              "Berry — Maintain production through launch and reassess after early sales data.",
-              "Variety — Align campaign activation with component and finished-goods availability.",
-            ]}
-          />
+
+      <section className="mb-10">
+        <div className="mb-4">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#98A2B3]">
+            03 / Suggested direction
+          </p>
+          <h2 className="mt-1.5 text-xl font-semibold tracking-[-0.02em] text-[#10233F]">
+            Recommended Alias Discussion
+          </h2>
         </div>
-      </section>
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold tracking-[-.015em] text-[#10233F]">
-          Client Decisions Required
-        </h2>
-        <div className="mt-3 grid gap-2 sm:grid-cols-2">
-          {decisions.map((decision, i) => (
-            <Button
-              variant="check"
-              onClick={() =>
-                setChecked((items) =>
-                  items.map((item, j) => (j === i ? !item : item)),
-                )
-              }
-              className="justify-start"
-              key={decision}
+
+        <div className="grid gap-3">
+          {[
+            "Citrus — Confirm additional production this week.",
+            "Berry — Maintain production through launch and reassess after early sales data.",
+            "Variety — Align campaign activation with component and finished-goods availability.",
+          ].map((item, index) => (
+            <div
+              className="flex items-start gap-4 rounded-lg border border-[#E4E9F0] bg-white p-4 transition-all hover:border-[#BFDBFE] hover:shadow-[0_6px_18px_rgba(16,35,63,0.05)]"
+              key={item}
             >
-              <span
-                className={`grid h-4 w-4 place-items-center rounded-[4px] border ${checked[i] ? "border-[#2563EB] bg-[#2563EB] text-white" : "border-[#667085]"}`}
-              >
-                {checked[i] && <Check size={14} strokeWidth={1.75} />}
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#EFF6FF] text-xs font-semibold text-[#2563EB]">
+                {String(index + 1).padStart(2, "0")}
               </span>
-              {decision}
-            </Button>
+              <p className="pt-1 text-sm leading-6 text-[#344054]">{item}</p>
+            </div>
           ))}
         </div>
       </section>
-      <section>
-        <h2 className="text-2xl font-semibold tracking-[-.015em] text-[#10233F]">
-          Monitor Next Week
-        </h2>
-        <div className="mt-3">
-          <StatementList
-            items={[
-              "Citrus wholesale velocity",
-              "Berry distributor pre-orders",
-              "Variety promotion inventory allocation",
-              "Seasonal Summer Pack sell-through",
-            ]}
-          />
+
+      <section className="mb-10">
+        <div className="mb-4 flex items-end justify-between gap-4">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#98A2B3]">
+              04 / Meeting checklist
+            </p>
+            <h2 className="mt-1.5 text-xl font-semibold tracking-[-0.02em] text-[#10233F]">
+              Client Decisions Required
+            </h2>
+          </div>
+          <span className="text-xs font-medium text-[#667085]">
+            {checked.filter(Boolean).length}/{decisions.length} reviewed
+          </span>
+        </div>
+
+        <Card className="border-[#E4E9F0] bg-white p-2 shadow-none">
+          <div className="space-y-1">
+            {decisions.map((decision, index) => (
+              <Button
+                variant="check"
+                onClick={() =>
+                  setChecked((items) =>
+                    items.map((item, j) => (j === index ? !item : item)),
+                  )
+                }
+                className={`w-full justify-start rounded-md px-4 py-3 text-left transition-colors ${
+                  checked[index]
+                    ? "bg-[#EFF6FF] text-[#1D4ED8]"
+                    : "text-[#344054] hover:bg-[#FAFBFC]"
+                }`}
+                key={decision}
+              >
+                <span
+                  className={`grid h-5 w-5 shrink-0 place-items-center rounded-md border ${
+                    checked[index]
+                      ? "border-[#2563EB] bg-[#2563EB] text-white"
+                      : "border-[#D0D5DD] bg-white"
+                  }`}
+                >
+                  {checked[index] && <Check size={14} strokeWidth={2} />}
+                </span>
+                <span
+                  className={checked[index] ? "line-through opacity-70" : ""}
+                >
+                  {decision}
+                </span>
+              </Button>
+            ))}
+          </div>
+        </Card>
+      </section>
+
+      <section className="mb-10">
+        <div className="mb-4">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#98A2B3]">
+            05 / Next signal
+          </p>
+          <h2 className="mt-1.5 text-xl font-semibold tracking-[-0.02em] text-[#10233F]">
+            Monitor Next Week
+          </h2>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          {[
+            "Citrus wholesale velocity",
+            "Berry distributor pre-orders",
+            "Variety promotion inventory allocation",
+            "Seasonal Summer Pack sell-through",
+          ].map((item, index) => (
+            <div
+              className="flex items-center gap-3 rounded-lg border border-[#E4E9F0] bg-white px-4 py-4"
+              key={item}
+            >
+              <span className="h-2 w-2 rounded-full bg-[#98A2B3]" />
+              <span className="text-sm text-[#475467]">{item}</span>
+              <span className="ml-auto text-[10px] font-semibold uppercase tracking-[0.1em] text-[#98A2B3]">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+            </div>
+          ))}
         </div>
       </section>
-      <footer className="mt-12 border-t border-[#E4E9F0] pt-5 text-[#667085]">
-        <p className="text-[11px] font-semibold tracking-[.04em]">
-          PREPARED THROUGH SCALESIGHT MANAGED INTELLIGENCE
-        </p>
-        <p className="mt-2 max-w-3xl text-xs leading-5">
+
+      <footer className="border-t border-[#E4E9F0] pt-6 text-[#667085]">
+        <div className="flex items-center gap-3">
+          <span className="h-2 w-2 rounded-full bg-[#2563EB]" />
+          <p className="text-[11px] font-semibold tracking-[0.04em] text-[#10233F]">
+            PREPARED THROUGH SCALESIGHT MANAGED INTELLIGENCE
+          </p>
+        </div>
+        <p className="mt-3 max-w-3xl text-xs leading-5">
           Forecast refresh, inventory-risk review, scenario analysis and analyst
           commentary are maintained continuously so Alias can focus on client
           strategy and operational decisions.
