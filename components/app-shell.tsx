@@ -70,10 +70,10 @@ function Navigation({
   const pathname = usePathname();
   return (
     <nav
-      className="flex h-full flex-col px-3 py-6"
+      className="flex h-full min-h-0 flex-col px-3 py-6"
       aria-label="Primary navigation"
     >
-      <div className={`mb-10 ${compact ? "px-0 text-center" : "px-3"}`}>
+      <div className={`mb-10  shrink-0 ${compact ? "px-0 text-center" : "px-3"}`}>
         <p className="text-[21px] font-bold tracking-[-0.035em] text-[#10233F]">
           {compact ? "A" : "Alias Advising"}
         </p>
@@ -87,7 +87,7 @@ function Navigation({
         )}
       </div>
 
-      <div className="space-y-8">
+      <div className="min-h-0 flex-1 space-y-8 overflow-y-auto overscroll-contain pr-1">
         {navGroups.map((group, groupIndex) => (
           <div key={group.label}>
             {!compact && (
@@ -161,7 +161,7 @@ function Navigation({
       </div>
 
       {!compact && (
-        <div className="mt-auto border-t border-[#E4E9F0] px-3 pt-5">
+        <div className="mt-5 shrink-0 border-t border-[#E4E9F0] px-3 pt-5">
           <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#10233F]">
             Alias × ScaleSight
           </p>
