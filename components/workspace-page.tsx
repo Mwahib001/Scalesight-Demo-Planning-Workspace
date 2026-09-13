@@ -1659,34 +1659,117 @@ function Managed() {
         title="Managed Planning Cycle"
         subtitle="What ScaleSight operates every week behind the scenes."
       />
-      <div className="relative grid gap-3 xl:grid-cols-5">
-        <div className="absolute left-[10%] right-[10%] top-[27px] hidden h-px bg-[#E4E9F0] xl:block" />
-        {flow.map(([title, body, result], i) => (
-          <Card key={title} className="relative">
-            <p className="relative z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-xs font-semibold text-[#667085] ring-1 ring-[#E4E9F0]">
-              0{i + 1}
+
+      <div className="relative">
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#2563EB]">
+              The weekly rhythm
             </p>
-            <h2 className="mt-3 font-semibold text-[#10233F]">{title}</h2>
-            <p className="mt-2 text-xs leading-5 text-[#667085]">{body}</p>
-            <p className="mt-3 text-xs font-medium text-[#10233F]">{result}</p>
-          </Card>
-        ))}
+            <p className="mt-1 text-sm text-[#667085]">
+              From raw signals to confident decisions.
+            </p>
+          </div>
+          <span className="hidden rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1.5 text-[11px] font-semibold text-[#1D4ED8] sm:inline-flex">
+            Always in motion
+          </span>
+        </div>
+
+        <div className="relative grid gap-3 xl:grid-cols-5">
+          <div
+            aria-hidden
+            className="absolute left-[10%] right-[10%] top-[29px] hidden h-px bg-gradient-to-r from-[#BFDBFE] via-[#2563EB] to-[#BFDBFE] xl:block"
+          />
+
+          {flow.map(([title, body, result], i) => (
+            <Card
+              key={title}
+              className={`group relative overflow-hidden border-[#E4E9F0] bg-white p-5 shadow-none transition-all duration-200 hover:-translate-y-1 hover:border-[#BFDBFE] hover:shadow-[0_10px_24px_rgba(16,35,63,0.07)] ${
+                i === flow.length - 1 ? "xl:border-[#BFDBFE]" : ""
+              }`}
+            >
+              <div className="flex items-start justify-between gap-3">
+                <span
+                  className={`relative z-10 inline-flex h-9 w-9 items-center justify-center rounded-full text-xs font-semibold ring-4 ring-white ${
+                    i === flow.length - 1
+                      ? "bg-[#2563EB] text-white"
+                      : "bg-[#EFF6FF] text-[#2563EB]"
+                  }`}
+                >
+                  0{i + 1}
+                </span>
+
+                <span className="pt-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#98A2B3]">
+                  Step {i + 1}
+                </span>
+              </div>
+
+              <h2 className="mt-5 text-[15px] font-semibold tracking-[-0.01em] text-[#10233F]">
+                {title}
+              </h2>
+
+              <p className="mt-2 text-xs leading-5 text-[#667085]">{body}</p>
+
+              <div className="mt-5 border-t border-[#E4E9F0] pt-3">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#98A2B3]">
+                  Outcome
+                </p>
+                <p className="mt-1 text-xs font-semibold leading-5 text-[#1D4ED8]">
+                  {result}
+                </p>
+              </div>
+            </Card>
+          ))}
+        </div>
       </div>
+
       <div className="space-section grid gap-5 md:grid-cols-2">
-        <Card>
-          <h2 className="text-xl font-semibold text-[#10233F]">
-            ScaleSight handles recurring workload
-          </h2>
-          <div className="mt-4">
-            <StatementList marker="teal" items={workload.map((item) => item)} />
+        <Card className="relative overflow-hidden border-[#E4E9F0] bg-white p-0 shadow-none">
+          <div className="h-1 bg-[#2563EB]" />
+          <div className="p-5">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#2563EB]">
+                  Behind the scenes
+                </p>
+                <h2 className="mt-2 text-xl font-semibold tracking-[-0.02em] text-[#10233F]">
+                  ScaleSight handles recurring workload
+                </h2>
+              </div>
+              <span className="text-2xl font-semibold tracking-[-0.04em] text-[#D0D5DD]">
+                01
+              </span>
+            </div>
+
+            <div className="mt-5">
+              <StatementList
+                marker="teal"
+                items={workload.map((item) => item)}
+              />
+            </div>
           </div>
         </Card>
-        <Card>
-          <h2 className="text-xl font-semibold text-[#10233F]">
-            Alias stays the trusted advisor
-          </h2>
-          <div className="mt-4">
-            <StatementList marker="navy" items={alias.map((item) => item)} />
+
+        <Card className="relative overflow-hidden border-[#E4E9F0] bg-white p-0 shadow-none">
+          <div className="h-1 bg-[#10233F]" />
+          <div className="p-5">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#10233F]">
+                  Where expertise matters
+                </p>
+                <h2 className="mt-2 text-xl font-semibold tracking-[-0.02em] text-[#10233F]">
+                  Alias stays the trusted advisor
+                </h2>
+              </div>
+              <span className="text-2xl font-semibold tracking-[-0.04em] text-[#D0D5DD]">
+                02
+              </span>
+            </div>
+
+            <div className="mt-5">
+              <StatementList marker="navy" items={alias.map((item) => item)} />
+            </div>
           </div>
         </Card>
       </div>
