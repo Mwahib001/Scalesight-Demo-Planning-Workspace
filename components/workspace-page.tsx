@@ -1804,66 +1804,160 @@ function Assumptions() {
         title="Planning Assumptions"
         subtitle="The business context currently informing the planning model."
         action={
-          <span className="text-xs text-[#667085]">
-            Last reviewed by: ScaleSight Analyst | Sep 9, 2026
-          </span>
+          <div className="rounded-md border border-[#E4E9F0] bg-white px-3 py-2 text-right">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#98A2B3]">
+              Reviewed by ScaleSight Analyst
+            </p>
+            <p className="mt-1 text-xs font-medium text-[#667085]">
+              Sep 9, 2026
+            </p>
+          </div>
         }
       />
-      <Card className="overflow-hidden p-0">
-        <table className="w-full text-left text-[13px] tabular-nums">
-          <thead className="bg-[#F6F8FB] text-[11px] uppercase tracking-[.04em] text-[#667085]">
-            <tr>
-              {["SKU", "Assumption", "Current Value", "Source"].map((item) => (
-                <th className="p-3" key={item}>
-                  {item}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row) => (
-              <tr className="border-t border-[#E4E9F0]" key={row[0]}>
-                <td className="p-3 font-medium">{row[0]}</td>
-                <td className="p-3 text-[#667085]">{row[1]}</td>
-                <td className="p-3 text-[#667085]">{row[2]}</td>
-                <td className="p-3">
-                  <span className="rounded-full border border-[#E4E9F0] bg-white px-2 py-1 text-[11px] text-[#667085]">
-                    {row[3]}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </Card>
-      <section className="space-section border-t border-[#E4E9F0] pt-5">
-        <h2 className="text-xl font-semibold text-[#10233F]">
-          Berry Human-Judgment Demonstration
-        </h2>
-        <div className="mt-4 grid items-stretch gap-4 md:grid-cols-[1fr_auto_1fr]">
-          <div className="rounded-lg bg-[#F6F8FB] p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[.04em] text-[#667085]">
-              Without Event Context
+
+      <Card className="overflow-hidden border-[#E4E9F0] bg-white p-0 shadow-none">
+        <div className="flex items-center justify-between border-b border-[#E4E9F0] px-5 py-4">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#2563EB]">
+              Model context
             </p>
-            <p className="mt-3 text-sm leading-6">
-              Recent demand softness and 11.1 weeks cover would point toward
-              reducing production.
-            </p>
+            <h2 className="mt-1 text-base font-semibold tracking-[-0.01em] text-[#10233F]">
+              Active business assumptions
+            </h2>
           </div>
-          <span className="grid place-items-center text-sm font-semibold text-[#667085]">
-            vs
+
+          <span className="hidden rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#1D4ED8] sm:inline-flex">
+            {rows.length} assumptions
           </span>
-          <div className="rounded-lg border-l-4 border-[#2563EB] bg-[#2563EB]/[.04] p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[.04em] text-[#2563EB]">
-              With Distributor Launch
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[720px] text-left text-[13px]">
+            <thead className="bg-[#FAFBFC] text-[10px] font-semibold uppercase tracking-[0.14em] text-[#98A2B3]">
+              <tr>
+                {["SKU", "Assumption", "Current Value", "Source"].map(
+                  (item) => (
+                    <th className="px-5 py-3.5" key={item}>
+                      {item}
+                    </th>
+                  ),
+                )}
+              </tr>
+            </thead>
+
+            <tbody>
+              {rows.map((row, index) => (
+                <tr
+                  className="group border-t border-[#E4E9F0] transition-colors hover:bg-[#FAFBFC]"
+                  key={row[0]}
+                >
+                  <td className="px-5 py-4">
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-[#F6F8FB] text-[10px] font-semibold text-[#667085] transition-colors group-hover:bg-[#EFF6FF] group-hover:text-[#2563EB]">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span className="font-semibold text-[#162033]">
+                        {row[0]}
+                      </span>
+                    </div>
+                  </td>
+
+                  <td className="px-5 py-4 leading-5 text-[#667085]">
+                    {row[1]}
+                  </td>
+
+                  <td className="px-5 py-4">
+                    <span className="font-semibold tabular-nums text-[#344054]">
+                      {row[2]}
+                    </span>
+                  </td>
+
+                  <td className="px-5 py-4">
+                    <span className="inline-flex items-center gap-2 rounded-md border border-[#E4E9F0] bg-white px-2.5 py-1.5 text-[11px] font-medium text-[#667085]">
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#2563EB]" />
+                      {row[3]}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+
+      <section className="space-section">
+        <div className="mb-5 flex items-end justify-between gap-4">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#2563EB]">
+              Judgment in context
             </p>
-            <p className="mt-3 text-sm leading-6">
-              Maintain the production plan until early launch demand becomes
-              visible, then reassess. The business event materially changes the
-              recommendation.
+            <h2 className="mt-1.5 text-xl font-semibold tracking-[-0.02em] text-[#10233F]">
+              Berry Human-Judgment Demonstration
+            </h2>
+          </div>
+
+          <span className="hidden text-xs font-medium text-[#98A2B3] sm:block">
+            Same data. Better decision.
+          </span>
+        </div>
+
+        <Card className="overflow-hidden border-[#E4E9F0] bg-white p-0 shadow-none">
+          <div className="grid items-stretch md:grid-cols-[1fr_64px_1fr]">
+            <div className="p-5 sm:p-6">
+              <div className="flex items-center gap-3">
+                <span className="h-2 w-2 rounded-full bg-[#98A2B3]" />
+                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#667085]">
+                  Without Event Context
+                </p>
+              </div>
+
+              <p className="mt-5 max-w-xl text-[15px] leading-7 text-[#475467]">
+                Recent demand softness and 11.1 weeks cover would point toward
+                reducing production.
+              </p>
+
+              <div className="mt-6 h-1 w-16 rounded-full bg-[#D0D5DD]" />
+            </div>
+
+            <div className="flex items-center justify-center border-y border-[#E4E9F0] bg-[#FAFBFC] py-3 md:border-x md:border-y-0">
+              <span className="rounded-full border border-[#E4E9F0] bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#98A2B3]">
+                vs
+              </span>
+            </div>
+
+            <div className="relative bg-[#F8FBFF] p-5 sm:p-6">
+              <span
+                aria-hidden
+                className="absolute inset-y-0 left-0 w-1 bg-[#2563EB]"
+              />
+
+              <div className="flex items-center gap-3 pl-2">
+                <span className="h-2 w-2 rounded-full bg-[#2563EB]" />
+                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#1D4ED8]">
+                  With Distributor Launch
+                </p>
+              </div>
+
+              <p className="mt-5 max-w-xl pl-2 text-[15px] font-medium leading-7 text-[#10233F]">
+                Maintain the production plan until early launch demand becomes
+                visible, then reassess. The business event materially changes
+                the recommendation.
+              </p>
+
+              <div className="mt-6 ml-2 h-1 w-16 rounded-full bg-[#2563EB]" />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 border-t border-[#E4E9F0] bg-[#FAFBFC] px-5 py-3.5 sm:px-6">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#EFF6FF] text-[#2563EB]">
+              <ArrowRight size={13} strokeWidth={2} />
+            </span>
+            <p className="text-xs font-medium text-[#475467]">
+              Operational events can change the recommendation more than
+              historical demand alone.
             </p>
           </div>
-        </div>
+        </Card>
       </section>
     </>
   );
