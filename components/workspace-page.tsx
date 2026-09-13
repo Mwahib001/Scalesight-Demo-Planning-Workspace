@@ -198,7 +198,7 @@ function ForecastChart() {
     };
   });
   return (
-    <div className="h-[350px]">
+    <div className="h-[280px] sm:h-[350px]">
       <ResponsiveContainer>
         <LineChart data={data} margin={{ top: 26, right: 18, left: -12 }}>
           <CartesianGrid vertical={false} stroke="#E4E9F0" />
@@ -448,7 +448,7 @@ function Weekly() {
                     <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#E5A000]">
                       Weeks of cover
                     </p>
-                    <p className="font-display mt-3 text-[56px] font-medium leading-none tracking-[-0.045em] tabular-nums text-[#E5A000]">
+                    <p className="font-display mt-3 text-[48px] font-medium leading-none tracking-[-0.045em] tabular-nums text-[#E5A000] sm:text-[56px]">
                       {
                         card.rows.find(
                           (row) => row[0] === "Weeks of cover",
@@ -730,7 +730,7 @@ function Forecast() {
                 <p className={`text-[10px] font-semibold uppercase tracking-[0.14em] ${i === 0 ? "text-[#E5A000]" : "text-[#98A2B3]"}`}>
                   {label}
                 </p>
-                <p className={`${i === 0 ? "font-display text-[52px] font-medium leading-none text-[#E5A000]" : "text-xl font-semibold text-[#10233F]"} mt-3 tracking-[-0.025em]`}>
+                <p className={`${i === 0 ? "font-display text-[44px] font-medium leading-none text-[#E5A000] sm:text-[52px]" : "text-xl font-semibold text-[#10233F]"} mt-3 tracking-[-0.025em]`}>
                   {value}
                 </p>
                 <p className={`mt-1 text-xs ${i === 0 ? "text-white/65" : "text-[#667085]"}`}>{detail}</p>
@@ -865,7 +865,8 @@ function Inventory() {
         subtitle="Forward inventory coverage, replenishment risk and recommended action."
       />
       <Card className="overflow-hidden p-0">
-        <table className="w-full table-fixed text-left text-[13px] tabular-nums">
+        <div className="overflow-x-auto">
+          <table className="min-w-[900px] table-fixed text-left text-[13px] tabular-nums">
           <colgroup>
             <col className="w-[21%]" />
             <col className="w-[10%]" />
@@ -930,7 +931,8 @@ function Inventory() {
               </tr>
             ))}
           </tbody>
-        </table>
+          </table>
+        </div>
       </Card>
       {open && (
         <div className="fixed inset-0 z-40">
@@ -939,7 +941,7 @@ function Inventory() {
             aria-label="Close drawer"
             className="absolute inset-0 bg-[#10233F]/[.24]"
           />
-          <aside className="absolute right-0 top-0 h-full w-full max-w-[400px] overflow-auto bg-white shadow-[-4px_0_24px_rgba(16,35,63,0.12)]">
+          <aside className="absolute right-0 top-0 flex h-full min-h-0 w-full max-w-[400px] flex-col bg-white shadow-[-4px_0_24px_rgba(16,35,63,0.12)]">
             <div className="hero-band flex items-start justify-between px-6 py-5">
               <div>
                 <p className="text-xs font-medium text-white/65">
@@ -958,10 +960,11 @@ function Inventory() {
                 <X size={16} strokeWidth={1.75} />
               </Button>
             </div>
-            <div className="mx-6 mt-5 border-l-2 border-[#E5A000] bg-[#FFF9E8] px-4 py-3">
+            <div className="min-h-0 flex-1 overflow-y-auto">
+              <div className="mx-6 mt-5 border-l-2 border-[#E5A000] bg-[#FFF9E8] px-4 py-3">
               <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#A16207]">Projected stockout</p>
               <p className="mt-1 font-semibold text-[#10233F]">Oct 14, 2026</p>
-            </div>
+              </div>
             <dl className="mx-6 mt-5 divide-y divide-[#E4E9F0] text-sm tabular-nums">
               {facts.map(([label, value]) => (
                 <div
@@ -995,6 +998,7 @@ function Inventory() {
                 production constraints, minimum run sizes and working-capital
                 limits.
               </p>
+            </div>
             </div>
           </aside>
         </div>
@@ -1281,7 +1285,7 @@ function Scenario() {
                   {label === "Scenario Stockout" ? (
                     <>
                       <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#E5A000]">{label}</p>
-                      <p className="font-display mt-3 text-[52px] font-medium leading-none tracking-[-0.04em] text-[#E5A000]">{value}</p>
+                      <p className="font-display mt-3 text-[44px] font-medium leading-none tracking-[-0.04em] text-[#E5A000] sm:text-[52px]">{value}</p>
                       <p className="mt-3 border-t border-white/12 pt-3 text-xs text-white/65">{detail}</p>
                     </>
                   ) : label === "Safety Coverage" ? (
@@ -2067,5 +2071,5 @@ export function WorkspacePage({
     managed: <Managed />,
     assumptions: <Assumptions />,
   }[view];
-  return <div className="mx-auto max-w-[1280px] px-6 py-7">{content}</div>;
+  return <div className="mx-auto min-w-0 max-w-[1280px] px-4 py-5 sm:px-6 sm:py-7">{content}</div>;
 }

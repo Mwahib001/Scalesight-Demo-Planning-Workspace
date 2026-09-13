@@ -191,7 +191,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <WorkspaceProvider>
       <div className="min-h-screen bg-[#F6F8FB] text-[#162033]">
-        <aside className="fixed inset-y-0 left-0 z-30 hidden w-[240px] border-r border-[#E4E9F0] bg-white lg:block xl:block">
+        <aside className="fixed inset-y-0 left-0 z-30 hidden w-[240px] border-r border-[#E4E9F0] bg-white xl:block">
           <Navigation />
         </aside>
 
@@ -200,7 +200,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </aside>
 
         <header className="fixed inset-x-0 top-0 z-20 h-[68px] border-b border-[#E4E9F0] bg-white/95 backdrop-blur-sm min-[1024px]:left-[64px] xl:left-[240px]">
-          <div className="mx-auto flex h-full max-w-[1280px] items-center justify-between gap-4 px-4 sm:px-6">
+          <div className="mx-auto flex h-full max-w-[1280px] items-center justify-between gap-2 px-4 sm:gap-4 sm:px-6">
             <div className="flex min-w-0 items-center gap-3">
               <Button
                 variant="icon"
@@ -222,7 +222,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex shrink-0 items-center gap-2 sm:gap-3">
               <span className="hidden text-xs font-medium text-[#667085] lg:inline">
                 Planning Week: Sep 7–13, 2026
               </span>
@@ -254,7 +254,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               className="absolute inset-0 bg-[#10233F]/[0.24]"
             />
 
-            <aside className="relative h-full w-[280px] border-r border-[#E4E9F0] bg-white shadow-[8px_0_24px_rgba(16,35,63,0.08)]">
+            <aside className="relative flex h-full min-h-0 w-[280px] flex-col border-r border-[#E4E9F0] bg-white shadow-[8px_0_24px_rgba(16,35,63,0.08)]">
               <Button
                 variant="icon"
                 aria-label="Close navigation"
@@ -269,7 +269,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
         )}
 
-        <main className="pt-[68px] min-[1024px]:pl-[64px] xl:pl-[240px]">
+        <main className="min-w-0 overflow-x-hidden pt-[68px] min-[1024px]:pl-[64px] xl:pl-[240px]">
           {children}
         </main>
       </div>
