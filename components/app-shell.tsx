@@ -88,7 +88,7 @@ function Navigation({
       </div>
 
       <div className="min-h-0 flex-1 space-y-8 overflow-y-auto overscroll-contain pr-1">
-        {navGroups.map((group, groupIndex) => (
+        {navGroups.map((group) => (
           <div key={group.label}>
             {!compact && (
               <div className="mb-3 flex items-center gap-3 px-3">
@@ -128,8 +128,8 @@ function Navigation({
                     >
                       <Icon
                         aria-hidden
-                        size={16}
-                        strokeWidth={active ? 2 : 1.75}
+                        size={18}
+                        strokeWidth={1.75}
                       />
                     </span>
 

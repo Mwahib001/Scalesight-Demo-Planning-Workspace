@@ -332,6 +332,19 @@ function InventoryProjection({ sku }: { sku: Sku }) {
   );
 }
 
+const planningWeekStart = new Date("2026-09-07T00:00:00Z");
+
+function planningDateForCover(cover: number | null) {
+  if (cover === null || !Number.isFinite(cover)) return "Not available";
+  const date = new Date(planningWeekStart);
+  date.setUTCDate(date.getUTCDate() + Math.round(cover * 7));
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  }).format(date);
+}
+
 function Weekly() {
   const { setSelectedSkuId } = useWorkspace();
   const router = useRouter();
@@ -751,7 +764,7 @@ function Forecast() {
             </div>
 
             <span className="hidden rounded-md border border-[#E4E9F0] bg-[#FAFBFC] px-2.5 py-1.5 text-[11px] font-medium text-[#667085] sm:inline-flex">
-              Citrus Vodka Soda
+              {sku.name}
             </span>
           </div>
 
@@ -947,7 +960,7 @@ function Inventory() {
                 <p className="text-xs font-medium text-white/65">
                   Inventory Detail
                 </p>
-                <h2 className="font-display mt-1 text-xl font-semibold text-white">
+                <h2 className="mt-1 text-xl font-semibold text-white">
                   {selected.name}
                 </h2>
               </div>
@@ -961,8 +974,8 @@ function Inventory() {
               </Button>
             </div>
             <div className="min-h-0 flex-1 overflow-y-auto">
-              <div className="mx-6 mt-5 border-l-2 border-[#E5A000] bg-[#FFF9E8] px-4 py-3">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#A16207]">Projected stockout</p>
+              <div className="mx-6 mt-5 border-l-2 border-[#10233F] px-4 py-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#667085]">Projected stockout</p>
               <p className="mt-1 font-semibold text-[#10233F]">Oct 14, 2026</p>
               </div>
             <dl className="mx-6 mt-5 divide-y divide-[#E4E9F0] text-sm tabular-nums">
@@ -1012,40 +1025,64 @@ function Scenario() {
     useWorkspace();
   const sku = skus.find((item) => item.id === selectedSkuId) ?? skus[0];
   const metrics = scenarioMetrics(sku, scenario);
+  const comparisonCases = [0, 0.15, 0.25, 0.4].map((growthRate) => {
+    const comparisonMetrics = scenarioMetrics(sku, { ...scenario, growthRate });
+    const safetyBreachCover =
+      comparisonMetrics.cover === null
+        ? null
+        : Math.max(0, comparisonMetrics.cover - sku.safetyStockWeeks);
+    return { comparisonMetrics, safetyBreachCover };
+  });
+  const comparisonRows = [
+    [
+      "Weekly demand",
+      ...comparisonCases.map(({ comparisonMetrics }) =>
+        formatUnits(comparisonMetrics.demand),
+      ),
+    ],
+    [
+      "Usable weeks cover",
+      ...comparisonCases.map(({ comparisonMetrics }) =>
+        displayCover(comparisonMetrics.cover).replace("w", ""),
+      ),
+    ],
+    [
+      "Safety breach",
+      ...comparisonCases.map(({ safetyBreachCover }) =>
+        planningDateForCover(safetyBreachCover),
+      ),
+    ],
+    [
+      "Projected stockout",
+      ...comparisonCases.map(({ comparisonMetrics }) =>
+        planningDateForCover(comparisonMetrics.cover),
+      ),
+    ],
+    [
+      "Required production",
+      ...comparisonCases.map(({ comparisonMetrics }) =>
+        formatUnits(comparisonMetrics.reorderGap),
+      ),
+    ],
+    [
+      "Risk level",
+      ...comparisonCases.map(({ comparisonMetrics }) =>
+        comparisonMetrics.risk === "high"
+          ? "High"
+          : comparisonMetrics.risk === "watch"
+            ? "Watch"
+            : comparisonMetrics.risk === "healthy"
+              ? "Healthy"
+              : "Overstock",
+      ),
+    ],
+  ];
   const recommendation =
     sku.id === "berry-vodka-soda"
       ? scenario.distributorEnabled
         ? "Maintain / reassess production until early launch demand becomes visible."
         : "Reduce production in response to current demand softness."
       : "Confirm additional production before increasing demand-generation activity beyond the current base plan.";
-  const slider = (
-    label: string,
-    key: "growthRate" | "leadTimeWeeks" | "shrinkRate",
-    min: number,
-    max: number,
-    step: number,
-    format: (value: number) => string,
-  ) => (
-    <label className="block" key={key}>
-      <span className="flex justify-between text-sm font-medium">
-        <span>{label}</span>
-        <span className="tabular-nums text-[#10233F]">
-          {format(scenario[key])}
-        </span>
-      </span>
-      <input
-        className="mt-2 w-full accent-[#10233F]"
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={scenario[key]}
-        onChange={(event) =>
-          updateScenario({ [key]: Number(event.target.value) })
-        }
-      />
-    </label>
-  );
   return (
     <>
       <PageTitle
@@ -1237,7 +1274,9 @@ function Scenario() {
               {[
                 [
                   "Current Stockout",
-                  "4.2 weeks",
+                  metrics.baseCover === null
+                    ? "Not available"
+                    : `${metrics.baseCover.toFixed(1)} weeks`,
                   "base estimate",
                   false,
                   false,
@@ -1371,20 +1410,7 @@ function Scenario() {
                 </thead>
 
                 <tbody>
-                  {[
-                    ["Weekly demand", "1,140", "1,311", "1,425", "1,596"],
-                    ["Usable weeks cover", "4.1", "3.6", "3.3", "2.9"],
-                    ["Safety breach", "Oct 5", "Sep 28", "Sep 22", "Sep 16"],
-                    [
-                      "Projected stockout",
-                      "Oct 14",
-                      "Oct 6",
-                      "Sep 30",
-                      "Sep 24",
-                    ],
-                    ["Required production", "1,800", "2,050", "2,400", "3,100"],
-                    ["Risk level", "High", "High", "High", "Critical"],
-                  ].map((row) => (
+                  {comparisonRows.map((row) => (
                     <tr
                       className="border-t border-[#E4E9F0] transition-colors hover:bg-[#FAFBFC]"
                       key={row[0]}
@@ -1396,8 +1422,8 @@ function Scenario() {
                               ? "font-medium text-[#344054]"
                               : i === 3
                                 ? "bg-[#EFF6FF] font-semibold text-[#1D4ED8]"
-                                : item === "Critical"
-                                  ? "font-semibold text-[#B54708]"
+                                  : item === "High"
+                                  ? "font-semibold text-[#DC3545]"
                                   : "text-[#667085]"
                           }`}
                           key={`${row[0]}-${item}`}
@@ -1553,7 +1579,7 @@ function Advisor() {
                 "Variety:",
                 "Campaign-driven demand could reduce available stock before replacement inventory arrives.",
               ],
-            ].map(([label, text], index) => (
+            ].map(([label, text]) => (
               <div className="flex gap-4" key={label}>
                 <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-[#2563EB]" />
                 <p className="text-sm leading-6 text-[#475467]">
@@ -1633,7 +1659,7 @@ function Advisor() {
                       : "border-[#D0D5DD] bg-white"
                   }`}
                 >
-                  {checked[index] && <Check size={14} strokeWidth={2} />}
+                  {checked[index] && <Check size={14} strokeWidth={1.75} />}
                 </span>
                 <span
                   className={checked[index] ? "line-through opacity-70" : ""}
@@ -1893,10 +1919,7 @@ function Assumptions() {
         action={
           <div className="rounded-md border border-[#E4E9F0] bg-white px-3 py-2 text-right">
             <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#98A2B3]">
-              Reviewed by ScaleSight Analyst
-            </p>
-            <p className="mt-1 text-xs font-medium text-[#667085]">
-              Sep 9, 2026
+              Last reviewed by: ScaleSight Analyst | Sep 9, 2026
             </p>
           </div>
         }
@@ -1919,7 +1942,7 @@ function Assumptions() {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[720px] text-left text-[13px]">
+          <table className="w-full min-w-[720px] text-left text-[13px] tabular-nums">
             <thead className="bg-[#FAFBFC] text-[10px] font-semibold uppercase tracking-[0.14em] text-[#98A2B3]">
               <tr>
                 {["SKU", "Assumption", "Current Value", "Source"].map(
@@ -2037,7 +2060,7 @@ function Assumptions() {
 
           <div className="flex items-center gap-3 border-t border-[#E4E9F0] bg-[#FAFBFC] px-5 py-3.5 sm:px-6">
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#EFF6FF] text-[#2563EB]">
-              <ArrowRight size={13} strokeWidth={2} />
+              <ArrowRight size={13} strokeWidth={1.75} />
             </span>
             <p className="text-xs font-medium text-[#475467]">
               Operational events can change the recommendation more than
