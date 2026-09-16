@@ -1,4 +1,4 @@
 import { WorkspacePage } from "@/components/workspace-page";
-export default function ScenarioPage() {
+export default function Page() {
   return <WorkspacePage view="scenario" />;
 }

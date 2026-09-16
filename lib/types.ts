@@ -1,86 +1,106 @@
-export type Risk = "high" | "watch" | "healthy" | "overstock";
-
-export interface Client {
+export type Category = "Bags" | "Wallets" | "Belts" | "Travel" | "Seasonal";
+export type Channel = "All" | "Online Store" | "Retail" | "Wholesale";
+export type Risk = "High" | "Watch" | "Healthy" | "Excess";
+export interface Merchant {
   id: string;
   name: string;
-  category: string;
-  accountLabel: string;
+  platform: string;
+  planningWeek: string;
+  dataThrough: string;
 }
-
-export interface Sku {
+export interface SKU {
   id: string;
   name: string;
-  channelMix: string;
+  category: Category;
   currentInventory: number;
   baseWeeklyDemand: number;
   leadTimeWeeks: number;
   safetyStockWeeks: number;
-  shrinkRate: number;
+  lossRate: number;
+  unitCost: number;
+  unitPrice: number;
   incomingUnits: number;
-  risk: Risk;
+  incomingWeek: number;
+  demandDelta: number;
+  excessCoverThreshold: number;
+  materialEvent: boolean;
+  uncertainReceipt: boolean;
+  packSize: number;
+  moq: number;
+  authored: boolean;
+  elasticity?: number;
 }
-
-export interface ForecastPoint {
-  weekStart: string;
-  actual?: number;
-  base: number;
-  conservative: number;
-  upside: number;
-}
-
 export interface WeeklyActual {
-  weekStart: string;
   skuId: string;
+  weekStart: string;
+  channel: Channel;
   units: number;
-  planUnits: number;
-  channel: string;
-  eventId?: string;
 }
-
-export interface ProductionOrder {
+export interface ForecastVersion {
+  id: string;
+  skuId: string;
+  issuedAt: string;
+  weeks: readonly { weekStart: string; units: number }[];
+}
+export interface InventoryReceipt {
   id: string;
   skuId: string;
   units: number;
-  expectedWeek: string;
-  status: string;
+  expectedWeek: number;
+  confirmed: boolean;
+  status: "open" | "received";
 }
-
 export interface BusinessEvent {
   id: string;
   skuId: string;
   type: string;
-  startWeek: string;
-  endWeek: string;
-  upliftRate: number;
+  start: string;
+  end: string;
   label: string;
   confirmed: boolean;
+  effect: number;
 }
-
-export interface PlanningAssumption {
-  skuId: string;
-  key: string;
-  value: string;
-  sourceType: "historical" | "confirmed_event" | "operational_input" | "analyst_judgment";
-  reviewedAt: string;
-  reviewedBy: string;
+export interface CustomerOrder {
+  customerId: string;
+  date: string;
+  acquiredAt: string;
+  sequence: number;
+  status: "completed" | "cancelled" | "refunded";
+  netRevenue: number;
 }
-
-export interface AdvisorItem {
-  skuId: string;
-  priority: number;
-  whatChanged: string;
-  whyItMatters: string;
-  recommendation: string;
-  decisionRequired: string;
-  monitorNext: string;
+export interface CustomerSegment {
+  name: string;
+  customers: number;
+  expectedValue: number;
 }
-
+export interface ChangeLogItem {
+  area: string;
+  subject: string;
+  happened: string;
+  matters: string;
+  decision: string;
+  impact: number;
+}
+export interface PartnershipModel {
+  name: string;
+  description: string;
+  steps: string;
+  qualifier: string;
+}
 export interface ScenarioInput {
-  skuId: string;
-  growthRate: number;
-  leadTimeWeeks: number;
-  shrinkRate: number;
-  promotionEnabled: boolean;
-  distributorEnabled: boolean;
+  demandChange: number;
+  leadTimeChange: number;
+  promotion: boolean;
+  adSpendChange: number;
   incomingUnits: number;
+  incomingWeek: number;
+  supplierDelay: boolean;
+  delayWeeks: number;
+  safetyWeeks: number;
+}
+export interface ProjectionPoint {
+  week: number;
+  onHand: number;
+  safety: number;
+  receipt: number;
 }

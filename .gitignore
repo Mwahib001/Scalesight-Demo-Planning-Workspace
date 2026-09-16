@@ -42,3 +42,8 @@ next-env.d.ts
 
 # mcp servers
 /.vscode
+
+# local QA output
+/.test-build/
+/test-results/
+/playwright-report/
