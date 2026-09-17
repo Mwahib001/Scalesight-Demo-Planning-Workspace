@@ -22,6 +22,14 @@ export function CustomerGrowth() {
         title="Customer & Growth Intelligence"
         description="Understand who returns, what acquisition cohorts contribute, and where to focus retention."
       />
+      <p
+        className="footnote"
+        title="Repeat purchase rate counts customers with at least two completed orders divided by customers with at least one in the TTM window. Completed revenue excludes refunded and cancelled orders."
+      >
+        Analysis through Sep 13, 2026. TTM customer metrics: n = 18,000; quarter
+        revenue: Jul 1–Sep 13; mature source cohorts: n = 9,000, acquired
+        Mar–May. All financial figures are illustrative estimates.
+      </p>
       <div className="metrics six">
         <Metric
           label="Repeat purchase rate"
@@ -86,7 +94,9 @@ export function CustomerGrowth() {
                     </td>
                     {Array.from({ length: 6 }, (_, i) => (
                       <td key={i}>
-                        {c.retention[i] !== undefined ? (
+                        {c.size < 100 ? (
+                          <span>Small sample (n &lt; 100)</span>
+                        ) : c.retention[i] !== undefined ? (
                           <span
                             style={{
                               background: `rgba(47,91,255,${0.07 + c.retention[i] / 180})`,
@@ -245,7 +255,11 @@ export function CustomerGrowth() {
                     <td>{formatUnits(s.size)}</td>
                     <td>{money(s.cac)}</td>
                     <td>
-                      <strong>{money(s.value)}</strong>
+                      <strong>
+                        {s.size < 100
+                          ? "Small sample (n < 100)"
+                          : money(s.value)}
+                      </strong>
                     </td>
                   </tr>
                 ))}
@@ -260,9 +274,9 @@ export function CustomerGrowth() {
           <div className="mini-interpretation">
             <strong>Association, subject to review</strong>
             <p>
-              Campaign B customers generated approximately 21% higher 90-day
-              revenue than the baseline cohort despite higher initial CAC. This
-              is an association in demo data, not proof of causation.
+              {
+                "Campaign B customers generated approximately 21% higher 90-day revenue than the baseline cohort despite higher initial CAC. This is an association in demo data, not proof of causation."
+              }
             </p>
           </div>
         </section>

@@ -49,7 +49,7 @@ export function Partnership() {
             <small>Managed intelligence / data-science partner</small>
           </div>
         </div>
-        <h2>FROM PROTECTED COMMERCE TO BETTER MERCHANT DECISIONS.</h2>
+        <h2>{"FROM PROTECTED COMMERCE TO BETTER MERCHANT DECISIONS."}</h2>
         <p>
           A concept for discussion. Merchant fit, delivery responsibilities and
           commercial structure would be explored together. A potential future
@@ -103,8 +103,9 @@ export function Partnership() {
         <div className="pilot-end">
           <ArrowUpRight size={27} />
           <h2>
-            START WITH ONE MERCHANT. PROVE THE MODEL. THEN DECIDE HOW TO SCALE
-            IT.
+            {
+              "START WITH ONE MERCHANT. PROVE THE MODEL. THEN DECIDE HOW TO SCALE IT."
+            }
           </h2>
           <p>
             Commercial structure to be discussed after merchant fit and pilot

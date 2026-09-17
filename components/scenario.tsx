@@ -404,8 +404,9 @@ export function Scenario() {
             </Decision>
           </section>
           <p className="scenario-disclaimer">
-            Scenario planning is an assumption tool, not a prediction of
-            certainty.
+            {
+              "Scenario planning is an assumption tool, not a prediction of certainty."
+            }
           </p>
         </>
       )}

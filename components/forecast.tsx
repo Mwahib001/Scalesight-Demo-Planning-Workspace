@@ -15,6 +15,8 @@ import {
   inventoryMetrics,
   mape,
   residualStability,
+  priorForecastVariance,
+  meanPriorForecastVariance,
 } from "@/lib/calculations";
 import { useWorkspace } from "./workspace-context";
 import {
@@ -105,7 +107,7 @@ export function Forecast() {
               label="Forecast change"
               value={
                 prior8
-                  ? `${((next8 / prior8 - 1) * 100).toFixed(1)}%`
+                  ? `${next8 >= prior8 ? "+" : ""}${((next8 / prior8 - 1) * 100).toFixed(1)}%`
                   : "New baseline"
               }
               note="Versus prior 8-week plan"
@@ -145,13 +147,7 @@ export function Forecast() {
               Weekly units · illustrative estimate · range expresses planning
               uncertainty
             </p>
-            <ForecastChart
-              data={points}
-              eventDates={chartEvents.map((e) => ({
-                date: e.start,
-                label: e.label,
-              }))}
-            />
+            <ForecastChart data={points} eventDates={chartEvents} />
             <div className="event-markers">
               {chartEvents.map((e, i) => (
                 <button
@@ -163,7 +159,8 @@ export function Forecast() {
                   <span className="event-tooltip">
                     {e.start}–{e.end}
                     <br />
-                    {e.label} · {e.confirmed ? "Confirmed" : "Unconfirmed"}
+                    {e.type} · {e.label} ·{" "}
+                    {e.confirmed ? "Confirmed" : "Unconfirmed"}
                     <br />
                     Assumed effect: {Math.round(e.effect * 100)}% within event
                     window
@@ -237,6 +234,12 @@ export function Forecast() {
                   <strong>{mape(backtest)?.toFixed(1)}%</strong>
                   <span>recent 4-week MAPE (demo backtest)</span>
                 </div>
+                <p className="footnote">
+                  Mean absolute variance versus prior forecast:{" "}
+                  {meanPriorForecastVariance(backtest)?.toFixed(1)}%. MAPE
+                  divides errors by actual demand; the prior-forecast variance
+                  divides by the committed plan.
+                </p>
                 <div className="table-scroll">
                   <table>
                     <thead>
@@ -244,17 +247,28 @@ export function Forecast() {
                         <th>Week</th>
                         <th>Previous forecast</th>
                         <th>Actual</th>
-                        <th>Variance</th>
+                        <th>Variance vs prior</th>
                         <th>Interpretation</th>
                       </tr>
                     </thead>
                     <tbody>
                       {backtest.map((r) => (
                         <tr key={r.week}>
-                          <td>{r.week}</td>
+                          <td
+                            title={`Forecast committed ${r.forecastIssuedAt} (${r.forecastVersionId})`}
+                          >
+                            {r.week}
+                          </td>
                           <td>{formatUnits(r.previousForecast)}</td>
                           <td>{formatUnits(r.actual)}</td>
-                          <td>+{formatUnits(r.actual - r.previousForecast)}</td>
+                          <td>
+                            +
+                            {priorForecastVariance(
+                              r.actual,
+                              r.previousForecast,
+                            )?.toFixed(1)}
+                            %
+                          </td>
                           <td>{r.interpretation}</td>
                         </tr>
                       ))}

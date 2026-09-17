@@ -1,6 +1,8 @@
 import { changes, skus, skuById, money, formatUnits } from "../data/planning";
 import { inventoryMetrics, runScenario } from "./calculations";
 import type { ScenarioInput } from "./types";
+export const analystFallback =
+  "This prototype supports the suggested demo questions. A production analyst workflow would be scoped around the merchant's needs.";
 export const questions = [
   "Why is SKU-104 at risk?",
   "What happens if demand increases 20%?",
@@ -57,5 +59,5 @@ export function answerQuestion(
           `${r.m.risk} — ${r.s.id} ${r.s.name}: ${r.m.risk === "High" ? "Review receipt timing and an expedited purchase order." : "Confirm event assumptions before increasing the order."}`,
       )
       .join("\n\n");
-  return "This prototype supports the suggested demo questions. A production analyst workflow would be scoped around the merchant's needs.";
+  return analystFallback;
 }

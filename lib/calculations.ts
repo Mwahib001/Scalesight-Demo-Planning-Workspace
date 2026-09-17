@@ -339,8 +339,15 @@ export const outsideReorderWindow = (
   grace: number,
   today = "2026-09-14",
 ) => Date.parse(today) > Date.parse(last) + (days + grace) * 86400000;
-export function customerMetrics(orders: readonly CustomerOrder[]) {
-  const completed = orders.filter((o) => o.status === "completed");
+export function customerMetrics(
+  orders: readonly CustomerOrder[],
+  window?: { start: string; end: string },
+) {
+  const completed = orders.filter(
+    (o) =>
+      o.status === "completed" &&
+      (!window || (o.date >= window.start && o.date <= window.end)),
+  );
   const ids = new Set(completed.map((o) => o.customerId));
   const counts = new Map<string, number>();
   completed.forEach((o) =>
@@ -376,4 +383,30 @@ export function residualStability(values: readonly number[]) {
   return residuals.length
     ? residuals.reduce((n, v) => n + v, 0) / residuals.length
     : 1;
+}
+
+export const priorForecastVariance = (actual: number, prior: number) =>
+  prior > 0 ? ((actual - prior) / prior) * 100 : null;
+export function meanPriorForecastVariance(
+  rows: readonly { actual: number; previousForecast: number }[],
+) {
+  const valid = rows.filter((r) => r.previousForecast > 0);
+  return valid.length
+    ? valid.reduce(
+        (n, r) =>
+          n + Math.abs(priorForecastVariance(r.actual, r.previousForecast)!),
+        0,
+      ) / valid.length
+    : null;
+}
+export function repeatRateFromBuckets(
+  buckets: readonly { completedOrders: number; customers: number }[],
+) {
+  const eligible = buckets.filter((b) => b.completedOrders >= 1);
+  const total = eligible.reduce((n, b) => n + b.customers, 0);
+  return total
+    ? eligible
+        .filter((b) => b.completedOrders >= 2)
+        .reduce((n, b) => n + b.customers, 0) / total
+    : 0;
 }

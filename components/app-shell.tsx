@@ -38,18 +38,8 @@ function Navigation({ close }: { close?: () => void }) {
   return (
     <nav className="navigation" aria-label="Primary navigation">
       <Link className="brand" href="/" onClick={close}>
-        <span>
-          Blockify <b>×</b>
-          <br />
-          <strong>
-            ScaleSight<span className="brand-dot">.</span>
-          </strong>
-        </span>
-        <small>
-          Managed Commerce
-          <br />
-          Intelligence Demo
-        </small>
+        <span>Blockify x ScaleSight</span>
+        <small>Managed Commerce Intelligence Demo.</small>
       </Link>
       <div className="nav-links">
         {nav.map((n, i) => (
@@ -107,18 +97,32 @@ function Shell({ children }: { children: React.ReactNode }) {
             <Menu size={22} />
           </button>
           <div className="merchant-context">
-            <strong>{merchant.name}</strong>
-            <span>
-              {merchant.platform} <i /> Illustrative merchant environment
-            </span>
+            <strong>
+              Northstar Commerce | Shopify Plus | Illustrative merchant
+              environment
+            </strong>
           </div>
           <div className="planning-context">
             <strong>Planning week: {merchant.planningWeek}</strong>
             <span>
-              Data through: {merchant.dataThrough} · Illustrative refresh: 2
-              hours ago
+              Data through: {merchant.dataThrough} ·{" "}
+              {"Illustrative refresh: 2 hours ago"}
             </span>
           </div>
+          <details className="header-context-disclosure">
+            <summary aria-label="Planning context">
+              <Info size={18} />
+            </summary>
+            <div>
+              <strong>
+                Northstar Commerce | Shopify Plus | Illustrative merchant
+                environment
+              </strong>
+              <p>Planning week: {merchant.planningWeek}</p>
+              <p>Data through: {merchant.dataThrough}</p>
+              <p>Illustrative refresh: 2 hours ago</p>
+            </div>
+          </details>
           <span
             tabIndex={0}
             className="demo-badge"

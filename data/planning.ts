@@ -30,15 +30,15 @@ export const weekDate = (week: number) =>
   new Date(Date.UTC(2026, 8, 14 + week * 7)).toISOString().slice(0, 10);
 const authored: SKU[] = [
   ["104", "Atlas Carryall", "Bags", 4300, 1130, 6, 0, 0, 0.23, 14],
-  ["087", "Meridian Wallet", "Wallets", 8900, 610, 4, 2000, 3, -0.18, 8],
+  ["087", "Meridian Wallet", "Wallets", 8900, 610, 5, 2000, 3, -0.18, 8],
   ["031", "Nova Belt", "Belts", 6200, 970, 7, 1500, 2, 0.34, 7.5],
-  ["112", "Orbit Weekender", "Travel", 2100, 650, 5, 1800, 4, 0.16, 16],
-  ["066", "Apex Cardholder", "Wallets", 1600, 480, 5, 900, 5, 0.11, 4],
-  ["019", "Lumen Tote", "Bags", 2700, 720, 5, 1200, 6, 0.09, 12],
-  ["128", "Solstice Pouch", "Travel", 1800, 520, 5, 800, 6, 0.07, 5],
-  ["055", "Voyager Strap", "Belts", 2200, 600, 5, 1000, 5, 0.12, 4],
-  ["141", "Holiday Gift Set", "Seasonal", 4200, 420, 8, 2400, 5, 0.08, 13],
-  ["073", "Transit Sling", "Bags", 5400, 580, 6, 1800, 4, 0.04, 10],
+  ["112", "Orbit Weekender", "Travel", 3750, 540, 8, 1200, 4, 0.09, 16],
+  ["066", "Apex Cardholder", "Wallets", 7200, 690, 4, 0, 0, 0.02, 4],
+  ["019", "Lumen Tote", "Bags", 5100, 720, 5, 1000, 3, 0.06, 12],
+  ["128", "Solstice Pouch", "Travel", 2650, 410, 9, 0, 0, 0.12, 5],
+  ["055", "Voyager Strap", "Belts", 9400, 430, 4, 0, 0, -0.11, 4],
+  ["141", "Holiday Gift Set", "Seasonal", 3100, 360, 10, 2400, 5, 0.28, 13],
+  ["073", "Transit Sling", "Bags", 4950, 760, 6, 900, 4, 0.04, 10],
   ["096", "Crescent Organizer", "Travel", 10800, 800, 4, 1000, 3, -0.08, 10],
   ["138", "Summit Travel Kit", "Travel", 9700, 700, 4, 1800, 4, -0.06, 12],
 ].map((r) => {
@@ -72,7 +72,7 @@ const authored: SKU[] = [
       Number(id) === 87
         ? 7.049180327868853
         : Number(id) === 96
-          ? 10.175
+          ? 11.865
           : Number(id) === 138
             ? 12.071428571428571
             : Number(id) === 141
@@ -95,7 +95,8 @@ const generated: SKU[] = Array.from({ length: 142 }, (_, i) => i + 1)
     category: categories[i % 5],
     currentInventory: 700 + i * 9,
     baseWeeklyDemand: 100 + i * 2,
-    leadTimeWeeks: 3,
+    // Named deterministic exception: extended supplier lead time for three tail SKUs.
+    leadTimeWeeks: [80, 90, 100].includes(id) ? 12 : 3,
     safetyStockWeeks: 1.2,
     lossRate: 0.01,
     unitCost: 5,
@@ -203,16 +204,14 @@ export function weeklyActuals(sku: SKU): readonly WeeklyActual[] {
     );
     const online = Math.round(total * 0.65),
       retail = Math.round(total * 0.25);
-    return channels
-      .slice(1)
-      .map((channel, c) =>
-        Object.freeze({
-          skuId: sku.id,
-          weekStart: date,
-          channel,
-          units: [online, retail, total - online - retail][c],
-        }),
-      );
+    return channels.slice(1).map((channel, c) =>
+      Object.freeze({
+        skuId: sku.id,
+        weekStart: date,
+        channel,
+        units: [online, retail, total - online - retail][c],
+      }),
+    );
   }).flat();
 }
 export function forecastUnits(sku: SKU, week: number) {
@@ -249,34 +248,82 @@ export const forecastVersions: readonly ForecastVersion[] = Object.freeze(
     ),
   ),
 );
+// Actuals join to versions committed before the observed week; later versions are ineligible.
+export const committedBacktestVersions: readonly ForecastVersion[] =
+  Object.freeze(
+    [
+      {
+        id: "atlas-20260810",
+        skuId: "SKU-104",
+        issuedAt: "2026-08-10",
+        weeks: [{ weekStart: "2026-08-17", units: 910 }],
+      },
+      {
+        id: "atlas-20260817",
+        skuId: "SKU-104",
+        issuedAt: "2026-08-17",
+        weeks: [{ weekStart: "2026-08-24", units: 940 }],
+      },
+      {
+        id: "atlas-20260824",
+        skuId: "SKU-104",
+        issuedAt: "2026-08-24",
+        weeks: [{ weekStart: "2026-08-31", units: 960 }],
+      },
+      {
+        id: "atlas-20260831",
+        skuId: "SKU-104",
+        issuedAt: "2026-08-31",
+        weeks: [{ weekStart: "2026-09-07", units: 980 }],
+      },
+    ].map((v) =>
+      Object.freeze({
+        ...v,
+        weeks: Object.freeze(v.weeks.map((w) => Object.freeze(w))),
+      }),
+    ),
+  );
 export const backtest = Object.freeze(
   [
-    {
-      week: "2026-08-17",
-      previousForecast: 800,
-      actual: 1000,
-      interpretation: "Campaign response above the committed plan.",
-    },
-    {
-      week: "2026-08-24",
-      previousForecast: 880,
-      actual: 1100,
-      interpretation: "Higher demand continued into a second week.",
-    },
-    {
-      week: "2026-08-31",
-      previousForecast: 902,
-      actual: 1100,
-      interpretation: "Observed uplift remained above baseline.",
-    },
+    { week: "2026-08-17", actual: 1025, interpretation: "Campaign begins" },
+    { week: "2026-08-24", actual: 1145, interpretation: "Uplift strengthens" },
+    { week: "2026-08-31", actual: 1210, interpretation: "Promotion peak" },
     {
       week: "2026-09-07",
-      previousForecast: 1055,
-      actual: 1250,
-      interpretation: "Gap narrowed after the preceding refresh.",
+      actual: 1108,
+      interpretation: "Uplift persists after peak",
     },
-  ].map((row) => Object.freeze(row)),
+  ].map((row) => {
+    const version = [...committedBacktestVersions]
+      .filter(
+        (v) =>
+          v.issuedAt < row.week &&
+          v.weeks.some((w) => w.weekStart === row.week),
+      )
+      .sort((a, b) => b.issuedAt.localeCompare(a.issuedAt))[0];
+    if (!version) throw new Error("Missing committed forecast for backtest");
+    return Object.freeze({
+      ...row,
+      previousForecast: version.weeks.find((w) => w.weekStart === row.week)!
+        .units,
+      forecastIssuedAt: version.issuedAt,
+      forecastVersionId: version.id,
+    });
+  }),
 );
+export const purchasingActions: Readonly<Record<string, string>> =
+  Object.freeze({
+    "SKU-104": "Expedite-review PO",
+    "SKU-087": "Reduce-defer PO",
+    "SKU-031": "Recalculate",
+    "SKU-112": "Confirm receipt",
+    "SKU-066": "Hold",
+    "SKU-019": "Monitor",
+    "SKU-128": "Alternate supply",
+    "SKU-055": "Freeze PO",
+    "SKU-141": "Validate launch",
+    "SKU-073": "Hold",
+  });
 export const changes: readonly ChangeLogItem[] = Object.freeze(
   [
     {
@@ -427,25 +474,35 @@ export const money = (n: number) =>
     maximumFractionDigits: 0,
   }).format(n);
 
-// Authored risk assessment covers exposed units, rather than valuing every unit in a risk SKU.
+// Assessed exposed quantities across the seven rule-derived high-risk positions.
+const assessmentIds = [
+  "SKU-104",
+  "SKU-031",
+  "SKU-112",
+  "SKU-128",
+  "SKU-080",
+  "SKU-090",
+  "SKU-100",
+];
+const assessedSkus = skus.filter((s) => assessmentIds.includes(s.id));
+const assessedPoolValue = assessedSkus.reduce(
+  (n, s) => n + s.currentInventory * s.unitCost,
+  0,
+);
 export const inventoryAssessments = Object.freeze(
-  skus
-    .filter((s) =>
-      [
-        "SKU-104",
-        "SKU-031",
-        "SKU-112",
-        "SKU-066",
-        "SKU-019",
-        "SKU-128",
-        "SKU-055",
-      ].includes(s.id),
-    )
-    .map((s, i) =>
-      Object.freeze({
-        skuId: s.id,
-        atRiskUnits: s.currentInventory * (184000 / 196900),
-        reviewThisWeek: i < 5,
-      }),
-    ),
+  assessedSkus.map((s, i) =>
+    Object.freeze({
+      skuId: s.id,
+      atRiskUnits: s.currentInventory * (184000 / assessedPoolValue),
+      reviewThisWeek: i < 5,
+    }),
+  ),
+);
+// Disjoint customer buckets use completed-order counts in the TTM analysis window.
+export const customerOrderBuckets = Object.freeze(
+  [
+    { completedOrders: 1, customers: 11088 },
+    { completedOrders: 4, customers: 5648 },
+    { completedOrders: 5, customers: 1264 },
+  ].map((row) => Object.freeze(row)),
 );

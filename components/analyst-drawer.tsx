@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Drawer } from "./drawer";
 import { useWorkspace } from "./workspace-context";
-import { answerQuestion, questions } from "@/lib/analyst";
+import { answerQuestion, questions, analystFallback } from "@/lib/analyst";
 export function AnalystDrawer() {
   const w = useWorkspace();
   const [answer, setAnswer] = useState(
@@ -40,18 +40,10 @@ export function AnalystDrawer() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          setAnswer(
-            answerQuestion(
-              input,
-              w.selectedSku,
-              w.scenario,
-              w.horizon,
-              w.selectedChannel,
-            ),
-          );
+          setAnswer(analystFallback);
         }}
       >
-        <label htmlFor="analyst-question">Find a supported question</label>
+        <label htmlFor="analyst-question">Other question</label>
         <div className="inline-form">
           <input
             id="analyst-question"

@@ -4,8 +4,15 @@ import {
   reorderGroups,
   backtest,
   inventoryAssessments,
+  customerOrderBuckets,
 } from "../data/planning";
-import { inventoryMetrics, mape, outsideReorderWindow } from "./calculations";
+import {
+  inventoryMetrics,
+  mape,
+  outsideReorderWindow,
+  meanPriorForecastVariance,
+  repeatRateFromBuckets,
+} from "./calculations";
 export function catalogMetrics() {
   const inventoryValue = skus.reduce(
     (n, s) => n + s.currentInventory * s.unitCost,
@@ -36,8 +43,7 @@ export function catalogMetrics() {
 }
 export function growthMetrics() {
   return {
-    repeatRate:
-      (customerAggregate.repeatCustomers / customerAggregate.customers) * 100,
+    repeatRate: repeatRateFromBuckets(customerOrderBuckets) * 100,
     repeatRevenue:
       (customerAggregate.quarterRepeatRevenue /
         customerAggregate.quarterNetRevenue) *
@@ -65,7 +71,14 @@ export function validateFixtures() {
   assert(Math.abs(m.inventoryValue - 1100000) < 1, "inventory cost");
   assert(m.inStockRate === 94, "availability checks");
   assert(Math.abs(m.weightedCover - 8.2) < 0.01, "weighted cover");
-  assert(Math.abs((mape(backtest) ?? 0) - 18.4) < 0.0001, "MAPE");
+  assert(
+    Math.abs((mape(backtest) ?? 0) - 15.334236480329205) < 0.0001,
+    "actual-denominator MAPE",
+  );
+  assert(
+    meanPriorForecastVariance(backtest)?.toFixed(1) === "18.4",
+    "prior-denominator variance",
+  );
   skus.forEach((s) =>
     assert(
       s.baseWeeklyDemand > 0 &&

@@ -25,7 +25,7 @@ const workflow = [
     output: "A dated, checked analytical snapshot.",
   },
   {
-    name: "Forecasting / Data Science",
+    name: "Forecasting/Data Science",
     icon: ChartNoAxesCombined,
     activity: "Model demand, segments and scenario-based planning assumptions.",
     output: "Transparent calculations and documented uncertainty.",
@@ -43,7 +43,7 @@ const workflow = [
     output: "Prioritized decisions with an accountable owner.",
   },
   {
-    name: "Merchant / Partner Review",
+    name: "Merchant/Partner Review",
     icon: Users,
     activity: "Review tradeoffs, agree next steps and capture what happened.",
     output: "A decision record and the next review cadence.",
@@ -88,8 +88,9 @@ export function ManagedIntelligence() {
           A PROCESS, WITH PEOPLE ACCOUNTABLE FOR THE WORK
         </span>
         <h2>
-          THE INTERFACE IS NOT THE PRODUCT. THE MANAGED INTELLIGENCE PROCESS
-          BEHIND IT IS.
+          {
+            "THE INTERFACE IS NOT THE PRODUCT. THE MANAGED INTELLIGENCE PROCESS BEHIND IT IS."
+          }
         </h2>
         <p>
           ScaleSight is presented as the proposed managed intelligence and
@@ -122,7 +123,7 @@ export function ManagedIntelligence() {
       <div className="section-heading">
         <div>
           <span className="eyebrow">SCOPED TO THE MERCHANT</span>
-          <h2>ONE MERCHANT DOES NOT EQUAL ONE STANDARD TEMPLATE.</h2>
+          <h2>{"ONE MERCHANT DOES NOT EQUAL ONE STANDARD TEMPLATE."}</h2>
         </div>
       </div>
       <div className="archetype-grid">

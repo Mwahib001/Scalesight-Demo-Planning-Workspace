@@ -31,6 +31,9 @@ import {
   outsideReorderWindow,
   validateInput,
   riskState,
+  meanPriorForecastVariance,
+  priorForecastVariance,
+  repeatRateFromBuckets,
 } from "../lib/calculations";
 import { answerQuestion, questions } from "../lib/analyst";
 test("build-blocking catalog and customer invariants reconcile", () => {
@@ -89,8 +92,25 @@ test("scenario fixture preserves raw gap, allowance, purchase and cash", () => {
   assert.equal(r.recommendedRoundedUnits * 7.5, r.capitalImpact);
   assert.equal(3600 * 7.5, 27000);
 });
-test("four-week committed MAPE is 18.4 and ignores zero actuals", () => {
-  assert.ok(Math.abs(mape(backtest)! - 18.4) < 1e-9);
+test("exact audit rows distinguish actual-denominator MAPE from prior-forecast variance", () => {
+  assert.ok(Math.abs(mape(backtest)! - 15.334236480329205) < 1e-9);
+  assert.equal(meanPriorForecastVariance(backtest)?.toFixed(1), "18.4");
+  assert.deepEqual(
+    backtest.map((r) => [r.previousForecast, r.actual]),
+    [
+      [910, 1025],
+      [940, 1145],
+      [960, 1210],
+      [980, 1108],
+    ],
+  );
+  assert.deepEqual(
+    backtest.map((r) =>
+      priorForecastVariance(r.actual, r.previousForecast)?.toFixed(1),
+    ),
+    ["12.6", "21.8", "26.0", "13.1"],
+  );
+  assert.ok(backtest.every((r) => r.forecastIssuedAt < r.week));
   assert.equal(mape([{ actual: 0, previousForecast: 100 }]), null);
   assert.equal(
     mape([
@@ -296,4 +316,92 @@ test("analyst suggestions are deterministic, isolated and support fallback", () 
     /illustrative estimate/,
   );
   assert.equal(catalogMetrics().risks.length, 142);
+});
+
+test("all ten audit inventory numeric rows and action evidence stay committed", () => {
+  const expected = [
+    ["SKU-104", 4300, 1130, 6, 0, 0.23],
+    ["SKU-087", 8900, 610, 5, 2000, -0.18],
+    ["SKU-031", 6200, 970, 7, 1500, 0.34],
+    ["SKU-112", 3750, 540, 8, 1200, 0.09],
+    ["SKU-066", 7200, 690, 4, 0, 0.02],
+    ["SKU-019", 5100, 720, 5, 1000, 0.06],
+    ["SKU-128", 2650, 410, 9, 0, 0.12],
+    ["SKU-055", 9400, 430, 4, 0, -0.11],
+    ["SKU-141", 3100, 360, 10, 2400, 0.28],
+    ["SKU-073", 4950, 760, 6, 900, 0.04],
+  ];
+  assert.deepEqual(
+    skus
+      .slice(0, 10)
+      .map((s) => [
+        s.id,
+        s.currentInventory,
+        s.baseWeeklyDemand,
+        s.leadTimeWeeks,
+        s.incomingUnits,
+        s.demandDelta,
+      ]),
+    expected,
+  );
+  const changed = inventoryMetrics({ ...skus[0], currentInventory: 5300 });
+  assert.equal(changed.usable, 5247);
+  assert.equal(changed.reorderGap, 2889);
+});
+test("extreme scenarios stay finite and reconciliation inputs move units/cash together", () => {
+  for (const demandChange of [-0.2, 0.5])
+    for (const safetyWeeks of [0.5, 4]) {
+      const r = runScenario(
+        skus[0],
+        {
+          ...defaultScenario(skus[0]),
+          demandChange,
+          safetyWeeks,
+          leadTimeChange: 6,
+          supplierDelay: true,
+          delayWeeks: 6,
+          incomingUnits: 100000,
+          incomingWeek: 52,
+        },
+        52,
+      );
+      for (const n of [
+        r.demand,
+        r.required,
+        r.capitalImpact,
+        r.recommendedRoundedUnits,
+      ])
+        assert.ok(Number.isFinite(n));
+    }
+  const a = reconciliationFixture(0.25, 2),
+    b = reconciliationFixture(0.5, 2);
+  assert.notEqual(a.recommendedRoundedUnits, b.recommendedRoundedUnits);
+  assert.equal(b.capitalImpact, b.recommendedRoundedUnits * 7.5);
+});
+test("completed-order buckets and actual customer metrics honor analysis windows", () => {
+  assert.equal(
+    repeatRateFromBuckets([
+      { completedOrders: 0, customers: 100 },
+      { completedOrders: 1, customers: 6 },
+      { completedOrders: 2, customers: 4 },
+    ]),
+    0.4,
+  );
+  const order = {
+    customerId: "c",
+    acquiredAt: "2026-01-01",
+    sequence: 1,
+    status: "completed" as const,
+    netRevenue: 10,
+  };
+  assert.equal(
+    customerMetrics(
+      [
+        { ...order, date: "2026-01-01" },
+        { ...order, date: "2026-02-01", sequence: 2 },
+      ],
+      { start: "2026-02-01", end: "2026-02-28" },
+    ).repeatPurchaseRate,
+    0,
+  );
 });

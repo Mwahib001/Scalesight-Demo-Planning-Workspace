@@ -2,7 +2,13 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowUpRight, Package } from "lucide-react";
-import { featuredSkus, skuById, formatUnits, money } from "@/data/planning";
+import {
+  featuredSkus,
+  skuById,
+  formatUnits,
+  money,
+  purchasingActions,
+} from "@/data/planning";
 import { inventoryMetrics, riskRank } from "@/lib/calculations";
 import { catalogMetrics } from "@/lib/selectors";
 import { useWorkspace } from "./workspace-context";
@@ -139,13 +145,7 @@ export function Inventory() {
                       <RiskBadge risk={m.risk} />
                     </td>
                     <td className="action-cell">
-                      {m.risk === "High"
-                        ? "Review PO"
-                        : m.risk === "Excess"
-                          ? "Defer / test"
-                          : m.risk === "Watch"
-                            ? "Recalculate"
-                            : "Monitor"}
+                      {purchasingActions[s.id]}
                       <ArrowUpRight size={13} />
                     </td>
                   </tr>
@@ -262,8 +262,9 @@ export function Inventory() {
             </p>
           </div>
           <p className="qualification">
-            Order quantity is illustrative and must be checked against MOQ,
-            supplier capacity, freight, cash and merchandising constraints.
+            {
+              "Order quantity is illustrative and must be checked against MOQ, supplier capacity, freight, cash and merchandising constraints."
+            }
           </p>
           <div className="button-row">
             <Link

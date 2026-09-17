@@ -23,7 +23,7 @@ Open `http://localhost:3000`. All seven pages are statically prerendered and sup
 | `/managed-intelligence` | Managed Intelligence           |
 | `/partnership`          | Proposed Partnership + Pilot   |
 
-The retired `/advisor-brief` and `/assumptions` URLs redirect to the new brief and operating model. No old story remains in visible content. Metadata and robots disallow indexing. The favicon is a generic chart mark, not a partner logo. Fonts use Inter when available, with a system sans fallback and no runtime font request.
+The retired `/advisor-brief` and `/assumptions` URLs redirect to the new brief and operating model. No old story remains in visible content. Metadata and robots disallow indexing. The favicon is a generic chart mark, not a partner logo. Inter is served from a committed local variable-font file, with a system sans fallback and no external font request.
 
 ## Verification
 
@@ -53,7 +53,7 @@ Customers/orders use the permitted aggregated equivalent: 18,000 customers, 40,0
 
 ## Brief ambiguities resolved
 
-The supplied brief refers to pages 15, 24, 31 and 34 and exact copy/rows that were not attached. Missing SKU attributes, workflow activity/output text, pilot exit evidence, entity fields and interpretation copy are explicitly authored demo fixtures here.
+The follow-up audit supplies the ten exact inventory rows and four exact backtest observations; these now replace the initial authored placeholders. Exact workflow activity/output text, pilot exit evidence and Atlas interpretation copy are still referenced but not attached. See [AUDIT_REPORT.md](AUDIT_REPORT.md) for all 112 checks and unresolved conflicts.
 
 The scenario figures in the prose are internally inconsistent with its explicit automated fixture. The committed reconciliation fixture takes precedence:
 
@@ -66,9 +66,9 @@ This example is clearly separated from the live selected-SKU model, which retain
 
 The Atlas safety-stock breach is about 2.57 weeks from the planning date (week 3), about 3.43 weeks before its 6-week replenishment. Stockout occurs at about 3.77 weeks, about 2.23 weeks before replenishment. The UI distinguishes those thresholds rather than describing the latter as a safety breach.
 
-The four exact backtest rows were not supplied. The committed demo fixture uses 800/1,000; 880/1,100; 902/1,100; 1,055/1,250 (previous forecast / actual) for Aug 17/24/31 and Sep 7. It yields exactly 18.4% MAPE. The rolling-refresh function requires a forecast version issued before the actual week and retains it before creating a new version.
+The audit supplies 910/1,025; 940/1,145; 960/1,210; and 980/1,108 (prior forecast / actual) for Aug 17/24/31 and Sep 7. These now join to explicit forecast versions issued before each actual week. They produce **15.3% MAPE** using actual denominators, and **18.4% mean absolute variance versus prior forecast** using prior denominators. The UI and tests distinguish these measures. The checklist's request for 18.4% MAPE from these same raw rows is inconsistent; it remains explicitly unresolved in the audit report.
 
-The executive Nova “Watch” is the authored weekly decision priority around campaign persistence. The inventory engine separately marks its quantitative stock position High when usable cover fails the lead-time-plus-safety rule.
+The executive Nova “Watch” is the authored weekly decision priority around campaign persistence. With the supplied numeric rows and 1.2-week safety defaults, the pure inventory rules produce High for Nova and Orbit and Watch for Transit. The audit reference requests Watch / Watch / Healthy respectively. The report records that conflict rather than hardcoding lower risk labels.
 
 ## Seven-minute walkthrough
 
@@ -79,3 +79,5 @@ The executive Nova “Watch” is the authored weekly decision priority around c
 5. Customer: inspect cohort size, repeat revenue, source associations and the overdue retention group.
 6. Managed intelligence: explain the six-step reviewed operating process and merchant-specific discovery.
 7. Partnership: discuss proposed structures and evidence required at each pilot gate.
+
+The audit adds local Inter font loading checks, route-specific metadata, keyboard-operable chart legends and event markers, completed-order/window selectors, small-sample guards, and axe accessibility scans. `pnpm test:e2e` runs the original smoke suite plus `tests/browser/audit.spec.ts`.

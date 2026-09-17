@@ -12,10 +12,21 @@ for (const [route, title] of routes) {
   test(`direct refresh, content and overflow: ${route}`, async ({ page }) => {
     const errors: string[] = [];
     page.on("pageerror", (e) => errors.push(e.message));
+    page.on("console", (m) => {
+      if (["warning", "error"].includes(m.type())) errors.push(m.text());
+    });
     await page.goto(route);
     await expect(
       page.getByRole("heading", { name: title, exact: true }),
     ).toBeVisible();
+    await expect(page).toHaveTitle(
+      new RegExp(title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
+    );
+    await page
+      .getByRole("button", { name: "Ask ScaleSight Analyst", exact: true })
+      .click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await page.keyboard.press("Escape");
     await page.reload();
     await expect(
       page.getByRole("heading", { name: title, exact: true }),
@@ -74,7 +85,7 @@ test("forecast fixture, shared selection and explicit empty state", async ({
     .click();
   await expect(page.getByLabel("SKU", { exact: true })).toHaveValue("SKU-104");
   await expect(page.getByText("9,420", { exact: true })).toBeVisible();
-  await expect(page.getByText("18.4%", { exact: true })).toBeVisible();
+  await expect(page.getByText("15.3%", { exact: true })).toBeVisible();
   await page.getByLabel("Category", { exact: true }).selectOption("Belts");
   await expect(
     page.getByRole("heading", { name: "No committed demo series" }),
@@ -164,7 +175,7 @@ test("analyst questions, fallback and keyboard close", async ({ page }) => {
     await page.getByRole("button", { name: q, exact: true }).click();
     await expect(page.locator(".analyst-answer p")).not.toBeEmpty();
   }
-  await page.getByLabel("Find a supported question").fill("unmatched");
+  await page.getByLabel("Other question").fill("unmatched");
   await page.getByRole("button", { name: "Ask", exact: true }).click();
   await expect(page.locator(".analyst-answer")).toContainText(
     "This prototype supports the suggested demo questions.",
