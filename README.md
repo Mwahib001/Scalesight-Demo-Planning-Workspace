@@ -53,9 +53,9 @@ Customers/orders use the permitted aggregated equivalent: 18,000 customers, 40,0
 
 ## Brief ambiguities resolved
 
-The follow-up audit supplies the ten exact inventory rows and four exact backtest observations; these now replace the initial authored placeholders. Exact workflow activity/output text, pilot exit evidence and Atlas interpretation copy are still referenced but not attached. See [AUDIT_REPORT.md](AUDIT_REPORT.md) for all 112 checks and unresolved conflicts.
+The follow-up audit supplies the ten exact inventory rows and four exact backtest observations; these now replace the initial authored placeholders. The client PDF now supplies the exact change-log, workflow activity/output, pilot evidence and Atlas interpretation copy; these have been restored. Under the user’s authorization, the following numerical decisions supersede contradictory presentation examples. See [AUDIT_REPORT.md](AUDIT_REPORT.md) for all 112 checks.
 
-The scenario figures in the prose are internally inconsistent with its explicit automated fixture. The committed reconciliation fixture takes precedence:
+The scenario figures in the prose are internally inconsistent with its explicit automated fixture. The committed reconciliation fixture takes precedence. Both baseline and scenario requirements use the same 8-week supply window, isolating the demand change:
 
 - 1,050 × (8 + 1.33) = 9,796.5, displayed as 9,800 to the nearest 50.
 - 1,312.5 × (8 + 1.33) = 12,245.625. The supplied raw fixture truncates to 12,245; the displayed requirement rounds up to 12,250.
@@ -66,9 +66,9 @@ This example is clearly separated from the live selected-SKU model, which retain
 
 The Atlas safety-stock breach is about 2.57 weeks from the planning date (week 3), about 3.43 weeks before its 6-week replenishment. Stockout occurs at about 3.77 weeks, about 2.23 weeks before replenishment. The UI distinguishes those thresholds rather than describing the latter as a safety breach.
 
-The audit supplies 910/1,025; 940/1,145; 960/1,210; and 980/1,108 (prior forecast / actual) for Aug 17/24/31 and Sep 7. These now join to explicit forecast versions issued before each actual week. They produce **15.3% MAPE** using actual denominators, and **18.4% mean absolute variance versus prior forecast** using prior denominators. The UI and tests distinguish these measures. The checklist's request for 18.4% MAPE from these same raw rows is inconsistent; it remains explicitly unresolved in the audit report.
+The audit supplies 910/1,025; 940/1,145; 960/1,210; and 980/1,108 (prior forecast / actual) for Aug 17/24/31 and Sep 7. These now join to explicit forecast versions issued before each actual week. They produce **15.3% MAPE** using actual denominators, and **18.4% mean absolute variance versus prior forecast** using prior denominators. The UI and tests distinguish these measures. The checklist's request for 18.4% MAPE from these same raw rows is inconsistent; the adopted requirement is the mathematically correct 15.3% MAPE with 18.4% separately labeled prior variance.
 
-The executive Nova “Watch” is the authored weekly decision priority around campaign persistence. With the supplied numeric rows and 1.2-week safety defaults, the pure inventory rules produce High for Nova and Orbit and Watch for Transit. The audit reference requests Watch / Watch / Healthy respectively. The report records that conflict rather than hardcoding lower risk labels.
+With the supplied numeric rows and 1.2-week safety defaults, the adopted inventory rules produce High for Nova and Orbit and Watch for Transit. These supersede the contradictory reference labels. Executive priority badges now use the same inventory calculation, including Nova High.
 
 ## Seven-minute walkthrough
 

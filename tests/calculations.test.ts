@@ -405,3 +405,16 @@ test("completed-order buckets and actual customer metrics honor analysis windows
     0,
   );
 });
+
+test("risk decisions preserve safety shortfalls despite confirmed receipts", () => {
+  for (const [id, expected] of [
+    ["SKU-031", "High"],
+    ["SKU-112", "High"],
+    ["SKU-073", "Watch"],
+  ] as const) {
+    const sku = skuById(id);
+    const result = inventoryMetrics(sku);
+    assert.ok(result.eligibleIncoming > 0);
+    assert.equal(result.risk, expected);
+  }
+});

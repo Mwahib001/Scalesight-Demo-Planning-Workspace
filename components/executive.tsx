@@ -15,7 +15,6 @@ import { Metric, PageTitle, RiskBadge, SectionHeader } from "./ui";
 const priorities = [
   {
     id: "SKU-104",
-    risk: "High" as const,
     label: "Protect availability",
     happened: "Demand is 23% above the prior forecast.",
     matters: "Available cover is shorter than the standard supplier lead time.",
@@ -26,7 +25,6 @@ const priorities = [
   },
   {
     id: "SKU-087",
-    risk: "Excess" as const,
     label: "Release working capital",
     happened: "Demand is 18% below plan, with 2,000 units incoming.",
     matters: "The current stock position extends well beyond demand needs.",
@@ -37,10 +35,10 @@ const priorities = [
   },
   {
     id: "SKU-031",
-    risk: "Watch" as const,
     label: "Validate campaign demand",
     happened: "The campaign lifted observed velocity by 34%.",
-    matters: "The uplift may change the replenishment requirement.",
+    matters:
+      "Even with the confirmed receipt, coverage falls short of lead time plus safety stock.",
     decision: "Recalculate the next 8-week need before changing the PO plan.",
     review: "Separate event-window demand from the ongoing base case.",
     route: "/scenario",
@@ -116,11 +114,11 @@ export function Executive() {
             v = inventoryMetrics(s);
           return (
             <article
-              className={`priority-card priority-${p.risk.toLowerCase()}`}
+              className={`priority-card priority-${v.risk.toLowerCase()}`}
               key={p.id}
             >
               <div className="priority-top">
-                <RiskBadge risk={p.risk} />
+                <RiskBadge risk={v.risk} />
                 <span>0{i + 1}</span>
               </div>
               <p className="priority-label">{p.label}</p>

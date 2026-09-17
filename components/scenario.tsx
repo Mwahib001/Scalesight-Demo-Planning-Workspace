@@ -356,20 +356,24 @@ export function Scenario() {
               title="A $27,000 purchasing conversation"
               detail={
                 <span className="small-tag">
-                  Separate reconciliation fixture
+                  Illustrative purchasing example
                 </span>
               }
             />
             <p>
               This committed example is independent of the selected SKU. Demand
               moves from 1,050 to 1,312.5 units/week (+25%); a 6-week lead time
-              plus 2-week delay is tested with 1.33 safety weeks.
+              plus 2-week delay is tested with 1.33 safety weeks. Both
+              requirements use the same 8-week supply window to isolate the
+              demand change; 9,800 available units cover the baseline
+              requirement. Stockout timing above comes from the selected SKU’s
+              actual stock and receipt schedule.
             </p>
             <div className="metrics four">
               <Metric
-                label="Current-plan requirement"
+                label="Baseline requirement"
                 value={formatUnits(fixture.baseRequired)}
-                note="8-week plan · illustrative estimate"
+                note="Same 8-week supply window · illustrative estimate"
               />
               <Metric
                 label="Scenario requirement"

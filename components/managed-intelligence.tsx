@@ -14,39 +14,39 @@ const workflow = [
     name: "Merchant Data",
     icon: Database,
     activity:
-      "Identify relevant sales, inventory, customer and operational records.",
-    output: "A scoped data inventory with clear owners.",
+      "Orders, SKUs, inventory, customers, suppliers, campaigns, events",
+    output: "Current inputs",
   },
   {
     name: "Data Refresh",
     icon: RefreshCw,
-    activity:
-      "Validate completeness, align definitions and retain prior versions.",
-    output: "A dated, checked analytical snapshot.",
+    activity: "Validate, normalize, reconcile and timestamp",
+    output: "Reliable planning base",
   },
   {
     name: "Forecasting/Data Science",
     icon: ChartNoAxesCombined,
-    activity: "Model demand, segments and scenario-based planning assumptions.",
-    output: "Transparent calculations and documented uncertainty.",
+    activity: "Forecast, segment, score, simulate and detect exceptions",
+    output: "Forward view",
   },
   {
     name: "Analyst Review",
     icon: UserCheck,
-    activity: "Check changes against events, constraints and merchant context.",
-    output: "Reviewed findings and practical exceptions.",
+    activity:
+      "Apply business context, challenge outputs and review assumptions",
+    output: "Judgment-adjusted interpretation",
   },
   {
     name: "Decision Brief",
     icon: FileText,
-    activity: "Translate findings into implications and reviewable actions.",
-    output: "Prioritized decisions with an accountable owner.",
+    activity: "Priorities, implications, recommendations and open decisions",
+    output: "Meeting-ready brief",
   },
   {
     name: "Merchant/Partner Review",
     icon: Users,
-    activity: "Review tradeoffs, agree next steps and capture what happened.",
-    output: "A decision record and the next review cadence.",
+    activity: "Add operating judgment, approve and monitor",
+    output: "Action and feedback",
   },
 ];
 const archetypes = [

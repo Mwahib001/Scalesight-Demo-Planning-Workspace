@@ -185,7 +185,7 @@ export function Forecast() {
               </h3>
               <p>
                 {s.id === "SKU-104"
-                  ? "The autumn campaign coincides with a step-up in observed demand. The updated eight-week base plan is higher than its committed prior version, but the recent uplift should not be carried forward indefinitely. Review the campaign window, remaining demand and supplier timing together."
+                  ? "Demand acceleration began following the August campaign. The latest refresh suggests part of the uplift is persisting beyond the promotional window. Purchasing assumptions should be reviewed rather than automatically applying the prior growth rate."
                   : `${s.name} is reviewed against its historical baseline, category cover threshold and confirmed receipts. Event assumptions remain separate from observed demand.`}
               </p>
               <p className="footnote">

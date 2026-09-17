@@ -2,34 +2,25 @@ import { ArrowDown, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { partnershipModels } from "@/data/planning";
 import { PageTitle, SectionHeader } from "./ui";
 const pilot = [
-  [
-    "Identify problem",
-    "One named merchant problem and an accountable decision owner.",
-  ],
-  [
-    "Review data",
-    "A documented inventory of available records, gaps and access constraints.",
-  ],
+  ["Identify meaningful operational/data problem", "Named decision and owner"],
+  ["Review available merchant data", "Feasibility + gap list"],
   [
     "Define success criteria",
-    "An agreed decision-usefulness measure and review period.",
+    "Decision usefulness, cadence and measurable signal",
   ],
   [
-    "Configure environment",
-    "A minimum useful view with transparent calculations and assumptions.",
+    "Configure intelligence environment",
+    "Merchant-specific prototype/workspace",
   ],
   [
-    "Run initial cycle",
-    "A dated refresh, analyst review and merchant decision brief.",
+    "Run initial managed intelligence cycle",
+    "Refresh, analysis, analyst brief and review",
   ],
   [
-    "Review value",
-    "Merchant feedback and evidence against the success criteria.",
+    "Review merchant / Blockify value",
+    "Evidence, feedback and operating burden",
   ],
-  [
-    "Decide how to scale",
-    "A recorded decision to extend, revise or stop the pilot.",
-  ],
+  ["Decide whether and how to scale", "Continue, adapt, expand or stop"],
 ];
 export function Partnership() {
   return (
