@@ -1,0 +1,997 @@
+{
+  "config": {
+    "argv": [
+      "/home/admin11/.nvm/versions/node/v24.20.0/bin/node",
+      "/home/admin11/github-projects/ecommerce-scalesight/node_modules/@playwright/test/cli.js",
+      "test",
+      "--reporter=json"
+    ],
+    "configFile": "/home/admin11/github-projects/ecommerce-scalesight/playwright.config.ts",
+    "rootDir": "/home/admin11/github-projects/ecommerce-scalesight/tests/browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/admin11/github-projects/ecommerce-scalesight/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/home/admin11/github-projects/ecommerce-scalesight/tests/browser",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "node_modules/.bin/next start -p 3100",
+      "url": "http://127.0.0.1:3100",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "audit.spec.ts",
+      "file": "audit.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "accessibility: /",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4830,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:04:58.260Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "axe-results",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "45efdff6a4d2e1f7e786-e2914765403823ee8d06",
+          "file": "audit.spec.ts",
+          "line": 14,
+          "column": 7
+        },
+        {
+          "title": "accessibility: /revenue-forecast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4951,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:05:04.036Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "axe-results",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "45efdff6a4d2e1f7e786-8a0e7155aa1ab51b9bb9",
+          "file": "audit.spec.ts",
+          "line": 14,
+          "column": 7
+        },
+        {
+          "title": "accessibility: /demand-forecast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4768,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:05:09.050Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "axe-results",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "45efdff6a4d2e1f7e786-b29afa59c4cd3c73a699",
+          "file": "audit.spec.ts",
+          "line": 14,
+          "column": 7
+        },
+        {
+          "title": "accessibility: /inventory",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4090,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:05:13.890Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "axe-results",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "45efdff6a4d2e1f7e786-6b257d507cb375300c03",
+          "file": "audit.spec.ts",
+          "line": 14,
+          "column": 7
+        },
+        {
+          "title": "accessibility: /sku-planning",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3639,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:05:18.035Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "axe-results",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "45efdff6a4d2e1f7e786-3d1598a28e5bcbde192c",
+          "file": "audit.spec.ts",
+          "line": 14,
+          "column": 7
+        },
+        {
+          "title": "accessibility: /scenario",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3870,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:05:21.733Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "axe-results",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "45efdff6a4d2e1f7e786-f0a09e3745866fd981e4",
+          "file": "audit.spec.ts",
+          "line": 14,
+          "column": 7
+        },
+        {
+          "title": "accessibility: /intelligence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5283,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:05:25.660Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "axe-results",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "45efdff6a4d2e1f7e786-e1f30a2e5a0ee859663d",
+          "file": "audit.spec.ts",
+          "line": 14,
+          "column": 7
+        },
+        {
+          "title": "accessibility: /managed-intelligence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3498,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:05:31.009Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "axe-results",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "45efdff6a4d2e1f7e786-383eb4ea3431f3a7398c",
+          "file": "audit.spec.ts",
+          "line": 14,
+          "column": 7
+        },
+        {
+          "title": "accessibility: /assumptions",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5864,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:05:34.568Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "axe-results",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "45efdff6a4d2e1f7e786-e78bf917b8ac71f3cc12",
+          "file": "audit.spec.ts",
+          "line": 14,
+          "column": 7
+        }
+      ]
+    },
+    {
+      "title": "smoke.spec.ts",
+      "file": "smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "route, refresh, responsive layout: /",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2874,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:05:40.522Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-6759d723d1abec728771",
+          "file": "smoke.spec.ts",
+          "line": 14,
+          "column": 7
+        },
+        {
+          "title": "route, refresh, responsive layout: /revenue-forecast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3111,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:05:43.434Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-7c80081eef4feaeb21c5",
+          "file": "smoke.spec.ts",
+          "line": 14,
+          "column": 7
+        },
+        {
+          "title": "route, refresh, responsive layout: /demand-forecast",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2916,
+                  "error": {
+                    "message": "Error: /demand-forecast at 1280\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: /demand-forecast at 1280\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /home/admin11/github-projects/ecommerce-scalesight/tests/browser/smoke.spec.ts:43:9",
+                    "location": {
+                      "file": "/home/admin11/github-projects/ecommerce-scalesight/tests/browser/smoke.spec.ts",
+                      "column": 9,
+                      "line": 43
+                    },
+                    "snippet": "  41 |         ),\n  42 |         `${route} at ${size.width}`,\n> 43 |       ).toBe(true);\n     |         ^\n  44 |     }\n  45 |     await page.setViewportSize({ width: 1440, height: 900 });\n  46 |     await page.screenshot({"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/admin11/github-projects/ecommerce-scalesight/tests/browser/smoke.spec.ts",
+                        "column": 9,
+                        "line": 43
+                      },
+                      "message": "Error: /demand-forecast at 1280\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  41 |         ),\n  42 |         `${route} at ${size.width}`,\n> 43 |       ).toBe(true);\n     |         ^\n  44 |     }\n  45 |     await page.setViewportSize({ width: 1440, height: 900 });\n  46 |     await page.screenshot({\n    at /home/admin11/github-projects/ecommerce-scalesight/tests/browser/smoke.spec.ts:43:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:05:46.597Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/admin11/github-projects/ecommerce-scalesight/test-results/smoke-route-refresh-responsive-layout-demand-forecast/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/home/admin11/github-projects/ecommerce-scalesight/test-results/smoke-route-refresh-responsive-layout-demand-forecast/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/admin11/github-projects/ecommerce-scalesight/tests/browser/smoke.spec.ts",
+                    "column": 9,
+                    "line": 43
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-cb2db73f6dc678c4baec",
+          "file": "smoke.spec.ts",
+          "line": 14,
+          "column": 7
+        },
+        {
+          "title": "route, refresh, responsive layout: /inventory",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3250,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:05:50.961Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-c7f6f8041cf9eb9c84d2",
+          "file": "smoke.spec.ts",
+          "line": 14,
+          "column": 7
+        },
+        {
+          "title": "route, refresh, responsive layout: /sku-planning",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3297,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:05:54.951Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-03d0dff3f4ad92b90b5d",
+          "file": "smoke.spec.ts",
+          "line": 14,
+          "column": 7
+        },
+        {
+          "title": "route, refresh, responsive layout: /scenario",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3569,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:05:58.315Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-1bada473c52a924074a0",
+          "file": "smoke.spec.ts",
+          "line": 14,
+          "column": 7
+        },
+        {
+          "title": "route, refresh, responsive layout: /intelligence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3070,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:06:01.937Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-965876684d452edb6f25",
+          "file": "smoke.spec.ts",
+          "line": 14,
+          "column": 7
+        },
+        {
+          "title": "route, refresh, responsive layout: /managed-intelligence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2753,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:06:05.080Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-39af2cc09a4e869e745d",
+          "file": "smoke.spec.ts",
+          "line": 14,
+          "column": 7
+        },
+        {
+          "title": "route, refresh, responsive layout: /assumptions",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4175,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:06:07.908Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-b48c0275035277a18890",
+          "file": "smoke.spec.ts",
+          "line": 14,
+          "column": 7
+        },
+        {
+          "title": "canonical executive fixtures and exact priority context",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3002,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:06:12.155Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-72e49443ecbfff1af88e",
+          "file": "smoke.spec.ts",
+          "line": 52,
+          "column": 5
+        },
+        {
+          "title": "scenario flows across routes and reset restores every input atomically",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4978,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:06:15.234Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-9169da9206c4bb3096eb",
+          "file": "smoke.spec.ts",
+          "line": 71,
+          "column": 5
+        },
+        {
+          "title": "inventory filters, keyboard drill-down, and recommendations",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2408,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:06:20.272Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-ddc1de9c50388b4a8af3",
+          "file": "smoke.spec.ts",
+          "line": 147,
+          "column": 5
+        },
+        {
+          "title": "intelligence judgment, workflow keyboard tabs, assumptions, and pilot",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3524,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:06:22.774Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-54001afe42475f566df6",
+          "file": "smoke.spec.ts",
+          "line": 171,
+          "column": 5
+        },
+        {
+          "title": "chart toggles, demo tooltip, mobile navigation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3331,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:06:26.349Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-401b412e99f281ddc57e",
+          "file": "smoke.spec.ts",
+          "line": 209,
+          "column": 5
+        },
+        {
+          "title": "revenue period and forecast horizon stay connected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3379,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-19T14:06:29.738Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-06cbefce89f585179cfa",
+          "file": "smoke.spec.ts",
+          "line": 230,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-19T14:04:54.921Z",
+    "duration": 98498.048,
+    "expected": 23,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

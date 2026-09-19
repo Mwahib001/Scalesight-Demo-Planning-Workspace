@@ -1,0 +1,246 @@
+src/components/AssumptionTable.tsx:103:          tabIndex={0}
+src/components/AssumptionTable.tsx:129:                    {typeof a.value === "number" ? number(a.value, 2) : a.value}
+src/components/AssumptionTable.tsx:136:                  <td>{date(a.reviewedAt)}, 2026</td>
+src/components/AssumptionTable.tsx:142:          {rows.length === 0 && (
+src/components/AssumptionTable.tsx:157:            <b>Revenue forecast</b>Units × expected selling price × (1 − returns
+src/components/AssumptionTable.tsx:169:            <b>Reorder gap</b>max(0, required − usable − incoming inventory)
+src/components/AssumptionTable.tsx:177:            projected inventory ≤ 0
+src/components/ForecastChart.tsx:24:  ["actual", "Actual", "#8a98ae"],
+src/components/ForecastChart.tsx:25:  ["current", "Current forecast", "#3b82f6"],
+src/components/ForecastChart.tsx:26:  ["previous", "Previous forecast", "#a78bfa"],
+src/components/ForecastChart.tsx:27:  ["upside", "Upside", "#14b8a6"],
+src/components/ForecastChart.tsx:28:  ["downside", "Downside", "#e9ad42"],
+src/components/ForecastChart.tsx:67:        <ResponsiveContainer width="100%" height="100%">
+src/components/ForecastChart.tsx:70:            margin={{ top: 18, right: 18, left: 0, bottom: 5 }}
+src/components/ForecastChart.tsx:73:              stroke="#e8edf4"
+src/components/ForecastChart.tsx:75:              strokeDasharray="3 3"
+src/components/ForecastChart.tsx:80:              tick={{ fontSize: 11, fill: "#69768c" }}
+src/components/ForecastChart.tsx:83:              minTickGap={28}
+src/components/ForecastChart.tsx:86:              width={65}
+src/components/ForecastChart.tsx:88:                revenue ? `$${number(v / 1000, 0)}k` : number(v)
+src/components/ForecastChart.tsx:90:              tick={{ fontSize: 11, fill: "#69768c" }}
+src/components/ForecastChart.tsx:101:                borderRadius: 8,
+src/components/ForecastChart.tsx:102:                border: "1px solid #dce3ed",
+src/components/ForecastChart.tsx:103:                fontSize: 12,
+src/components/ForecastChart.tsx:112:                  stroke="#d1c3f0"
+src/components/ForecastChart.tsx:113:                  strokeDasharray="3 3"
+src/components/ForecastChart.tsx:117:                    fontSize: 10,
+src/components/ForecastChart.tsx:118:                    fill: "#78639a",
+src/components/ForecastChart.tsx:129:                strokeWidth={key === "current" ? 3 : 1.8}
+src/components/ForecastChart.tsx:130:                strokeDasharray={key === "previous" ? "5 5" : undefined}
+src/components/ForecastViews.tsx:18:  const period = state.forecastHorizon === 4 ? 30 : state.forecastHorizon * 7;
+src/components/ForecastViews.tsx:38:            {([4, 8, 13, 26] as const).map((d, i) => (
+src/components/ForecastViews.tsx:44:                {["30 days", "8 weeks", "13 weeks", "6 months"][i]}
+src/components/ForecastViews.tsx:50:          Portfolio view · 24 active SKUs · expected net revenue
+src/components/ForecastViews.tsx:57:          qualifier={`Over ${period === 30 ? "30 days" : period === 56 ? "8 weeks" : period === 91 ? "13 weeks" : "26 weeks"}`}
+src/components/ForecastViews.tsx:61:          label="30-day growth"
+src/components/ForecastViews.tsx:63:          qualifier="Versus previous comparable 30 days"
+src/components/ForecastViews.tsx:78:          discounts and a 2% returns assumption. {plan.stockouts} projected
+src/components/ForecastViews.tsx:80:          outlook, not a guarantee of shipped revenue. The 30-day view prorates
+src/components/ForecastViews.tsx:93:              .slice(0, 6)
+src/components/ForecastViews.tsx:109:            <span>01</span>
+src/components/ForecastViews.tsx:111:              <h3>Demand comes first</h3>
+src/components/ForecastViews.tsx:119:            <span>02</span>
+src/components/ForecastViews.tsx:121:              <h3>Events change the mix</h3>
+src/components/ForecastViews.tsx:129:            <span>03</span>
+src/components/ForecastViews.tsx:131:              <h3>Supply determines what you can fulfill</h3>
+src/components/ForecastViews.tsx:151:    .slice(-8)
+src/components/ForecastViews.tsx:165:      p.eventNames.join(",") !== r.forecast[i - 1]?.eventNames.join(",")
+src/components/ForecastViews.tsx:166:        ? p.eventNames[0]
+src/components/ForecastViews.tsx:191:          value={`${number(r.inventory.weeksOfCover, 1)} wks`}
+src/components/ForecastViews.tsx:208:          {r.sku.id === "mango-12"
+src/components/ForecastViews.tsx:220:          tabIndex={0}
+src/components/ForecastViews.tsx:240:                  <td>{number(p.baseline, 1)}</td>
+src/components/ForecastViews.tsx:241:                  <td>{number(p.trendUnits, 1)}</td>
+src/components/ForecastViews.tsx:242:                  <td>{number(p.seasonalUnits, 1)}</td>
+src/components/ForecastViews.tsx:243:                  <td>{number(p.eventUnits, 1)}</td>
+src/components/ForecastViews.tsx:244:                  <td>{number(p.scenarioUnits, 1)}</td>
+src/components/ForecastViews.tsx:246:                    <strong>{number(p.units, 1)}</strong>
+src/components/ForecastViews.tsx:255:        <RecommendationPanel item={r.recommendations[0]} />
+src/components/SKUDetail.tsx:31:          <h2>{r.sku.name}</h2>
+src/components/SKUDetail.tsx:39:          value={`${number(inv.weeksOfCover, 1)} wks`}
+src/components/SKUDetail.tsx:40:          qualifier={`${number(plan.state.leadTimeWeeks, 1)}-week supplier lead time`}
+src/components/SKUDetail.tsx:73:        <RecommendationPanel item={r.recommendations[0]} />
+src/components/SKUDetail.tsx:102:          tabIndex={0}
+src/components/WeeklyBrief.tsx:22:  const mango = plan.rows.find((r) => r.sku.id === "mango-12")!;
+src/components/WeeklyBrief.tsx:23:  const berry = plan.rows.find((r) => r.sku.id === "berry-6")!;
+src/components/WeeklyBrief.tsx:30:      metric: `${number(mango.inventory.weeksOfCover, 1)} weeks`,
+src/components/WeeklyBrief.tsx:58:        )?.whatChanged ?? mango.recommendations[0].whatChanged,
+src/components/WeeklyBrief.tsx:61:      sku: "mango-12",
+src/components/WeeklyBrief.tsx:68:          .find((r) => r.sku.id === "orange-12")!
+src/components/WeeklyBrief.tsx:73:      sku: "orange-12",
+src/components/WeeklyBrief.tsx:86:      detail: `${number(berry.inventory.weeksOfCover, 1)} weeks of cover against an eight-week target.`,
+src/components/WeeklyBrief.tsx:89:      sku: "berry-6",
+src/components/WeeklyBrief.tsx:105:          <CheckCheck size={15} />
+src/components/WeeklyBrief.tsx:109:          Next planning review <strong>Monday, Sep 21</strong>
+src/components/WeeklyBrief.tsx:114:          label="30-day revenue outlook"
+src/components/WeeklyBrief.tsx:115:          value={money(plan.revenue30)}
+src/components/WeeklyBrief.tsx:116:          delta={`${percent(plan.revenueGrowthPct)} vs previous 30 days`}
+src/components/WeeklyBrief.tsx:127:          value={String(plan.attention).padStart(2, "0")}
+src/components/WeeklyBrief.tsx:133:          value={String(plan.stockouts).padStart(2, "0")}
+src/components/WeeklyBrief.tsx:147:          View intelligence center <ArrowRight size={15} />
+src/components/WeeklyBrief.tsx:154:            priority={i + 1}
+src/components/WeeklyBrief.tsx:160:              ) ?? p.row.recommendations[0]
+src/components/WeeklyBrief.tsx:178:                <c.Icon size={18} />
+src/components/WeeklyBrief.tsx:181:                <h3>{c.title}</h3>
+src/components/WeeklyBrief.tsx:190:            <summary>Show all 7 material changes</summary>
+src/components/WeeklyBrief.tsx:193:              Promotion: Starter Kit uplift and discount scheduled for Oct 26.
+src/components/WeeklyBrief.tsx:203:            <Sparkles size={15} />
+src/components/WeeklyBrief.tsx:206:          <h2>
+src/components/WeeklyBrief.tsx:210:          </h2>
+src/components/WeeklyBrief.tsx:220:              <small>Analysis reviewed · Sep 17, 2026</small>
+src/components/WeeklyBrief.tsx:222:            <CircleCheck size={17} />
+src/components/WeeklyBrief.tsx:225:            See the intelligence behind your plan <ArrowUpRight size={15} />
+src/components/WeeklyBrief.tsx:231:          <Radio size={22} />
+src/components/WeeklyBrief.tsx:248:          <ArrowRight size={20} />
+src/components/AppShell.tsx:14:  Layers3,
+src/components/AppShell.tsx:18:  Settings2,
+src/components/AppShell.tsx:30:  ["/sku-planning", "SKU Planning", Layers3],
+src/components/AppShell.tsx:31:  ["/scenario", "Scenario Planning", Settings2],
+src/components/AppShell.tsx:53:        const first = focusable[0],
+src/components/AppShell.tsx:54:          last = focusable[focusable.length - 1];
+src/components/AppShell.tsx:85:            <ChartNoAxesCombined size={23} />
+src/components/AppShell.tsx:96:          <X size={20} />
+src/components/AppShell.tsx:104:          <ChevronDown size={15} />
+src/components/AppShell.tsx:109:              {(i === 0 || i === 6) && (
+src/components/AppShell.tsx:111:                  {i === 0 ? "YOUR PLANNING SYSTEM" : "YOUR INTELLIGENCE TEAM"}
+src/components/AppShell.tsx:120:                <Icon size={18} strokeWidth={1.7} />
+src/components/AppShell.tsx:140:            Explore the planning pilot <ArrowUpRight size={14} />
+src/components/AppShell.tsx:158:            <Menu size={22} />
+src/components/AppShell.tsx:162:            <strong>{nav.find((n) => n[0] === path)?.[1] ?? "Planning"}</strong>
+src/components/AppShell.tsx:166:              <CircleCheck size={14} />
+src/components/AppShell.tsx:167:              Updated Sep 17 · 6:00 AM
+src/components/AppShell.tsx:169:            <span className="demo-badge" tabIndex={0}>
+src/components/AppShell.tsx:170:              <FlaskConical size={13} />
+src/components/AppShell.tsx:183:              <FlaskConical size={16} />
+src/components/AppShell.tsx:194:              <Sparkles size={14} />
+src/components/IntelligenceView.tsx:29:            <h2>History suggests a cut. Business context says hold.</h2>
+src/components/IntelligenceView.tsx:67:            <option value="1">1 · Act now</option>
+src/components/IntelligenceView.tsx:68:            <option value="2">2 · Review this week</option>
+src/components/IntelligenceView.tsx:69:            <option value="3">3 · Monitor</option>
+src/components/ScenarioView.tsx:25:    ["30-day portfolio revenue", money(base.revenue30), money(plan.revenue30)],
+src/components/ScenarioView.tsx:29:      number(b.inventory.weeksOfCover, 1),
+src/components/ScenarioView.tsx:30:      number(r.inventory.weeksOfCover, 1),
+src/components/ScenarioView.tsx:62:        <FlaskConical size={17} />
+src/components/ScenarioView.tsx:75:              tabIndex={0}
+src/components/ScenarioView.tsx:105:                : comparison.stockoutDaysEarlier > 0
+src/components/ScenarioView.tsx:107:                  : comparison.stockoutDaysEarlier < 0
+src/components/ScenarioView.tsx:121:          <RecommendationPanel item={r.recommendations[0]} />
+src/components/PriorityCard.tsx:27:    priority === 1 ? ArrowUpRight : priority === 2 ? Package : CalendarDays;
+src/components/PriorityCard.tsx:32:          <Icon size={16} />
+src/components/PriorityCard.tsx:35:        <span className="priority-number">0{priority}</span>
+src/components/PriorityCard.tsx:37:      <h3>{title}</h3>
+src/components/PriorityCard.tsx:62:        {priority === 1
+src/components/PriorityCard.tsx:64:          : priority === 2
+src/components/ui.tsx:21:        <h1>{title}</h1>
+src/components/ui.tsx:26:          <CalendarDays size={15} />
+src/components/ui.tsx:27:          Week of Sep 14, 2026
+src/components/ui.tsx:45:        <h2>{title}</h2>
+src/components/ui.tsx:73:      <ArrowRight size={15} />
+src/components/ui.tsx:81:      {([4, 8, 13, 26] as const).map((h) => (
+src/components/ui.tsx:120:        <CircleCheck size={15} />
+src/components/ui.tsx:129:      <Info size={17} />
+src/components/InventoryProjectionChart.tsx:23:          <i style={{ background: "#3b82f6" }} />
+src/components/InventoryProjectionChart.tsx:27:          <i style={{ background: "#e6a326" }} />
+src/components/InventoryProjectionChart.tsx:31:          <i style={{ background: "#14b8a6" }} />
+src/components/InventoryProjectionChart.tsx:40:        <ResponsiveContainer width="100%" height="100%">
+src/components/InventoryProjectionChart.tsx:43:            margin={{ top: 25, right: 20, left: 0, bottom: 5 }}
+src/components/InventoryProjectionChart.tsx:47:              stroke="#e8edf4"
+src/components/InventoryProjectionChart.tsx:48:              strokeDasharray="3 3"
+src/components/InventoryProjectionChart.tsx:53:              tick={{ fontSize: 11 }}
+src/components/InventoryProjectionChart.tsx:56:              minTickGap={24}
+src/components/InventoryProjectionChart.tsx:59:              width={65}
+src/components/InventoryProjectionChart.tsx:61:              tick={{ fontSize: 11 }}
+src/components/InventoryProjectionChart.tsx:69:                borderRadius: 8,
+src/components/InventoryProjectionChart.tsx:70:                border: "1px solid #dce3ed",
+src/components/InventoryProjectionChart.tsx:71:                fontSize: 12,
+src/components/InventoryProjectionChart.tsx:74:            <ReferenceLine y={0} stroke="#e26060" />
+src/components/InventoryProjectionChart.tsx:76:              .filter((p) => p.arrivals > 0)
+src/components/InventoryProjectionChart.tsx:81:                  stroke="#8acdbf"
+src/components/InventoryProjectionChart.tsx:82:                  strokeDasharray="3 3"
+src/components/InventoryProjectionChart.tsx:86:                    fontSize: 10,
+src/components/InventoryProjectionChart.tsx:87:                    fill: "#278a77",
+src/components/InventoryProjectionChart.tsx:94:                stroke="#e26060"
+src/components/InventoryProjectionChart.tsx:95:                strokeDasharray="3 3"
+src/components/InventoryProjectionChart.tsx:99:                  fontSize: 10,
+src/components/InventoryProjectionChart.tsx:100:                  fill: "#bf4b4b",
+src/components/InventoryProjectionChart.tsx:107:              stroke="#3b82f6"
+src/components/InventoryProjectionChart.tsx:108:              strokeWidth={2.5}
+src/components/InventoryProjectionChart.tsx:116:              stroke="#e6a326"
+src/components/InventoryProjectionChart.tsx:117:              strokeDasharray="5 4"
+src/components/MetricCard.tsx:19:        <ArrowUpRight size={14} />
+src/components/ScenarioControls.tsx:23:      min: 0,
+src/components/ScenarioControls.tsx:24:      max: 50,
+src/components/ScenarioControls.tsx:26:      step: 1,
+src/components/ScenarioControls.tsx:31:      min: -20,
+src/components/ScenarioControls.tsx:32:      max: 50,
+src/components/ScenarioControls.tsx:34:      step: 1,
+src/components/ScenarioControls.tsx:39:      min: 0,
+src/components/ScenarioControls.tsx:40:      max: 40,
+src/components/ScenarioControls.tsx:42:      step: 1,
+src/components/ScenarioControls.tsx:47:      min: 2,
+src/components/ScenarioControls.tsx:48:      max: 12,
+src/components/ScenarioControls.tsx:50:      step: 0.5,
+src/components/ScenarioControls.tsx:55:      <h2>Change the assumptions</h2>
+src/components/ScenarioControls.tsx:71:          <option value="upside">Upside · +20% demand</option>
+src/components/ScenarioControls.tsx:72:          <option value="downside">Downside · −15% demand</option>
+src/components/ScenarioControls.tsx:118:          min={0}
+src/components/ScenarioControls.tsx:119:          step={1}
+src/components/ScenarioControls.tsx:130:          min={0}
+src/components/ScenarioControls.tsx:131:          step={1}
+src/components/ScenarioControls.tsx:141:        <RotateCcw size={15} />
+src/components/InventoryHealthTable.tsx:9:  "High risk": 0,
+src/components/InventoryHealthTable.tsx:10:  Watch: 1,
+src/components/InventoryHealthTable.tsx:11:  Overstock: 2,
+src/components/InventoryHealthTable.tsx:12:  Healthy: 3,
+src/components/InventoryHealthTable.tsx:65:        tabIndex={0}
+src/components/InventoryHealthTable.tsx:88:                  <small>{r.recommendations[0].recommendation}</small>
+src/components/InventoryHealthTable.tsx:96:                  <strong>{number(r.inventory.weeksOfCover, 1)}</strong> /{" "}
+src/components/InventoryHealthTable.tsx:101:                    1,
+src/components/InventoryHealthTable.tsx:119:        24 active SKUs contribute to portfolio metrics; 10 are shown in detail.
+src/components/RecommendationPanel.tsx:13:        <Sparkles size={16} />
+src/components/ManagedWorkflow.tsx:55:  const [active, setActive] = useState(0);
+src/components/ManagedWorkflow.tsx:62:          <RefreshCcw size={14} />
+src/components/ManagedWorkflow.tsx:73:            const next = (active + (e.key === "ArrowRight" ? 1 : 4)) % 5;
+src/components/ManagedWorkflow.tsx:85:            tabIndex={active === i ? 0 : -1}
+src/components/ManagedWorkflow.tsx:91:              <step.icon size={23} />
+src/components/ManagedWorkflow.tsx:93:            <small>0{i + 1}</small>
+src/components/ManagedWorkflow.tsx:95:            {i < 4 && <ArrowRight className="workflow-arrow" size={20} />}
+src/components/ManagedWorkflow.tsx:109:          <h2>{s.title}</h2>
+src/components/ManagedWorkflow.tsx:113:          <CheckCheck size={22} />
+src/components/ManagedWorkflow.tsx:119:        <RefreshCcw size={13} />
+src/components/ManagedWorkflow.tsx:150:            <Sparkles size={15} />
+src/components/ManagedWorkflow.tsx:153:          <h2>
+src/components/ManagedWorkflow.tsx:157:          </h2>
+src/components/ManagedWorkflow.tsx:166:            <ChartNoAxesCombined size={22} />
+src/components/ManagedWorkflow.tsx:171:            <Users size={22} />
+src/components/ManagedWorkflow.tsx:176:            <Compass size={22} />A considered next step
+src/components/ManagedWorkflow.tsx:182:          ["Data Updated", "Sep 17, 2026 · 6:00 AM"],
+src/components/ManagedWorkflow.tsx:184:          ["Changes Analyzed", "7 material changes"],
+src/components/ManagedWorkflow.tsx:185:          ["Priorities Identified", "3 require attention"],
+src/components/ManagedWorkflow.tsx:186:          ["Recommendations Prepared", "4 actions"],
+src/components/ManagedWorkflow.tsx:207:            <span>0{i + 1}</span>
+src/components/ManagedWorkflow.tsx:208:            <h3>{a}</h3>
+src/components/ManagedWorkflow.tsx:228:              <span>{i + 1}</span>
+src/components/ManagedWorkflow.tsx:230:              {i < 5 && <ArrowRight size={15} />}
+src/components/ManagedWorkflow.tsx:236:            <CheckCheck size={17} />
+src/components/ManagedWorkflow.tsx:240:            <CheckCheck size={17} />
+src/components/ManagedWorkflow.tsx:244:            <CheckCheck size={17} />
+src/components/ManagedWorkflow.tsx:248:            <CheckCheck size={17} />
+src/components/ManagedWorkflow.tsx:252:            <CheckCheck size={17} />
+src/components/ManagedWorkflow.tsx:256:            <CheckCheck size={17} />
+src/components/ManagedWorkflow.tsx:264:          <h2>The 30-Day Planning Pilot</h2>
+src/components/ManagedWorkflow.tsx:273:              "Week 1",
+src/components/ManagedWorkflow.tsx:278:              "Week 2",
+src/components/ManagedWorkflow.tsx:283:              "Week 3",
+src/components/ManagedWorkflow.tsx:288:              "Week 4",
+src/components/ManagedWorkflow.tsx:295:              <h3>{b}</h3>
+src/components/ManagedWorkflow.tsx:302:            Book A Strategy Call <ArrowRight size={16} />
+src/components/ManagedWorkflow.tsx:305:            <MessageSquareText size={22} />
+src/components/ManagedWorkflow.tsx:306:            <h3>Your first conversation</h3>
+src/components/IntelligenceCard.tsx:10:          <Radio size={14} />
+src/components/IntelligenceCard.tsx:15:      <h2>{item.title}</h2>
+src/components/IntelligenceCard.tsx:19:          Open the decision context <ArrowUpRight size={13} />
+src/components/RiskBadge.tsx:1:import { AlertTriangle, CircleCheck, Clock3, Package } from "lucide-react";
+src/components/RiskBadge.tsx:8:        ? Clock3
+src/components/RiskBadge.tsx:14:      <Icon size={12} />

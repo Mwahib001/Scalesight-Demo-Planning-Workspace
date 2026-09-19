@@ -1,0 +1,585 @@
+{
+  "routes": [
+    {
+      "route": "/",
+      "size": {
+        "width": 1440,
+        "height": 900
+      },
+      "immediate": {
+        "viewport": 1440,
+        "width": 1440
+      },
+      "settled": {
+        "width": 1440,
+        "viewport": 1440,
+        "chartTextOutsideSvg": []
+      },
+      "screenshot": "brief-1440.png",
+      "heading": "Weekly Planning Brief"
+    },
+    {
+      "route": "/",
+      "size": {
+        "width": 1280,
+        "height": 720
+      },
+      "immediate": {
+        "viewport": 1280,
+        "width": 1280
+      },
+      "settled": {
+        "width": 1280,
+        "viewport": 1280,
+        "chartTextOutsideSvg": []
+      },
+      "screenshot": "brief-1280.png",
+      "heading": "Weekly Planning Brief"
+    },
+    {
+      "route": "/revenue-forecast",
+      "size": {
+        "width": 1440,
+        "height": 900
+      },
+      "immediate": {
+        "viewport": 1440,
+        "width": 1440
+      },
+      "settled": {
+        "width": 1440,
+        "viewport": 1440,
+        "chartTextOutsideSvg": []
+      },
+      "screenshot": "revenue-forecast-1440.png",
+      "heading": "Revenue Forecast"
+    },
+    {
+      "route": "/revenue-forecast",
+      "size": {
+        "width": 1280,
+        "height": 720
+      },
+      "immediate": {
+        "viewport": 1280,
+        "width": 1355
+      },
+      "settled": {
+        "width": 1280,
+        "viewport": 1280,
+        "chartTextOutsideSvg": []
+      },
+      "screenshot": "revenue-forecast-1280.png",
+      "heading": "Revenue Forecast"
+    },
+    {
+      "route": "/demand-forecast",
+      "size": {
+        "width": 1440,
+        "height": 900
+      },
+      "immediate": {
+        "viewport": 1440,
+        "width": 1440
+      },
+      "settled": {
+        "width": 1440,
+        "viewport": 1440,
+        "chartTextOutsideSvg": []
+      },
+      "screenshot": "demand-forecast-1440.png",
+      "heading": "Demand Forecast"
+    },
+    {
+      "route": "/demand-forecast",
+      "size": {
+        "width": 1280,
+        "height": 720
+      },
+      "immediate": {
+        "viewport": 1280,
+        "width": 1280
+      },
+      "settled": {
+        "width": 1280,
+        "viewport": 1280,
+        "chartTextOutsideSvg": []
+      },
+      "screenshot": "demand-forecast-1280.png",
+      "heading": "Demand Forecast"
+    },
+    {
+      "route": "/inventory",
+      "size": {
+        "width": 1440,
+        "height": 900
+      },
+      "immediate": {
+        "viewport": 1440,
+        "width": 1440
+      },
+      "settled": {
+        "width": 1440,
+        "viewport": 1440,
+        "chartTextOutsideSvg": []
+      },
+      "screenshot": "inventory-1440.png",
+      "heading": "Inventory Health"
+    },
+    {
+      "route": "/inventory",
+      "size": {
+        "width": 1280,
+        "height": 720
+      },
+      "immediate": {
+        "viewport": 1280,
+        "width": 1280
+      },
+      "settled": {
+        "width": 1280,
+        "viewport": 1280,
+        "chartTextOutsideSvg": []
+      },
+      "screenshot": "inventory-1280.png",
+      "heading": "Inventory Health"
+    },
+    {
+      "route": "/sku-planning",
+      "size": {
+        "width": 1440,
+        "height": 900
+      },
+      "immediate": {
+        "viewport": 1440,
+        "width": 1440
+      },
+      "settled": {
+        "width": 1440,
+        "viewport": 1440,
+        "chartTextOutsideSvg": []
+      },
+      "screenshot": "sku-planning-1440.png",
+      "heading": "SKU Planning"
+    },
+    {
+      "route": "/sku-planning",
+      "size": {
+        "width": 1280,
+        "height": 720
+      },
+      "immediate": {
+        "viewport": 1280,
+        "width": 1355
+      },
+      "settled": {
+        "width": 1280,
+        "viewport": 1280,
+        "chartTextOutsideSvg": []
+      },
+      "screenshot": "sku-planning-1280.png",
+      "heading": "SKU Planning"
+    },
+    {
+      "route": "/scenario",
+      "size": {
+        "width": 1440,
+        "height": 900
+      },
+      "immediate": {
+        "viewport": 1440,
+        "width": 1440
+      },
+      "settled": {
+        "width": 1440,
+        "viewport": 1440,
+        "chartTextOutsideSvg": []
+      },
+      "screenshot": "scenario-1440.png",
+      "heading": "Scenario Planning"
+    },
+    {
+      "route": "/scenario",
+      "size": {
+        "width": 1280,
+        "height": 720
+      },
+      "immediate": {
+        "viewport": 1280,
+        "width": 1325
+      },
+      "settled": {
+        "width": 1280,
+        "viewport": 1280,
+        "chartTextOutsideSvg": []
+      },
+      "screenshot": "scenario-1280.png",
+      "heading": "Scenario Planning"
+    },
+    {
+      "route": "/intelligence",
+      "size": {
+        "width": 1440,
+        "height": 900
+      },
+      "immediate": {
+        "viewport": 1440,
+        "width": 1440
+      },
+      "settled": {
+        "width": 1440,
+        "viewport": 1440,
+        "chartTextOutsideSvg": []
+      },
+      "screenshot": "intelligence-1440.png",
+      "heading": "Intelligence Center"
+    },
+    {
+      "route": "/intelligence",
+      "size": {
+        "width": 1280,
+        "height": 720
+      },
+      "immediate": {
+        "viewport": 1280,
+        "width": 1280
+      },
+      "settled": {
+        "width": 1280,
+        "viewport": 1280,
+        "chartTextOutsideSvg": []
+      },
+      "screenshot": "intelligence-1280.png",
+      "heading": "Intelligence Center"
+    },
+    {
+      "route": "/managed-intelligence",
+      "size": {
+        "width": 1440,
+        "height": 900
+      },
+      "immediate": {
+        "viewport": 1440,
+        "width": 1440
+      },
+      "settled": {
+        "width": 1440,
+        "viewport": 1440,
+        "chartTextOutsideSvg": []
+      },
+      "screenshot": "managed-intelligence-1440.png",
+      "heading": "Managed Intelligence"
+    },
+    {
+      "route": "/managed-intelligence",
+      "size": {
+        "width": 1280,
+        "height": 720
+      },
+      "immediate": {
+        "viewport": 1280,
+        "width": 1280
+      },
+      "settled": {
+        "width": 1280,
+        "viewport": 1280,
+        "chartTextOutsideSvg": []
+      },
+      "screenshot": "managed-intelligence-1280.png",
+      "heading": "Managed Intelligence"
+    },
+    {
+      "route": "/assumptions",
+      "size": {
+        "width": 1440,
+        "height": 900
+      },
+      "immediate": {
+        "viewport": 1440,
+        "width": 1440
+      },
+      "settled": {
+        "width": 1440,
+        "viewport": 1440,
+        "chartTextOutsideSvg": []
+      },
+      "screenshot": "assumptions-1440.png",
+      "heading": "Planning Assumptions"
+    },
+    {
+      "route": "/assumptions",
+      "size": {
+        "width": 1280,
+        "height": 720
+      },
+      "immediate": {
+        "viewport": 1280,
+        "width": 1280
+      },
+      "settled": {
+        "width": 1280,
+        "viewport": 1280,
+        "chartTextOutsideSvg": []
+      },
+      "screenshot": "assumptions-1280.png",
+      "heading": "Planning Assumptions"
+    }
+  ],
+  "checks": [
+    {
+      "name": "Priority actions and CTAs above fold at 1440x900",
+      "status": "fail",
+      "evidence": [
+        {
+          "title": "Protect your fastest mover",
+          "titleTop": 609.5625,
+          "actionTop": 942.71875,
+          "actionBottom": 1016.953125,
+          "ctaTop": 1123.1875,
+          "ctaBottom": 1170.1875
+        },
+        {
+          "title": "Put tied-up cash to work",
+          "titleTop": 609.5625,
+          "actionTop": 932,
+          "actionBottom": 1011.59375,
+          "ctaTop": 1123.1875,
+          "ctaBottom": 1170.1875
+        },
+        {
+          "title": "Get ahead of BFCM",
+          "titleTop": 609.5625,
+          "actionTop": 940,
+          "actionBottom": 1026.3125,
+          "ctaTop": 1123.1875,
+          "ctaBottom": 1170.1875
+        }
+      ]
+    },
+    {
+      "name": "Priority actions and CTAs above fold at 1280x720",
+      "status": "fail",
+      "evidence": [
+        {
+          "title": "Protect your fastest mover",
+          "titleTop": 592.171875,
+          "actionTop": 946.890625,
+          "actionBottom": 1011.765625,
+          "ctaTop": 1108.640625,
+          "ctaBottom": 1155.640625
+        },
+        {
+          "title": "Put tied-up cash to work",
+          "titleTop": 592.171875,
+          "actionTop": 914.734375,
+          "actionBottom": 995.6875,
+          "ctaTop": 1108.640625,
+          "ctaBottom": 1155.640625
+        },
+        {
+          "title": "Get ahead of BFCM",
+          "titleTop": 592.171875,
+          "actionTop": 921.234375,
+          "actionBottom": 1009.65625,
+          "ctaTop": 1108.640625,
+          "ctaBottom": 1155.640625
+        }
+      ]
+    },
+    {
+      "name": "All nine routes have no settled desktop horizontal overflow",
+      "status": "pass",
+      "evidence": []
+    },
+    {
+      "name": "All desktop chart text lies inside chart SVG bounds",
+      "status": "pass",
+      "evidence": []
+    },
+    {
+      "name": "Mango +20% persists and reconciles across four screens",
+      "status": "pass",
+      "evidence": {
+        "table": "Planning measure\tBase plan\tCurrent scenario\nWeekly demand\t705\t846\n30-day portfolio revenue\t$318,000\t$332,213\nSKU margin over horizon\t$177,744\t$213,293\nWeeks of cover\t3.4\t2.8\nSafety breach week\tSep 28\tSep 21\nStockout week\tOct 5\tSep 28\nRequired inventory\t4,230\t5,076\nReorder gap\t630\t1,476\nCommitted + purchase cost\t$6,000\t$6,000",
+        "skuMetrics": "Inventory cover\n2.8 wks\n\n5-week supplier lead time\n\nRequired inventory\n5,076\n\nLead-time demand + safety stock\n\nReorder gap\n1,476\n\nRequired − usable − incoming; minimum zero\n\nStockout week\nSep 28\n\nWithin the 13-week horizon",
+        "skuRecommendation": "ScaleSight recommendation\nWhat Changed\nMango Hydration 12-Pack has 2.8 weeks of cover; safety stock is first breached in the week of Sep 21.\nWhy It Matters\n$12,000 of current stock cost is exposed to supply disruption. Projected stockout: week of Sep 28.\nRecommended Action\nReview 1,476 additional units and expedite an arrival before the breach.\nDecision Required\nApprove an expedited supplier review before committing more demand.",
+        "inventoryRow": "Mango Hydration 12-Pack\nReview 1,476 additional units and expedite an arrival before the breach.\n\t\nHigh risk\t2,400\t846\t2.8 / 5w\t1,200\tSep 28",
+        "briefPriority": "DEMAND ACCELERATION\n01\nProtect your fastest mover\nHigh risk\n2.8 weeks\nMango inventory cover\nWhat Changed\nMango Hydration 12-Pack has 2.8 weeks of cover; safety stock is first breached in the week of Sep 21.\nWhy It Matters\n$12,000 of current stock cost is exposed to supply disruption. Projected stockout: week of Sep 28.\nRecommended Action\nReview 1,476 additional units and expedite an arrival before the breach.\nDecision Required\nApprove an expedited supplier review before committing more demand.\nReview Mango plan",
+        "briefMetrics": "30-day revenue outlook\n$332,213\n+13.2% vs previous 30 days\n\nNet sales · after expected returns\n\nInventory at risk\n$42,000\n\nStock cost exposed to supply / excess risk\n\nSKUs requiring attention\n05\n3 high risk · 2 watch\n\nOverstock reviewed separately\n\nProjected stockouts\n03\n\nWithin the next 13 weeks\n\nForecast confidence\nModerate\n\nBFCM + new-product assumptions"
+      }
+    },
+    {
+      "name": "SKU context navigation retains prior Mango override",
+      "status": "fail",
+      "evidence": {
+        "selected": "berry-6",
+        "uplift": "0",
+        "returnedMangoUplift": "0"
+      }
+    },
+    {
+      "name": "Berry link retains SKU context when opened directly",
+      "status": "fail",
+      "evidence": {
+        "href": "/sku-planning",
+        "actualSku": "mango-12"
+      }
+    },
+    {
+      "name": "Weekly analyst conclusion follows negative-growth scenario",
+      "status": "fail",
+      "evidence": {
+        "metrics": "30-day revenue outlook\n$270,300\n-7.9% vs previous 30 days\n\nNet sales · after expected returns\n\nInventory at risk\n$47,676\n\nStock cost exposed to supply / excess risk\n\nSKUs requiring attention\n03\n3 high risk · 0 watch\n\nOverstock reviewed separately\n\nProjected stockouts\n03\n\nWithin the next 13 weeks\n\nForecast confidence\nModerate\n\nBFCM + new-product assumptions",
+        "headings": [
+          "This Week’s Planning Priorities",
+          "What Changed Since Last Week",
+          "Growth is coming.Supply needs to keep up."
+        ]
+      }
+    },
+    {
+      "name": "Revenue chart provides historical/current/previous/base/upside/downside",
+      "status": "fail",
+      "evidence": [
+        "Current forecast",
+        "Previous forecast"
+      ]
+    },
+    {
+      "name": "Inventory trajectory names the stockout marker on the plot",
+      "status": "fail",
+      "evidence": [
+        "PO",
+        "Safety breach"
+      ]
+    },
+    {
+      "name": "Intelligence page supplies all five required sections",
+      "status": "fail",
+      "evidence": [
+        "History suggests a cut. Business context says hold.",
+        "Your managed intelligence queue",
+        "High Stockout Risk",
+        "High Stockout Risk",
+        "Replenishment Timing Risk",
+        "High Stockout Risk",
+        "Forecast Review Required",
+        "Overstock Watch",
+        "Protect the replenishment buffer",
+        "Forecast Review Required",
+        "Protect the replenishment buffer",
+        "Business context changes the decision",
+        "Maintain the reviewed plan",
+        "Maintain the reviewed plan",
+        "Maintain the reviewed plan"
+      ]
+    },
+    {
+      "name": "Human override is visible in the rendered intelligence page",
+      "status": "pass"
+    },
+    {
+      "name": "All five managed workflow steps expose substantive output",
+      "status": "pass",
+      "evidence": [
+        {
+          "label": "Monitor",
+          "content": "MONITOR · SCALESIGHT + YOUR TEAM\nAlways watching the signals that matter.\n\nRevenue, demand, inventory, and SKU performance are reviewed together. Material changes are surfaced for analyst attention.\n\nWHAT YOU RECEIVE\nA refreshed view of business performance and supply exposure."
+        },
+        {
+          "label": "Analyze",
+          "content": "ANALYZE · SCALESIGHT + YOUR TEAM\nTurn a change into an explanation.\n\nThe planning team tests the signal against history, purchase orders, campaigns, and supplier context. Assumptions are explicit and confidence stays qualitative.\n\nWHAT YOU RECEIVE\nA business explanation of what changed and why it matters."
+        },
+        {
+          "label": "Prioritize",
+          "content": "PRIORITIZE · SCALESIGHT + YOUR TEAM\nKnow which decisions come first.\n\nTiming, cash exposure, and commercial importance determine what needs management attention this week.\n\nWHAT YOU RECEIVE\nA short, ordered planning brief with clear decision owners."
+        },
+        {
+          "label": "Recommend",
+          "content": "RECOMMEND · SCALESIGHT + YOUR TEAM\nEvery insight has a next step.\n\nThe team prepares purchasing actions, demand scenarios, and commercial trade-offs. Every recommendation includes the change, meaning, action, and decision required.\n\nWHAT YOU RECEIVE\nConsidered actions and scenario analysis on demand."
+        },
+        {
+          "label": "Review",
+          "content": "REVIEW · SCALESIGHT + YOUR TEAM\nMake the decision with your team.\n\nA planning review brings your business context into the model. Decisions update the assumptions, and the next monitoring cycle begins.\n\nWHAT YOU RECEIVE\nStrategic guidance and ongoing decision support."
+        }
+      ]
+    },
+    {
+      "name": "Strategy CTA reaches a booking destination",
+      "status": "fail",
+      "evidence": "Book A Strategy Call\nYour first conversation\n\nBring your current purchasing process, the decisions that are hardest to make, and a list of priority products. Your ScaleSight contact can arrange the strategy session and scope the pilot.\n\nDemo preview: booking and contact submission are not connected."
+    },
+    {
+      "name": "Scenario slider has a visible focus outline and label",
+      "status": "pass",
+      "evidence": {
+        "outline": "rgb(59, 130, 246) solid 3px",
+        "label": "Additional demand uplift\n0%\n0%\n50%"
+      }
+    },
+    {
+      "name": "No uncaught browser runtime errors during audit",
+      "status": "pass",
+      "evidence": []
+    }
+  ],
+  "events": [
+    {
+      "sku": "starter-kit",
+      "markers": [
+        "Starter kit promotion"
+      ]
+    },
+    {
+      "sku": "citrus-12",
+      "markers": [
+        "BFCM campaign"
+      ]
+    },
+    {
+      "sku": "peach-6",
+      "markers": [
+        "BFCM campaign",
+        "Peach launch · Lime analog"
+      ]
+    },
+    {
+      "sku": "orange-12",
+      "markers": [
+        "Supplier arrival delayed by four weeks"
+      ]
+    },
+    {
+      "sku": "passion-12",
+      "markers": [
+        "Paid media expansion"
+      ]
+    }
+  ],
+  "scenario": {
+    "table": "Planning measure\tBase plan\tCurrent scenario\nWeekly demand\t705\t846\n30-day portfolio revenue\t$318,000\t$332,213\nSKU margin over horizon\t$177,744\t$213,293\nWeeks of cover\t3.4\t2.8\nSafety breach week\tSep 28\tSep 21\nStockout week\tOct 5\tSep 28\nRequired inventory\t4,230\t5,076\nReorder gap\t630\t1,476\nCommitted + purchase cost\t$6,000\t$6,000",
+    "skuMetrics": "Inventory cover\n2.8 wks\n\n5-week supplier lead time\n\nRequired inventory\n5,076\n\nLead-time demand + safety stock\n\nReorder gap\n1,476\n\nRequired − usable − incoming; minimum zero\n\nStockout week\nSep 28\n\nWithin the 13-week horizon",
+    "skuRecommendation": "ScaleSight recommendation\nWhat Changed\nMango Hydration 12-Pack has 2.8 weeks of cover; safety stock is first breached in the week of Sep 21.\nWhy It Matters\n$12,000 of current stock cost is exposed to supply disruption. Projected stockout: week of Sep 28.\nRecommended Action\nReview 1,476 additional units and expedite an arrival before the breach.\nDecision Required\nApprove an expedited supplier review before committing more demand.",
+    "inventoryRow": "Mango Hydration 12-Pack\nReview 1,476 additional units and expedite an arrival before the breach.\n\t\nHigh risk\t2,400\t846\t2.8 / 5w\t1,200\tSep 28",
+    "briefPriority": "DEMAND ACCELERATION\n01\nProtect your fastest mover\nHigh risk\n2.8 weeks\nMango inventory cover\nWhat Changed\nMango Hydration 12-Pack has 2.8 weeks of cover; safety stock is first breached in the week of Sep 21.\nWhy It Matters\n$12,000 of current stock cost is exposed to supply disruption. Projected stockout: week of Sep 28.\nRecommended Action\nReview 1,476 additional units and expedite an arrival before the breach.\nDecision Required\nApprove an expedited supplier review before committing more demand.\nReview Mango plan",
+    "briefMetrics": "30-day revenue outlook\n$332,213\n+13.2% vs previous 30 days\n\nNet sales · after expected returns\n\nInventory at risk\n$42,000\n\nStock cost exposed to supply / excess risk\n\nSKUs requiring attention\n05\n3 high risk · 2 watch\n\nOverstock reviewed separately\n\nProjected stockouts\n03\n\nWithin the next 13 weeks\n\nForecast confidence\nModerate\n\nBFCM + new-product assumptions"
+  },
+  "selection": {
+    "selected": "berry-6",
+    "uplift": "0",
+    "returnedMangoUplift": "0"
+  },
+  "inventoryMarkers": [
+    "PO",
+    "Safety breach"
+  ],
+  "focus": {
+    "outline": "rgb(59, 130, 246) solid 3px",
+    "label": "Additional demand uplift\n0%\n0%\n50%"
+  },
+  "runtimeErrors": [],
+  "summary": {
+    "pass": 7,
+    "fail": 9
+  }
+}

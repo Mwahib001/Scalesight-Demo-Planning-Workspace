@@ -1,0 +1,363 @@
+{
+  "source": "Fresh calls to compiled current source, with temporary in-memory counterfactuals; no application files changed.",
+  "tests": [
+    {
+      "name": "Canonical five SKU covers and statuses",
+      "status": "pass"
+    },
+    {
+      "name": "Executive base reconciliation",
+      "status": "pass"
+    },
+    {
+      "name": "Scenario +20% propagates coherent units, revenue, cover and chart dates",
+      "status": "pass"
+    },
+    {
+      "name": "Thirty-day chart sum equals thirty-day total",
+      "status": "pass"
+    },
+    {
+      "name": "Inventory available snapshot feeds cover",
+      "status": "fail",
+      "message": "3.404255319148936 !== 1.702127659574468"
+    },
+    {
+      "name": "Cover uses available, independently of optional shrink",
+      "status": "fail",
+      "message": "3.0638297872340425 !== 3.404255319148936"
+    },
+    {
+      "name": "Previous revenue forecast is immutable under a new promotion assumption",
+      "status": "fail",
+      "message": "71018.75479999998 !== 68233.04599999999"
+    },
+    {
+      "name": "Promotion Constraint requires an actual promotion",
+      "status": "fail",
+      "message": "The expression evaluated to a falsy value:\n\n  assert.ok(!rec.some(r=>r.title==='Promotion Constraint'))\n"
+    },
+    {
+      "name": "Supplier timing risk requires the delay to cause the breach",
+      "status": "fail",
+      "message": "The expression evaluated to a falsy value:\n\n  assert.ok(!rec.some(r=>r.title==='Replenishment Timing Risk'))\n"
+    },
+    {
+      "name": "Literal coverage rule flags insufficient lead-time cover even outside display horizon",
+      "status": "fail",
+      "message": "The expression evaluated to a falsy value:\n\n  assert.ok(p.selected.recommendations.some(r=>r.title==='High Stockout Risk'))\n"
+    },
+    {
+      "name": "Lead-time change is reflected in unconfirmed future purchase orders",
+      "status": "fail",
+      "message": "4 !== 12"
+    },
+    {
+      "name": "Forecast Review requires consecutive weeks, not just last three records",
+      "status": "fail",
+      "message": "The expression evaluated to a falsy value:\n\n  assert.ok(!recommend(s,inv,[],observations).some(r=>r.title==='Forecast Review Required'))\n"
+    },
+    {
+      "name": "Zero demand has finite outputs",
+      "status": "pass"
+    },
+    {
+      "name": "Reset restores every state input atomically",
+      "status": "pass"
+    },
+    {
+      "name": "Numeric ranges and non-finite sanitization",
+      "status": "pass"
+    },
+    {
+      "name": "Human judgment override is backed by confirmed BFCM context",
+      "status": "pass"
+    },
+    {
+      "name": "Canonical history is seeded and repeatable",
+      "status": "pass"
+    },
+    {
+      "name": "Zero comparable sales does not yield infinite growth",
+      "status": "fail",
+      "message": "The expression evaluated to a falsy value:\n\n  assert.ok(Number.isFinite(p.revenueGrowthPct))\n"
+    },
+    {
+      "name": "Selected SKU validation rejects inactive products",
+      "status": "fail",
+      "message": "Expected \"actual\" to be strictly unequal to:\n\n'berry-6'"
+    }
+  ],
+  "canonical": [
+    {
+      "id": "mango-12",
+      "onHand": 2400,
+      "demand": 705,
+      "cover": 3.404255319148936,
+      "roundedCover": "3.4",
+      "lead": 5,
+      "incoming": 1200,
+      "risk": "High risk"
+    },
+    {
+      "id": "berry-6",
+      "onHand": 6200,
+      "demand": 473,
+      "cover": 13.10782241014799,
+      "roundedCover": "13.1",
+      "lead": 4,
+      "incoming": 0,
+      "risk": "Overstock"
+    },
+    {
+      "id": "citrus-12",
+      "onHand": 3150,
+      "demand": 610,
+      "cover": 5.163934426229508,
+      "roundedCover": "5.2",
+      "lead": 5,
+      "incoming": 1800,
+      "risk": "Watch"
+    },
+    {
+      "id": "lime-6",
+      "onHand": 4100,
+      "demand": 788,
+      "cover": 5.2030456852791875,
+      "roundedCover": "5.2",
+      "lead": 3.5,
+      "incoming": 1500,
+      "risk": "Healthy"
+    },
+    {
+      "id": "starter-kit",
+      "onHand": 1480,
+      "demand": 246,
+      "cover": 6.016260162601626,
+      "roundedCover": "6.0",
+      "lead": 4,
+      "incoming": 600,
+      "risk": "Healthy"
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "base",
+      "revenue30": 318000,
+      "growth": 8.4,
+      "weeklyDemand": 705,
+      "cover": 3.404255,
+      "stockout": "2026-10-05",
+      "breach": "2026-09-28",
+      "required": 4230,
+      "gap": 630,
+      "capital": 41600,
+      "high": 3,
+      "watch": 2,
+      "stockouts": 3,
+      "previousRevenueWeek1": 71018.75479999998,
+      "recommendation": "Review 630 additional units and expedite an arrival before the breach.",
+      "stockoutDaysEarlier": 0
+    },
+    {
+      "name": "Mango +20%",
+      "revenue30": 332212.8,
+      "growth": 13.244866,
+      "weeklyDemand": 846,
+      "cover": 2.836879,
+      "stockout": "2026-09-28",
+      "breach": "2026-09-21",
+      "required": 5076,
+      "gap": 1476,
+      "capital": 41600,
+      "high": 3,
+      "watch": 2,
+      "stockouts": 3,
+      "previousRevenueWeek1": 71018.75479999998,
+      "recommendation": "Review 1,476 additional units and expedite an arrival before the breach.",
+      "stockoutDaysEarlier": 7
+    },
+    {
+      "name": "Mango +50%",
+      "revenue30": 353532,
+      "growth": 20.512166,
+      "weeklyDemand": 1057.5,
+      "cover": 2.269504,
+      "stockout": "2026-09-28",
+      "breach": "2026-09-21",
+      "required": 6345,
+      "gap": 2745,
+      "capital": 41600,
+      "high": 3,
+      "watch": 2,
+      "stockouts": 3,
+      "previousRevenueWeek1": 71018.75479999998,
+      "recommendation": "Review 2,745 additional units and expedite an arrival before the breach.",
+      "stockoutDaysEarlier": 7
+    },
+    {
+      "name": "portfolio upside",
+      "revenue30": 381600,
+      "growth": 30.08,
+      "weeklyDemand": 846,
+      "cover": 2.836879,
+      "stockout": "2026-09-28",
+      "breach": "2026-09-21",
+      "required": 5076,
+      "gap": 1476,
+      "capital": 41600,
+      "high": 5,
+      "watch": 3,
+      "stockouts": 4,
+      "previousRevenueWeek1": 71018.75479999998,
+      "recommendation": "Review 1,476 additional units and expedite an arrival before the breach.",
+      "stockoutDaysEarlier": 7
+    },
+    {
+      "name": "portfolio downside",
+      "revenue30": 270300,
+      "growth": -7.86,
+      "weeklyDemand": 599.25,
+      "cover": 4.005006,
+      "stockout": "2026-10-12",
+      "breach": "2026-10-05",
+      "required": 3595.5,
+      "gap": 0,
+      "capital": 41600,
+      "high": 3,
+      "watch": 0,
+      "stockouts": 3,
+      "previousRevenueWeek1": 71018.75479999998,
+      "recommendation": "Expedite existing supply before the breach; quantity alone does not solve the timing gap.",
+      "stockoutDaysEarlier": -7
+    },
+    {
+      "name": "Mango purchase 5000",
+      "revenue30": 318000,
+      "growth": 8.4,
+      "weeklyDemand": 705,
+      "cover": 3.404255,
+      "stockout": "2026-10-05",
+      "breach": "2026-09-28",
+      "required": 4230,
+      "gap": 630,
+      "capital": 66600,
+      "high": 3,
+      "watch": 2,
+      "stockouts": 3,
+      "previousRevenueWeek1": 71018.75479999998,
+      "recommendation": "Review 630 additional units and expedite an arrival before the breach.",
+      "stockoutDaysEarlier": 0
+    },
+    {
+      "name": "Mango promotion 20%",
+      "revenue30": 312883.392,
+      "growth": 6.655848,
+      "weeklyDemand": 817.8000000000001,
+      "cover": 2.934703,
+      "stockout": "2026-09-28",
+      "breach": "2026-09-21",
+      "required": 4906.8,
+      "gap": 1306.8000000000002,
+      "capital": 41600,
+      "high": 3,
+      "watch": 2,
+      "stockouts": 3,
+      "previousRevenueWeek1": 68233.04599999999,
+      "recommendation": "Review 1,307 additional units and expedite an arrival before the breach.",
+      "stockoutDaysEarlier": 7
+    }
+  ],
+  "evidence": {
+    "executive": {
+      "revenue30": 318000.00000000023,
+      "previous30": 293357.93357933545,
+      "growth": 8.400000000000208,
+      "riskValue": 42000,
+      "high": 3,
+      "watch": 2,
+      "attention": 5,
+      "stockouts": 3,
+      "confidence": "Moderate"
+    },
+    "available": {
+      "snapshotAvailable": 1200,
+      "computedCover": 3.404255319148936,
+      "expectedCover": 1.702127659574468
+    },
+    "shrink": {
+      "cover": 3.0638297872340425,
+      "expectedCover": 3.404255319148936,
+      "usable": 2160,
+      "firstProjection": 1455,
+      "literalCurrentProjection": 1695
+    },
+    "previous": {
+      "before": 71018.75479999998,
+      "after": 68233.04599999999
+    },
+    "falsePromotion": [
+      "High Stockout Risk",
+      "Promotion Constraint"
+    ],
+    "falseDelay": {
+      "originalBreach": "2026-09-14",
+      "delayedBreach": "2026-09-14",
+      "recommendations": [
+        "High Stockout Risk",
+        "Replenishment Timing Risk",
+        "Promotion Constraint"
+      ]
+    },
+    "horizonRule": {
+      "cover": 5.2030456852791875,
+      "requiredCover": 13,
+      "risk": "Watch",
+      "breach": null,
+      "recommendations": [
+        "Protect the replenishment buffer"
+      ]
+    },
+    "plannedLead": {
+      "stateLead": 12,
+      "order": {
+        "id": "PLAN-8-0",
+        "skuId": "peach-6",
+        "quantity": 500,
+        "unitCost": 4,
+        "orderDate": "2026-09-21",
+        "expectedArrival": "2026-10-19",
+        "status": "planned"
+      },
+      "effectiveLead": 4,
+      "risk": "Watch",
+      "stockout": null
+    },
+    "zeroDemand": {
+      "cover": 0,
+      "risk": "Watch",
+      "breach": null,
+      "stockout": null
+    },
+    "history": {
+      "rows": 2496,
+      "start": "2024-09-16",
+      "end": "2026-09-07",
+      "activeSkuCount": 24,
+      "detailedCount": 10,
+      "postLaunchZeroDemand": 0
+    },
+    "zeroComparable": {
+      "previous30": 0,
+      "growth": "Infinity"
+    },
+    "inactiveSelection": {
+      "active": false,
+      "selected": "berry-6"
+    }
+  },
+  "summary": {
+    "pass": 9,
+    "fail": 10
+  }
+}
