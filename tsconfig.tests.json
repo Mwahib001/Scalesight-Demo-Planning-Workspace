@@ -9,5 +9,9 @@
     "outDir": ".test-build",
     "rootDir": "."
   },
-  "include": ["data/**/*.ts", "lib/**/*.ts", "tests/calculations.test.ts"]
+  "include": [
+    "src/data/**/*.ts",
+    "src/engine/**/*.ts",
+    "tests/planning.test.ts"
+  ]
 }

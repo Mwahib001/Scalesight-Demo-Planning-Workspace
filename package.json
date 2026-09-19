@@ -1,16 +1,16 @@
 {
-  "name": "blockify-scalesight-demo",
+  "name": "ecommerce-scalesight",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "pnpm test && next build",
+    "dev": "next dev --webpack",
+    "build": "pnpm test && next build --webpack",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsc -p tsconfig.tests.json && node .test-build/tests/calculations.test.js",
+    "test": "tsc -p tsconfig.tests.json && node .test-build/tests/planning.test.js",
     "typecheck": "tsc --noEmit",
     "test:e2e": "playwright test",
-    "format": "prettier --write app components data lib tests README.md playwright.config.ts"
+    "format": "prettier --write src tests README.md playwright.config.ts"
   },
   "dependencies": {
     "lucide-react": "^1.45.0",

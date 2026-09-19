@@ -1,83 +1,66 @@
-# Blockify x ScaleSight — Managed Commerce Intelligence
+# ScaleSight · Kelarune Planning Workspace
 
-A fictional Northstar Commerce (Shopify Plus) demo built with Next.js App Router, TypeScript, React Context, Tailwind and Recharts. Everything is deterministic, local demo data. No auth, database, payment flow, external analyst API or live commerce integration is included. The partnership is explicitly proposed.
+A fictional, interactive demonstration of **Planning System + Ongoing Analysis + Recommendations + Strategic Guidance**. Built in the existing Next.js App Router project with TypeScript, Tailwind, Recharts, Lucide, and React Context. No backend, authentication, credentials, external fonts, or live integrations.
 
-Deployment is left to the project owner. No hosting project or deployment configuration has been changed.
+## Run and verify
 
-## Run locally
-
-```sh
+```bash
 pnpm install
 pnpm dev
-```
-
-Open `http://localhost:3000`. All seven pages are statically prerendered and support direct requests and hard refreshes.
-
-| Route                   | View                           |
-| ----------------------- | ------------------------------ |
-| `/`                     | Executive Intelligence Brief   |
-| `/forecast`             | Demand Forecast                |
-| `/inventory`            | Inventory & Purchasing         |
-| `/scenario`             | Scenario Planning              |
-| `/customer-growth`      | Customer & Growth Intelligence |
-| `/managed-intelligence` | Managed Intelligence           |
-| `/partnership`          | Proposed Partnership + Pilot   |
-
-The retired `/advisor-brief` and `/assumptions` URLs redirect to the new brief and operating model. No old story remains in visible content. Metadata and robots disallow indexing. The favicon is a generic chart mark, not a partner logo. Inter is served from a committed local variable-font file, with a system sans fallback and no external font request.
-
-## Verification
-
-```sh
-pnpm lint
-pnpm typecheck
 pnpm test
+pnpm lint
 pnpm build
 pnpm test:e2e
 ```
 
-`build` runs all unit/invariant tests before Next.js. Tests use Node's built-in test runner after a separate TypeScript compilation; no application data is sent over a network. Playwright starts the production server on port 3100. It uses `/usr/bin/google-chrome` when available, or Playwright's Chromium. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to use another existing compatible browser. Browser installation is not required if system Chrome is available.
+`pnpm build` runs the engine fixture tests before the production build. Build and development use Next.js’s supported webpack compiler because this workspace blocks Turbopack’s CSS worker from binding its local port. All application routes are prerendered static pages. Deploy the repository to Vercel with the Next.js preset; no environment variables are required. Playwright uses an existing Chrome installation or its installed Chromium. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` if needed. Browser tests start the production app on port 3100, so build first.
 
-The browser suite covers seven direct-refresh routes, navigation, empty states, shared selection, scenario controls, session persistence, analyst responses, drawer focus/Escape, partnership framing, 1440/1280/tablet/mobile viewports and 125% CSS zoom. Screenshots go into ignored `test-results/`. CSS zoom is a layout stress check; it is not a substitute for checking every browser's native zoom behavior.
+## One calculation layer
 
-## Data and calculations
+```text
+src/data/entities.ts         Typed source model and scenario contract
+src/data/dataset.ts          Seeded generator and date helpers
+src/data/kelarune.ts         Canonical data, orders, events, and assumptions
+src/engine/forecastEngine.ts SKU demand and net revenue
+src/engine/inventoryEngine.ts Dated inventory, cover, safety, cash, and risk
+src/engine/scenarioEngine.ts Shared portfolio plan, reducer, and comparison
+src/engine/recommendationEngine.ts Deterministic four-part recommendations
+src/context/PlanningContext.tsx Shared in-session state
+src/components/             Read-only consumers and input controls
+src/app/                    Nine primary routes + legacy redirects
+```
 
-- `data/planning.ts`: frozen source records, 12 authored + 130 generated SKUs, 24 PO records, 18 events, at least four committed versions for each authored SKU and a current forecast for all SKUs. The pure history generator produces 104 weekly observations per SKU per channel, with a fixed seed, bounded noise, trend, seasonality and named events. Channel forecasts are not committed; the forecast view explicitly shows an empty state for those filters.
-- `lib/calculations.ts`: shared stock, receipt eligibility, risk, scenario, forecast refresh, MAPE and customer definitions. Incoming receipts are added once at the specified weekly boundary, after consumption to that boundary. A late receipt cannot erase an earlier stockout. Promotions only affect weeks 2–3; ad-spend elasticity exists only for SKU-104 / Online Store.
-- `lib/selectors.ts`: derived catalog and customer KPI summaries and fixture validation. The catalog reconciles to revenue of 6.8M, inventory cost of 1.10M, 142 SKUs, demand-weighted cover of 8.2, seven high-risk SKUs, excess exposure of 126K, assessed risk of 184K and five weekly PO decisions.
-- `components/workspace-context.tsx`: shared selection and validated scenario inputs in React Context. Session storage keeps filters, draft assumptions and an explicitly applied brief note across reloads within the same tab. Invalid storage is ignored. No local storage or backend persistence.
-- `lib/analyst.ts`: five pure deterministic responses. Temporary demand scenarios do not mutate saved inputs. Unmatched input returns the prescribed fallback.
+There are 24 active SKUs, 10 detailed SKUs, and 104 seeded historical weekly observations per SKU. Peach has eight weeks of post-launch observations; earlier periods are explicitly zero. The review date is September 17, 2026, with planning beginning September 14.
 
-Generated tail stock and unit costs are calibrated to the specified catalog totals. In-stock rate is a weighted availability-check metric (9,400 of 10,000 checks), not a rounded count of the 142 SKUs. Risk valuation is an authored assessment of exposed quantities; it does not value every unit in a high-risk SKU as exposed. Source record costs retain precision; presentation rounds money.
+The base fixtures reconcile to $318,000 net 30-day revenue, +8.4% versus the previous comparable period, $42,000 stock cost at risk, three high-risk SKUs, two Watch SKUs, and three stockouts over 13 weeks. Berry overstock is reviewed separately from the five supply-attention SKUs.
 
-Customers/orders use the permitted aggregated equivalent: 18,000 customers, 40,000 completed orders, 6,912 repeat customers, 6.8M TTM net revenue, 1.7M quarter-to-date revenue and 795,600 repeat revenue. The 90-day headline is a committed expected estimate. The source comparison contains a 9,000-customer mature subset acquired March–May; the retention heatmap includes 18,000 acquisitions March–August. Segment lifetime estimates are a separate measure from 90-day value. Refunds/cancellations do not contribute to completed revenue. Reorder group dates represent committed aggregates. No real client data is used.
+## Modeling decisions
 
-## Brief ambiguities resolved
+- SKU baselines are reviewed planning inputs. The first five weeks retain those baselines; subsequent weeks add configured trend and seasonality. Confirmed events apply during their scheduled weeks.
+- The final portfolio SKU's fractional expected weekly demand calibrates the synthetic catalog to the requested revenue fixture. A comparable-period discount calibrates historical net revenue to the required +8.4% comparison. Historical revenue still equals units × list price × (1 − discount). Both calibrations are disclosed in the assumptions register.
+- Revenue is unconstrained demand revenue after the larger of event/scenario discounts and a 2% returns allowance. It is not promised shipped revenue. Margin is net revenue minus product unit costs; it excludes media, shipping, and overhead.
+- Cover uses inventory available today. Confirmed/delayed incoming orders contribute to the projection in their arrival week. Separately labeled, unconfirmed planned replenishments support the longer-term healthy-SKU plan and are explicitly conditional.
+- Weekly projections show end-of-week net stock. Negative values represent unmet demand. Stockout dates are week commencements, not invented day-level precision. Comparisons use exactly these chart dates.
+- High risk requires inadequate cover or a stockout, plus a safety breach within the selected horizon. Inadequate cover outside that horizon is Watch. Declining overstock means more than ten weeks of cover, with excess measured above an eight-week target. Confirmed BFCM context prevents an automatic stock cut for Winter Discovery Kit.
+- Risk value is current stock cost for high-risk SKUs plus excess stock cost for declining overstock. The base consists of Mango $12,000 + Blood Orange $3,200 + Passionfruit $2,640 + Berry $24,160. It is not a lost-revenue estimate.
+- Incoming and scenario purchases contribute to committed working capital; unconfirmed routine replenishment plans are excluded. Lead-time edits shift committed arrival dates by the corresponding day delta while preserving supplier-delay context.
+- Upside/downside modes apply portfolio-wide. The remaining controls apply only to the selected SKU. Selecting a different SKU starts a fresh SKU test, retaining the horizon and mode. Route navigation preserves state. Reloading starts a clean base plan. Reset is one reducer action restoring all fields, including Mango and the 13-week horizon.
+- Paid media uses elasticity 0.6 with diminishing factor `1 / (1 + abs(change) / 100)`. Promotion demand elasticity is 0.8. Scenario controls clamp non-finite and out-of-range input.
+- Confidence is qualitative. The static service-status strip represents the reviewed base operating cycle; the intelligence queue updates dynamically with the active scenario.
 
-The follow-up audit supplies the ten exact inventory rows and four exact backtest observations; these now replace the initial authored placeholders. The client PDF now supplies the exact change-log, workflow activity/output, pilot evidence and Atlas interpretation copy; these have been restored. Under the user’s authorization, the following numerical decisions supersede contradictory presentation examples. See [AUDIT_REPORT.md](AUDIT_REPORT.md) for all 112 checks.
+## Five-minute demo walkthrough
 
-The scenario figures in the prose are internally inconsistent with its explicit automated fixture. The committed reconciliation fixture takes precedence. Both baseline and scenario requirements use the same 8-week supply window, isolating the demand change:
+1. **Weekly Planning Brief:** identify Mango availability, Berry excess cash, and BFCM preparation. Read the action and decision on each card.
+2. **SKU Planning:** open Mango. Reconcile 2,400 on hand, 705 weekly demand, 3.4 weeks of cover, the safety breach, and the stockout week with the chart and PO schedule.
+3. **Demand Forecast:** inspect actual versus previous/current forecasts. Toggle the legend and change the shared horizon. Explain the three consecutive forecast misses.
+4. **Inventory Health:** filter High risk, then Overstock. Open Blood Orange to compare the delayed arrival with the original date. Open Berry to connect stock to cash exposure.
+5. **Scenario Planning:** increase Mango demand, add a purchase, change lead time, and observe units → revenue → inventory → cash → recommendation. Navigate to the brief to confirm shared values. Reset to Base Plan.
+6. **Intelligence Center:** filter Opportunity. Explain why confirmed BFCM context overrides the history-only Winter Kit inventory cut.
+7. **Managed Intelligence:** step through Monitor → Analyze → Prioritize → Recommend → Review. Review the operating cycle and the 30-Day Planning Pilot.
+8. **Planning Assumptions:** inspect source types, reviewers, event assumptions, and current scenario inputs. Use Revenue Forecast to compare 30 days, 13 weeks, and six months.
 
-- 1,050 × (8 + 1.33) = 9,796.5, displayed as 9,800 to the nearest 50.
-- 1,312.5 × (8 + 1.33) = 12,245.625. The supplied raw fixture truncates to 12,245; the displayed requirement rounds up to 12,250.
-- 12,245 − 9,800 = 2,445 raw gap. An explicit 1,000-unit contingency, 600-unit pack and 1,200-unit MOQ produce 3,600 recommended units. Total allowance above raw need is 1,155.
-- 3,600 × 7.50 = 27,000. Both values come from the same function and are asserted literally in tests.
+## Demo boundaries
 
-This example is clearly separated from the live selected-SKU model, which retains unrounded math. The conflicting 13,400 requirement and 7.2/5.1-week stockout claims are not presented as calculated outputs: their necessary opening-stock and receipt assumptions were not supplied. Live stockout values come from the actual projection.
+All data and analyst-review identities are synthetic. No orders, ad changes, messages, or bookings are submitted. The strategy-call control shows the pilot conversation outline; an external booking destination has deliberately not been invented. Existing `/forecast`, `/customer-growth`, `/partnership`, and `/advisor-brief` links redirect into the new workspace.
 
-The Atlas safety-stock breach is about 2.57 weeks from the planning date (week 3), about 3.43 weeks before its 6-week replenishment. Stockout occurs at about 3.77 weeks, about 2.23 weeks before replenishment. The UI distinguishes those thresholds rather than describing the latter as a safety breach.
-
-The audit supplies 910/1,025; 940/1,145; 960/1,210; and 980/1,108 (prior forecast / actual) for Aug 17/24/31 and Sep 7. These now join to explicit forecast versions issued before each actual week. They produce **15.3% MAPE** using actual denominators, and **18.4% mean absolute variance versus prior forecast** using prior denominators. The UI and tests distinguish these measures. The checklist's request for 18.4% MAPE from these same raw rows is inconsistent; the adopted requirement is the mathematically correct 15.3% MAPE with 18.4% separately labeled prior variance.
-
-With the supplied numeric rows and 1.2-week safety defaults, the adopted inventory rules produce High for Nova and Orbit and Watch for Transit. These supersede the contradictory reference labels. Executive priority badges now use the same inventory calculation, including Nova High.
-
-## Seven-minute walkthrough
-
-1. Executive brief: discuss availability, excess working capital and campaign uncertainty.
-2. Forecast: review Atlas history, the prior/base plan, event assumptions and demo backtest.
-3. Inventory: open Atlas and inspect the 3,879-unit unrounded gap and receipt timing.
-4. Scenario: vary assumptions, inspect rounded purchasing/cash impacts and apply a labeled session note.
-5. Customer: inspect cohort size, repeat revenue, source associations and the overdue retention group.
-6. Managed intelligence: explain the six-step reviewed operating process and merchant-specific discovery.
-7. Partnership: discuss proposed structures and evidence required at each pilot gate.
-
-The audit adds local Inter font loading checks, route-specific metadata, keyboard-operable chart legends and event markers, completed-order/window selectors, small-sample guards, and axe accessibility scans. `pnpm test:e2e` runs the original smoke suite plus `tests/browser/audit.spec.ts`.
+`tests/planning.test.ts` covers reconciliation, deterministic generation, forecast and inventory math, supplier delays, context overrides, exact chart-date comparisons, atomic reset, and 288 SKU/horizon/mode stress combinations. Browser tests cover the nine routes, 1440/1280/mobile layouts, shared scenarios, filtering, keyboard use, chart controls, tooltips, workflow steps, and automated accessibility checks.

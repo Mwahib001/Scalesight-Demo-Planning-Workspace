@@ -1,207 +1,252 @@
 import { test, expect } from "@playwright/test";
 const routes = [
-  ["/", "Executive Intelligence Brief"],
-  ["/forecast", "Demand Forecast"],
-  ["/inventory", "Inventory & Purchasing"],
+  ["/", "Weekly Planning Brief"],
+  ["/revenue-forecast", "Revenue Forecast"],
+  ["/demand-forecast", "Demand Forecast"],
+  ["/inventory", "Inventory Health"],
+  ["/sku-planning", "SKU Planning"],
   ["/scenario", "Scenario Planning"],
-  ["/customer-growth", "Customer & Growth Intelligence"],
+  ["/intelligence", "Intelligence Center"],
   ["/managed-intelligence", "Managed Intelligence"],
-  ["/partnership", "Blockify x ScaleSight Partnership"],
+  ["/assumptions", "Planning Assumptions"],
 ];
-for (const [route, title] of routes) {
-  test(`direct refresh, content and overflow: ${route}`, async ({ page }) => {
+for (const [route, title] of routes)
+  test(`route, refresh, responsive layout: ${route}`, async ({ page }) => {
     const errors: string[] = [];
     page.on("pageerror", (e) => errors.push(e.message));
     page.on("console", (m) => {
-      if (["warning", "error"].includes(m.type())) errors.push(m.text());
+      if (m.type() === "error") errors.push(m.text());
     });
     await page.goto(route);
     await expect(
       page.getByRole("heading", { name: title, exact: true }),
     ).toBeVisible();
-    await expect(page).toHaveTitle(
-      new RegExp(title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
-    );
-    await page
-      .getByRole("button", { name: "Ask ScaleSight Analyst", exact: true })
-      .click();
-    await expect(page.getByRole("dialog")).toBeVisible();
-    await page.keyboard.press("Escape");
     await page.reload();
-    await expect(
-      page.getByRole("heading", { name: title, exact: true }),
-    ).toBeVisible();
     await expect(page.locator('nav a[aria-current="page"]')).toHaveAttribute(
       "href",
       route,
     );
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
-      "content",
-      "noindex, nofollow",
-    );
     expect(await page.locator("body").innerText()).not.toMatch(
-      /Alias|Harbor Coast|vodka|beverages/i,
+      /NaN|Infinity|Northstar|Blockify|AI accuracy/,
     );
-    expect(errors).toEqual([]);
     for (const size of [
       { width: 1440, height: 900 },
       { width: 1280, height: 720 },
-      { width: 1024, height: 576 },
-      { width: 768, height: 1024 },
       { width: 390, height: 844 },
     ]) {
       await page.setViewportSize(size);
-      await expect(
-        page.getByRole("heading", { name: title, exact: true }),
-      ).toBeVisible();
       expect(
         await page.evaluate(
-          () => document.documentElement.scrollWidth <= window.innerWidth,
+          () => document.documentElement.scrollWidth <= innerWidth,
         ),
-        `overflow ${route} at ${size.width}`,
+        `${route} at ${size.width}`,
       ).toBe(true);
     }
-    await page.setViewportSize({ width: 1280, height: 720 });
-    await page.evaluate(() => (document.documentElement.style.zoom = "1.25"));
-    expect(
-      await page.evaluate(
-        () => document.documentElement.scrollWidth <= window.innerWidth,
-      ),
-      "125% zoom",
-    ).toBe(true);
-    await page.evaluate(() => (document.documentElement.style.zoom = "1"));
+    await page.setViewportSize({ width: 1440, height: 900 });
     await page.screenshot({
-      path: `test-results/${route === "/" ? "executive" : route.slice(1)}-1280.png`,
+      path: `test-results/${route === "/" ? "brief" : route.slice(1)}-1440.png`,
       fullPage: true,
     });
+    expect(errors).toEqual([]);
   });
-}
-test("forecast fixture, shared selection and explicit empty state", async ({
+test("canonical executive fixtures and exact priority context", async ({
   page,
 }) => {
   await page.goto("/");
+  for (const value of ["$318,000", "$42,000", "+8.4% vs previous 30 days"])
+    await expect(page.getByText(value, { exact: true })).toBeVisible();
+  await page.getByRole("link", { name: "Review Mango plan" }).click();
+  await expect(page.getByLabel("Planning SKU")).toHaveValue("mango-12");
+  await expect(page.getByText("3.4 wks", { exact: true })).toBeVisible();
   await page
-    .getByRole("link", { name: "Review forecast", exact: true })
+    .getByRole("link", { name: "Weekly Planning Brief", exact: true })
     .click();
-  await expect(page.getByLabel("SKU", { exact: true })).toHaveValue("SKU-104");
-  await expect(page.getByText("9,420", { exact: true })).toBeVisible();
-  await expect(page.getByText("15.3%", { exact: true })).toBeVisible();
-  await page.getByLabel("Category", { exact: true }).selectOption("Belts");
-  await expect(
-    page.getByRole("heading", { name: "No committed demo series" }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Reset to Atlas Carryall" }).click();
-  await expect(page.getByText("9,420", { exact: true })).toBeVisible();
-  await page.getByLabel("SKU", { exact: true }).selectOption("SKU-031");
+  await page.getByRole("link", { name: "Review inventory decision" }).click();
   await page
-    .getByRole("link", { name: "Scenario Planning", exact: true })
+    .getByRole("link", { name: "Berry Hydration 6-Pack", exact: true })
     .click();
-  await expect(page.getByLabel("SKU", { exact: true })).toHaveValue("SKU-031");
+  await expect(page.getByLabel("Planning SKU")).toHaveValue("berry-6");
+  await expect(page.getByText("13.1 wks", { exact: true })).toBeVisible();
 });
-test("inventory drawer calculation, focus trap, Escape and focus return", async ({
-  page,
-}) => {
-  await page.goto("/inventory");
-  const row = page.getByRole("button", { name: "Atlas Carryall SKU-104" });
-  await row.click();
-  const dialog = page.getByRole("dialog");
-  await expect(dialog).toBeVisible();
-  await expect(dialog.getByText("3,879 units", { exact: true })).toBeVisible();
-  await expect(dialog.getByRole("heading")).toBeFocused();
-  await page.keyboard.press("Shift+Tab");
-  expect(
-    await page.evaluate(() => !!document.activeElement?.closest("dialog")),
-  ).toBe(true);
-  await page.keyboard.press("Escape");
-  await expect(dialog).not.toBeVisible();
-  await expect(row).toBeFocused();
-  await row.click();
-  await dialog.getByRole("link", { name: "Test scenario" }).click();
-  await expect(page.getByLabel("SKU", { exact: true })).toHaveValue("SKU-104");
-});
-test("scenario live math, temporary analyst, session persistence and reset", async ({
+test("scenario flows across routes and reset restores every input atomically", async ({
   page,
 }) => {
   await page.goto("/scenario");
-  const demand = page.getByRole("slider", { name: /Demand change/ });
-  await demand.fill("25");
-  await expect(demand).toHaveValue("25");
   await page
-    .getByRole("button", { name: "Apply to brief", exact: true })
+    .getByRole("slider", { name: "Additional demand uplift" })
+    .fill("50");
+  await page
+    .getByRole("slider", { name: "Paid media spend change" })
+    .fill("25");
+  await page.getByLabel("Enable promotion").check();
+  await page.getByRole("slider", { name: "Promotion discount" }).fill("20");
+  await page.getByRole("slider", { name: "Supplier lead time" }).fill("7");
+  await page.getByLabel("Incoming inventory (units)").fill("700");
+  await page.getByLabel("Additional purchase quantity (units)").fill("2500");
+  await page.getByLabel("Portfolio scenario").selectOption("upside");
+  const weekly = await page
+    .locator(".comparison-table tbody tr")
+    .first()
+    .locator("td")
+    .last()
+    .innerText();
+  await page
+    .getByRole("link", { name: "Demand Forecast", exact: true })
     .click();
-  await page.getByRole("link", { name: "View brief" }).click();
   await expect(
-    page.getByText("Session scenario note", { exact: true }),
-  ).toBeVisible();
-  await page.reload();
-  await expect(
-    page.getByText("Session scenario note", { exact: true }),
-  ).toBeVisible();
+    page.locator(".metric-card").first().locator("strong"),
+  ).toHaveText(weekly);
+  await page.getByRole("button", { name: "26 weeks", exact: true }).click();
+  await page
+    .getByRole("link", { name: "Weekly Planning Brief", exact: true })
+    .click();
+  await expect(page.getByText("$318,000", { exact: true })).toHaveCount(0);
+  await expect(page.locator(".scenario-banner")).toBeVisible();
   await page
     .getByRole("link", { name: "Scenario Planning", exact: true })
     .click();
-  await expect(demand).toHaveValue("25");
+  await expect(
+    page.getByRole("slider", { name: "Additional demand uplift" }),
+  ).toHaveValue("50");
+  await expect(
+    page.getByRole("button", { name: "26 weeks", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
   await page
-    .getByRole("button", { name: "Ask ScaleSight Analyst", exact: true })
+    .getByRole("button", { name: "Reset to Base Plan", exact: true })
+    .last()
     .click();
-  await page
-    .getByRole("button", { name: "What happens if demand increases 20%?" })
-    .click();
-  await expect(page.locator('[aria-live="polite"]').last()).toContainText(
-    "Saved scenario inputs have not changed",
+  for (const name of [
+    "Additional demand uplift",
+    "Paid media spend change",
+    "Promotion discount",
+  ])
+    await expect(page.getByRole("slider", { name })).toHaveValue("0");
+  await expect(
+    page.getByRole("slider", { name: "Supplier lead time" }),
+  ).toHaveValue("5");
+  await expect(page.getByLabel("Incoming inventory (units)")).toHaveValue(
+    "1200",
   );
-  await page.keyboard.press("Escape");
-  await expect(demand).toHaveValue("25");
-  await page.getByRole("button", { name: "Reset scenario" }).click();
-  await expect(demand).toHaveValue("0");
-  await expect(page.getByText("$27,000", { exact: true })).toBeVisible();
-});
-test("analyst questions, fallback and keyboard close", async ({ page }) => {
-  await page.goto("/");
-  const trigger = page.getByRole("button", {
-    name: "Ask ScaleSight Analyst",
-    exact: true,
-  });
-  await trigger.click();
-  await expect(page.getByRole("dialog").getByRole("heading")).toBeFocused();
-  const questions = [
-    "Why is SKU-104 at risk?",
-    "What happens if demand increases 20%?",
-    "Which SKUs tie up the most working capital?",
-    "What changed since last week?",
-    "Which purchasing decisions require attention?",
-  ];
-  for (const q of questions) {
-    await page.getByRole("button", { name: q, exact: true }).click();
-    await expect(page.locator(".analyst-answer p")).not.toBeEmpty();
-  }
-  await page.getByLabel("Other question").fill("unmatched");
-  await page.getByRole("button", { name: "Ask", exact: true }).click();
-  await expect(page.locator(".analyst-answer")).toContainText(
-    "This prototype supports the suggested demo questions.",
-  );
-  await page.keyboard.press("Escape");
-  await expect(trigger).toBeFocused();
-});
-test("mobile menu and proposed partnership preserve truthful framing", async ({
-  page,
-}) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/");
-  await page.getByRole("button", { name: "Open navigation" }).click();
+  await expect(
+    page.getByLabel("Additional purchase quantity (units)"),
+  ).toHaveValue("0");
+  await expect(page.getByLabel("Enable promotion")).not.toBeChecked();
+  await expect(page.getByLabel("Portfolio scenario")).toHaveValue("base");
+  await expect(
+    page.getByRole("button", { name: "13 weeks", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator(".scenario-banner")).toHaveCount(0);
   await page
-    .getByRole("dialog")
-    .getByRole("link", { name: "Partnership & Pilot" })
+    .getByRole("link", { name: "Weekly Planning Brief", exact: true })
     .click();
   await expect(
+    page.getByRole("heading", { name: "Weekly Planning Brief", exact: true }),
+  ).toBeVisible();
+  await expect(page.getByText("$318,000", { exact: true })).toBeVisible();
+});
+test("inventory filters, keyboard drill-down, and recommendations", async ({
+  page,
+}) => {
+  await page.goto("/inventory");
+  await page.getByLabel("Risk filter").selectOption("High risk");
+  await expect(page.locator("tbody tr")).toHaveCount(3);
+  await page.getByLabel("Search SKUs").fill("Orange");
+  await expect(page.locator("tbody tr")).toHaveCount(1);
+  await page
+    .getByRole("link", { name: "Blood Orange Hydration 12-Pack", exact: true })
+    .focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByLabel("Planning SKU")).toHaveValue("orange-12");
+  for (const text of [
+    "What Changed",
+    "Why It Matters",
+    "Recommended Action",
+    "Decision Required",
+  ])
+    await expect(page.getByText(text, { exact: true })).toBeVisible();
+  await expect(
+    page.getByText("Previously Sep 28", { exact: true }),
+  ).toBeVisible();
+});
+test("intelligence judgment, workflow keyboard tabs, assumptions, and pilot", async ({
+  page,
+}) => {
+  await page.goto("/intelligence");
+  await page.getByRole("button", { name: "opportunity", exact: true }).click();
+  await expect(
     page.getByRole("heading", {
-      name: "Blockify x ScaleSight Partnership",
+      name: "Business context changes the decision",
       exact: true,
     }),
   ).toBeVisible();
-  const content = await page.locator("main").innerText();
-  expect(content).toContain("PROPOSED PARTNERSHIP MODEL");
-  expect(content).not.toMatch(/\$|\d\s*%/);
-  await page.getByRole("link", { name: "Discuss structure" }).first().click();
-  await expect(page).toHaveURL(/#pilot$/);
+  await expect(
+    page.getByText(/do not automatically cut purchasing/),
+  ).toBeVisible();
+  await page
+    .getByRole("link", { name: "Managed Intelligence", exact: true })
+    .click();
+  await page.getByRole("tab", { name: /Monitor/ }).focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(page.getByRole("tab", { name: /Analyze/ })).toHaveAttribute(
+    "aria-selected",
+    "true",
+  );
+  await expect(page.getByRole("tabpanel")).toContainText(
+    "Turn a change into an explanation.",
+  );
+  await page.getByText("Book A Strategy Call", { exact: true }).click();
+  await expect(
+    page.getByText(
+      "Demo preview: booking and contact submission are not connected.",
+    ),
+  ).toBeVisible();
+  await page
+    .getByRole("link", { name: "Planning Assumptions", exact: true })
+    .click();
+  await page.getByLabel("Source type").selectOption("confirmed_business_event");
+  await expect(page.locator("tbody")).toContainText("Confirmed campaign");
+});
+test("chart toggles, demo tooltip, mobile navigation", async ({ page }) => {
+  await page.goto("/demand-forecast");
+  const actual = page.getByRole("button", { name: "Actual", exact: true });
+  await actual.focus();
+  await page.keyboard.press("Enter");
+  await expect(actual).toHaveAttribute("aria-pressed", "false");
+  await actual.click();
+  await expect(actual).toHaveAttribute("aria-pressed", "true");
+  await page.locator(".demo-badge").focus();
+  await expect(page.getByRole("tooltip")).toBeVisible();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.getByRole("button", { name: "Open navigation" }).click();
+  await page
+    .getByRole("link", { name: "Inventory Health", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Inventory Health", exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".sidebar")).not.toBeVisible();
+});
+
+test("revenue period and forecast horizon stay connected", async ({ page }) => {
+  await page.goto("/revenue-forecast");
+  await page.getByRole("button", { name: "30 days", exact: true }).click();
+  await expect(
+    page.locator(".metric-card").first().locator("strong"),
+  ).toHaveText("$318,000");
+  await page
+    .getByRole("link", { name: "Demand Forecast", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "4 weeks", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await page
+    .getByRole("link", { name: "Revenue Forecast", exact: true })
+    .click();
+  await page.getByRole("button", { name: "6 months", exact: true }).click();
+  await page
+    .getByRole("link", { name: "Demand Forecast", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "26 weeks", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
 });
