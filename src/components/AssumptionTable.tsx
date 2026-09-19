@@ -169,7 +169,7 @@ export function AssumptionTable() {
             <b>Reorder gap</b>max(0, required − usable − incoming inventory)
           </p>
           <p>
-            <b>Projected inventory</b>Usable stock + arrivals to date −
+            <b>Projected inventory</b>On-hand stock + arrivals to date −
             cumulative demand
           </p>
           <p>

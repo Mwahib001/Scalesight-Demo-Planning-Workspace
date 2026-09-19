@@ -5,7 +5,11 @@ import {
   purchaseOrders,
   events,
   history,
+  snapshots,
 } from "../data/kelarune";
+import { reviewedPlan } from "../data/reviewedPlan";
+import { date, percent } from "./formatters";
+import { PLANNING_DATE } from "../data/dataset";
 import { forecastSku, revenueForDays, RETURNS_RATE } from "./forecastEngine";
 import { inventoryFor } from "./inventoryEngine";
 import { recommend } from "./recommendationEngine";
@@ -77,74 +81,90 @@ export function demandMultiplier(s: PlanningState) {
 }
 export function buildPlan(input: PlanningState) {
   const state = sanitizeState(input);
-  const rows = skus.map((sku) => {
-    const selected = sku.id === state.selectedSkuId;
-    // Mode is portfolio-wide; the explicit controls apply only to the selected SKU.
-    const scenario = selected
-      ? state
-      : { ...defaultState(sku.id), scenarioMode: state.scenarioMode };
-    const allForecast = forecastSku(
-      sku,
-      26,
-      events,
-      demandMultiplier(scenario),
-      scenario.promotionEnabled ? scenario.promotionDiscountPct / 100 : 0,
-    );
-    const forecast = allForecast.slice(0, state.forecastHorizon);
-    const hasContext = events.some(
-      (e) => e.type === "bfcm" && e.confirmed && e.skuIds.includes(sku.id),
-    );
-    const inventory = inventoryFor(
-      sku,
-      forecast,
-      purchaseOrders,
-      scenario.leadTimeWeeks,
-      scenario.incomingInventory,
-      scenario.purchaseQuantity,
-      0,
-      hasContext,
-    );
-    const recommendations = recommend(sku, inventory, events, history);
-    return {
-      sku,
-      confidence:
-        sku.historyWeeks < 26 ? ("Low" as const) : ("Moderate" as const),
-      forecast,
-      allForecast,
-      inventory,
-      recommendations,
-      totalUnits: forecast.reduce((n, p) => n + p.units, 0),
-      revenue: forecast.reduce((n, p) => n + p.revenue, 0),
-      margin: forecast.reduce((n, p) => n + p.margin, 0),
-    };
-  });
+  const rows = skus
+    .filter((sku) => sku.active)
+    .map((sku) => {
+      const selected = sku.id === state.selectedSkuId;
+      // Mode is portfolio-wide; the explicit controls apply only to the selected SKU.
+      const scenario = selected
+        ? state
+        : { ...defaultState(sku.id), scenarioMode: state.scenarioMode };
+      const allForecast = forecastSku(
+        sku,
+        26,
+        events,
+        demandMultiplier(scenario),
+        scenario.promotionEnabled ? scenario.promotionDiscountPct / 100 : 0,
+      ).map((point, i) => ({
+        ...point,
+        previousForecast: reviewedPlan.forecasts[sku.id][i].units,
+        previousRevenue: reviewedPlan.forecasts[sku.id][i].revenue,
+      }));
+      const forecast = allForecast.slice(0, state.forecastHorizon);
+      const hasContext = events.some(
+        (e) =>
+          e.type === "bfcm" &&
+          e.confirmed &&
+          e.skuIds.includes(sku.id) &&
+          e.endDate >= PLANNING_DATE,
+      );
+      const inventory = inventoryFor(
+        sku,
+        forecast,
+        purchaseOrders,
+        scenario.leadTimeWeeks,
+        scenario.incomingInventory,
+        scenario.purchaseQuantity,
+        0,
+        hasContext,
+        snapshots
+          .filter((s) => s.skuId === sku.id && s.date <= PLANNING_DATE)
+          .sort((a, b) => b.date.localeCompare(a.date))[0],
+      );
+      const recommendations = recommend(
+        sku,
+        inventory,
+        events,
+        history,
+        scenario.promotionEnabled,
+      );
+      return {
+        sku,
+        confidence:
+          sku.historyWeeks < 26 ? ("Low" as const) : ("Moderate" as const),
+        forecast,
+        allForecast,
+        inventory,
+        recommendations,
+        totalUnits: forecast.reduce((n, p) => n + p.units, 0),
+        revenue: forecast.reduce((n, p) => n + p.revenue, 0),
+        margin: forecast.reduce((n, p) => n + p.margin, 0),
+      };
+    });
   const revenueSeries = Array.from({ length: 26 }, (_, i) => ({
     weekStart: rows[0].allForecast[i].weekStart,
     revenue: rows.reduce((n, r) => n + r.allForecast[i].revenue, 0),
-    previous: rows.reduce(
-      (n, r) =>
-        n +
-        r.allForecast[i].previousForecast *
-          r.allForecast[i].sellingPrice *
-          (1 - RETURNS_RATE),
-      0,
-    ),
+    previous: rows.reduce((n, r) => n + r.allForecast[i].previousRevenue, 0),
   }));
   const revenue30 = revenueForDays(revenueSeries, 30);
   const previous30 =
-    skus.reduce(
-      (n, s) =>
-        n +
-        history
-          .filter((h) => h.skuId === s.id)
-          .slice(-5)
-          .reduce((t, h, i) => t + h.revenue * (i === 0 ? 2 / 7 : 1), 0),
-      0,
-    ) *
+    skus
+      .filter((sku) => sku.active)
+      .reduce(
+        (n, s) =>
+          n +
+          history
+            .filter((h) => h.skuId === s.id)
+            .slice(-5)
+            .reduce((t, h, i) => t + h.revenue * (i === 0 ? 2 / 7 : 1), 0),
+        0,
+      ) *
     (1 - RETURNS_RATE);
   const high = rows.filter((r) => r.inventory.risk === "High risk").length;
   const watch = rows.filter((r) => r.inventory.risk === "Watch").length;
   const selected = rows.find((r) => r.sku.id === state.selectedSkuId)!;
+  const revenueGrowthPct =
+    previous30 > 0 ? (revenue30 / previous30 - 1) * 100 : null;
   return {
     state,
     rows,
@@ -152,7 +172,18 @@ export function buildPlan(input: PlanningState) {
     revenueSeries,
     revenue30,
     previous30,
-    revenueGrowthPct: (revenue30 / previous30 - 1) * 100,
+    revenueGrowthPct,
+    outlook: {
+      title:
+        revenueGrowthPct === null
+          ? "Establish the revenue baseline."
+          : revenueGrowthPct > 0
+            ? "Growth is coming."
+            : revenueGrowthPct < 0
+              ? "Demand is softening."
+              : "Revenue is holding steady.",
+      detail: `${revenueGrowthPct === null ? "There are no comparable sales for a growth comparison." : `Revenue is expected to finish ${percent(revenueGrowthPct)} versus the previous comparable period.`} ${high ? `Review the ${high} high-risk supply plans before committing demand.` : "Maintain the reviewed supply plan and monitor demand."}`,
+    },
     revenue13: revenueForDays(revenueSeries, 91),
     revenue26: revenueForDays(revenueSeries, 182),
     riskValue: rows.reduce((n, r) => n + r.inventory.riskValue, 0),
@@ -183,11 +214,25 @@ export type PlanRow = Plan["rows"][number];
 export function comparePlans(current: Plan, base: Plan) {
   const a = current.selected.inventory.stockoutDate,
     b = base.selected.inventory.stockoutDate;
+  const days =
+    a && b ? Math.round((Date.parse(b) - Date.parse(a)) / 86400000) : null;
+  const stockoutExplanation =
+    !a && !b
+      ? "Neither plan projects a stockout within this horizon."
+      : a && !b
+        ? `A stockout appears in the week of ${date(a)}; the base plan had none in this horizon.`
+        : !a && b
+          ? "The scenario clears the base plan's stockout within this horizon."
+          : days === 0
+            ? "Stockout timing is unchanged versus the base plan."
+            : days! > 0
+              ? `Stockout moves ${days} days earlier, using the same weekly dates plotted below.`
+              : `Stockout moves ${Math.abs(days!)} days later.`;
   return {
     revenueDelta: current.revenue30 - base.revenue30,
     capitalDelta: current.workingCapital - base.workingCapital,
-    stockoutDaysEarlier:
-      a && b ? Math.round((Date.parse(b) - Date.parse(a)) / 86400000) : null,
+    stockoutDaysEarlier: days,
+    stockoutExplanation,
   };
 }
 

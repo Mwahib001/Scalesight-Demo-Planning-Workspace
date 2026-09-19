@@ -100,16 +100,9 @@ export function ScenarioView() {
               fulfillment, and overhead are excluded.
             </p>
             <Interpretation>
-              {comparison.stockoutDaysEarlier === null
-                ? "A stockout appears or clears within the chosen horizon as assumptions change."
-                : comparison.stockoutDaysEarlier > 0
-                  ? `Stockout moves ${comparison.stockoutDaysEarlier} days earlier, using the same weekly dates plotted below.`
-                  : comparison.stockoutDaysEarlier < 0
-                    ? `Stockout moves ${Math.abs(comparison.stockoutDaysEarlier)} days later.`
-                    : "Stockout timing is unchanged versus the base plan."}{" "}
-              The portfolio working-capital change is{" "}
-              {money(comparison.capitalDelta)}. Review both purchasing quantity
-              and arrival timing.
+              {comparison.stockoutExplanation} The portfolio working-capital
+              change is {money(comparison.capitalDelta)}. Review both purchasing
+              quantity and arrival timing.
             </Interpretation>
           </section>
           <section className="panel">

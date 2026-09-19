@@ -14,4 +14,5 @@ export const date = (s: string | null) =>
         timeZone: "UTC",
       }).format(new Date(s + "T00:00:00Z"))
     : "None in horizon";
-export const percent = (n: number) => `${n >= 0 ? "+" : ""}${n.toFixed(1)}%`;
+export const percent = (n: number | null) =>
+  n === null ? "No comparable sales" : `${n >= 0 ? "+" : ""}${n.toFixed(1)}%`;

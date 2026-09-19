@@ -35,12 +35,15 @@ for (const [route, title] of routes)
       { width: 390, height: 844 },
     ]) {
       await page.setViewportSize(size);
-      expect(
-        await page.evaluate(
-          () => document.documentElement.scrollWidth <= innerWidth,
-        ),
-        `${route} at ${size.width}`,
-      ).toBe(true);
+      await expect
+        .poll(
+          () =>
+            page.evaluate(
+              () => document.documentElement.scrollWidth <= innerWidth,
+            ),
+          { message: `${route} at ${size.width}` },
+        )
+        .toBe(true);
     }
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.screenshot({

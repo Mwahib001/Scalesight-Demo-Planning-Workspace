@@ -65,14 +65,18 @@ export function SKUDetail() {
           {inv.stockoutDate
             ? `The projection reaches zero in the week of ${date(inv.stockoutDate)}. Review expediting before increasing demand.`
             : "Stock remains positive over this horizon, conditional on the planned arrivals shown."}{" "}
-          Cover and reorder gap use current inventory; the chart additionally
-          accounts for dated future replenishment assumptions.
+          Cover uses available stock; reorder gap uses usable on-hand stock. The
+          chart starts with on-hand stock and accounts for dated arrivals.
         </Interpretation>
       </section>
       <div className="two-col">
         <RecommendationPanel item={r.recommendations[0]} />
         <section className="panel">
           <SectionHeading title="Purchasing & cash" />
+          <div className="decision-stat">
+            <span>Available stock</span>
+            <strong>{number(inv.availableInventory)} units</strong>
+          </div>
           <div className="decision-stat">
             <span>Usable stock</span>
             <strong>{number(inv.usableInventory)} units</strong>

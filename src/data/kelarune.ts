@@ -192,7 +192,9 @@ extras[13].currentInventory = Math.ceil(extras[13].baseWeeklyDemand * 8);
 export const skus = [...core, ...extras];
 export const detailedSkus = skus.filter((s) => s.detailed);
 export function getSku(id: string) {
-  return skus.find((s) => s.id === id) ?? skus[0];
+  return (
+    skus.find((s) => s.id === id && s.active) ?? skus.find((s) => s.active)!
+  );
 }
 const incoming = [1200, 0, 1800, 1500, 600, 1200, 900, 800, 0, 0];
 export const purchaseOrders: PurchaseOrder[] = skus.flatMap((sku, i) => {

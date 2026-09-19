@@ -22,6 +22,9 @@ export function WeeklyBrief() {
   const mango = plan.rows.find((r) => r.sku.id === "mango-12")!;
   const berry = plan.rows.find((r) => r.sku.id === "berry-6")!;
   const winter = plan.rows.find((r) => r.sku.id === "winter-kit")!;
+  const mangoReview = mango.recommendations.find(
+    (r) => r.title === "Forecast Review Required",
+  );
   const priorities = [
     {
       row: mango,
@@ -33,10 +36,18 @@ export function WeeklyBrief() {
     },
     {
       row: berry,
-      title: "Put tied-up cash to work",
-      kind: "INVENTORY OPPORTUNITY",
+      title:
+        berry.inventory.risk === "Overstock"
+          ? "Put tied-up cash to work"
+          : berry.inventory.risk === "High risk"
+            ? "Protect Berry supply"
+            : "Review Berry replenishment",
+      kind:
+        berry.inventory.risk === "Overstock"
+          ? "INVENTORY OPPORTUNITY"
+          : "SUPPLY PLANNING",
       metric: money(berry.inventory.riskValue),
-      metricLabel: "Berry excess stock at cost",
+      metricLabel: `Berry ${berry.inventory.riskValueLabel}`,
       href: "/inventory",
     },
     {
@@ -51,11 +62,10 @@ export function WeeklyBrief() {
   const changes = [
     {
       Icon: TrendingUp,
-      title: "Mango demand is ahead of plan",
-      detail:
-        mango.recommendations.find(
-          (r) => r.title === "Forecast Review Required",
-        )?.whatChanged ?? mango.recommendations[0].whatChanged,
+      title: mangoReview
+        ? "Mango demand is ahead of plan"
+        : "Review Mango demand and supply",
+      detail: mangoReview?.whatChanged ?? mango.recommendations[0].whatChanged,
       tag: "Demand",
       href: "/demand-forecast",
       sku: "mango-12",
@@ -82,8 +92,11 @@ export function WeeklyBrief() {
     },
     {
       Icon: Package,
-      title: "Berry purchasing needs a pause",
-      detail: `${number(berry.inventory.weeksOfCover, 1)} weeks of cover against an eight-week target.`,
+      title:
+        berry.inventory.risk === "Overstock"
+          ? "Berry purchasing needs a pause"
+          : "Review Berry supply timing",
+      detail: berry.recommendations[0].whatChanged,
       tag: "Inventory",
       href: "/inventory",
       sku: "berry-6",
@@ -113,7 +126,11 @@ export function WeeklyBrief() {
         <MetricCard
           label="30-day revenue outlook"
           value={money(plan.revenue30)}
-          delta={`${percent(plan.revenueGrowthPct)} vs previous 30 days`}
+          delta={
+            plan.revenueGrowthPct === null
+              ? "No comparable sales"
+              : `${percent(plan.revenueGrowthPct)} vs previous 30 days`
+          }
           qualifier="Net sales · after expected returns"
           accent
         />
@@ -155,9 +172,11 @@ export function WeeklyBrief() {
             title={p.title}
             kind={p.kind}
             item={
-              p.row.recommendations.find(
-                (r) => r.title === "Business context changes the decision",
-              ) ?? p.row.recommendations[0]
+              (p.row.inventory.risk !== "High risk"
+                ? p.row.recommendations.find(
+                    (r) => r.title === "Business context changes the decision",
+                  )
+                : undefined) ?? p.row.recommendations[0]
             }
             risk={p.row.inventory.risk}
             metric={p.metric}
@@ -188,7 +207,10 @@ export function WeeklyBrief() {
           ))}
           <details className="more-changes">
             <summary>Show all 7 material changes</summary>
-            <p>Forecast: Mango baseline revised after consecutive misses.</p>
+            <p>
+              Forecast:{" "}
+              {mangoReview?.whatChanged ?? mango.recommendations[0].whatChanged}
+            </p>
             <p>
               Promotion: Starter Kit uplift and discount scheduled for Oct 26.
             </p>
@@ -203,16 +225,8 @@ export function WeeklyBrief() {
             <Sparkles size={15} />
             THE ANALYST’S PERSPECTIVE
           </span>
-          <h2>
-            Growth is coming.
-            <br />
-            Supply needs to keep up.
-          </h2>
-          <p>
-            Revenue is expected to finish {percent(plan.revenueGrowthPct)}{" "}
-            versus the previous comparable period. Protect Mango availability,
-            release excess Berry cash, and plan BFCM with business context.
-          </p>
+          <h2>{plan.outlook.title}</h2>
+          <p>{plan.outlook.detail}</p>
           <div className="analyst-signature">
             <span className="profile-avatar">SS</span>
             <div>

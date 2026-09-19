@@ -205,9 +205,9 @@ export function DemandForecast() {
         <SectionHeading title={r.sku.name} description={r.sku.story} />
         <ForecastChart data={[...past, ...future]} />
         <Interpretation>
-          {r.sku.id === "mango-12"
-            ? "Mango has exceeded its previous plan for three consecutive periods. The reviewed baseline reflects that acceleration."
-            : r.sku.story + "."}{" "}
+          {r.recommendations.find(
+            (item) => item.title === "Forecast Review Required",
+          )?.whatChanged ?? r.sku.story + "."}{" "}
           Current forecast combines baseline, trend, seasonality, known events
           and the active scenario. Upside/downside lines are illustrative
           alternatives to the base plan.

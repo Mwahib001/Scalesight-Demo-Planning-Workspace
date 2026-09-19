@@ -1,5 +1,7 @@
 # ScaleSight Demo Planning Workspace — implementation audit
 
+> **Remediation update — 20 September 2026:** The reported available-inventory, previous-forecast repricing, lead-time and contradictory-advice defects have since been fixed and regression-tested. See [the current remediation/verification record](AUDIT_REPORT.md) for exact scope, results and remaining findings. The original audit and its evidence below are preserved as the pre-fix record; its source line numbers refer to that audited revision.
+
 Audited **19 September 2026**, commit **`7b1cce24c41eac1d7fde25a507e8b52639648afc`**. Reviewer: Codex, using source inspection, a fresh production build, automated tests, independent counterfactual probes, and rendered-browser inspection.
 
 The governing reference is the supplied [48-page V1 specification](</home/admin11/Downloads/ScaleSight_Demo_Planning_Workspace_Product_Technical_Specification_v1.pdf>), read end to end, together with the user's attached audit checklist. Existing README and acceptance claims were treated as unverified. Older Stitch prompts/assets were inspected as repository content, not substituted for the governing PDF.

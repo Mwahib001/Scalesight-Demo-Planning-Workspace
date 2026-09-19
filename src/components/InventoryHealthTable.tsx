@@ -90,7 +90,7 @@ export function InventoryHealthTable() {
                 <td>
                   <RiskBadge risk={r.inventory.risk} />
                 </td>
-                <td>{number(r.sku.currentInventory)}</td>
+                <td>{number(r.inventory.currentInventory)}</td>
                 <td>{number(r.inventory.weeklyDemand)}</td>
                 <td>
                   <strong>{number(r.inventory.weeksOfCover, 1)}</strong> /{" "}
