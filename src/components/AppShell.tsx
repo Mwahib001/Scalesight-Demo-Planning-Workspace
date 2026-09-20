@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -81,12 +82,15 @@ function Shell({ children }: { children: React.ReactNode }) {
         aria-label={menu ? "Workspace navigation" : undefined}
       >
         <Link href="/" className="brand">
-          <span className="brand-mark">
-            <ChartNoAxesCombined size={23} />
-          </span>
-          <span>
-            ScaleSight<small>MANAGED INTELLIGENCE</small>
-          </span>
+          <Image
+            className="brand-logo"
+            src="/logos/scalesight logo coloured bg.svg"
+            alt="ScaleSight"
+            width={1135.14}
+            height={395.86}
+            loading="eager"
+          />
+          <small>MANAGED INTELLIGENCE</small>
         </Link>
         <button
           className="mobile-close icon-button"
