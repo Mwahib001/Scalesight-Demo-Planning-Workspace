@@ -197,12 +197,21 @@ test("intelligence judgment, workflow keyboard tabs, assumptions, and pilot", as
   await expect(page.getByRole("tabpanel")).toContainText(
     "Turn a change into an explanation.",
   );
-  await page.getByText("Book A Strategy Call", { exact: true }).click();
-  await expect(
-    page.getByText(
-      "Demo preview: booking and contact submission are not connected.",
-    ),
-  ).toBeVisible();
+  await page.route(
+    "https://assets.calendly.com/assets/external/widget.js",
+    (route) =>
+      route.fulfill({
+        contentType: "application/javascript",
+        body: `window.Calendly = { initPopupWidget: ({ url }) => {
+        document.body.dataset.calendlyUrl = url;
+      } };`,
+      }),
+  );
+  await page.getByRole("button", { name: "Book A Strategy Call" }).click();
+  await expect(page.locator("body")).toHaveAttribute(
+    "data-calendly-url",
+    "https://calendly.com/kazmiarmanmehdi/30min",
+  );
   await page
     .getByRole("link", { name: "Planning Assumptions", exact: true })
     .click();
@@ -252,4 +261,21 @@ test("revenue period and forecast horizon stay connected", async ({ page }) => {
   await expect(
     page.getByRole("button", { name: "26 weeks", exact: true }),
   ).toHaveAttribute("aria-pressed", "true");
+});
+
+test("strategy call offers a booking link when Calendly fails to load", async ({
+  page,
+}) => {
+  await page.route(
+    "https://assets.calendly.com/assets/external/widget.js",
+    (route) => route.abort(),
+  );
+  await page.goto("/managed-intelligence");
+  await page.getByRole("button", { name: "Book A Strategy Call" }).click();
+  await expect(
+    page.getByRole("alert").filter({ hasText: "Calendly couldn’t load." }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Open the booking page" }),
+  ).toHaveAttribute("href", "https://calendly.com/kazmiarmanmehdi/30min");
 });

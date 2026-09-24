@@ -1,11 +1,12 @@
 # ScaleSight · Kelarune Planning Workspace
 
-A fictional, interactive demonstration of **Planning System + Ongoing Analysis + Recommendations + Strategic Guidance**. Built in the existing Next.js App Router project with TypeScript, Tailwind, Recharts, Lucide, and React Context. No backend, authentication, credentials, external fonts, or live integrations.
+A fictional, interactive demonstration of **Planning System + Ongoing Analysis + Recommendations + Strategic Guidance**. Built in the existing Next.js App Router project with TypeScript, Tailwind, Recharts, Lucide, and React Context. No backend or authentication. Strategy calls use a live Calendly booking widget.
 
 ## Run and verify
 
 ```bash
 pnpm install
+cp .env.example .env.local
 pnpm dev
 pnpm test
 pnpm lint
@@ -13,7 +14,7 @@ pnpm build
 pnpm test:e2e
 ```
 
-`pnpm build` runs the engine fixture tests before the production build. Build and development use Next.js’s supported webpack compiler because this workspace blocks Turbopack’s CSS worker from binding its local port. All application routes are prerendered static pages. Deploy the repository to Vercel with the Next.js preset; no environment variables are required. Playwright uses an existing Chrome installation or its installed Chromium. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` if needed. Browser tests start the production app on port 3100, so build first.
+`pnpm build` runs the engine fixture tests before the production build. Build and development use Next.js’s supported webpack compiler because this workspace blocks Turbopack’s CSS worker from binding its local port. All application routes are prerendered static pages. Deploy the repository to Vercel with the Next.js preset; set `NEXT_PUBLIC_CALENDLY_URL=https://calendly.com/kazmiarmanmehdi/30min` before building. Restart development or rebuild after changing this public booking URL. Playwright uses an existing Chrome installation or its installed Chromium. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` if needed. Browser tests start the production app on port 3100, so build first.
 
 ## One calculation layer
 
@@ -63,6 +64,6 @@ The base fixtures reconcile to $318,000 net 30-day revenue, +8.4% versus the pre
 
 ## Demo boundaries
 
-All data and analyst-review identities are synthetic. No orders, ad changes, messages, or bookings are submitted. The strategy-call control shows the pilot conversation outline; an external booking destination has deliberately not been invented. Existing `/forecast`, `/customer-growth`, `/partnership`, and `/advisor-brief` links redirect into the new workspace.
+All data and analyst-review identities are synthetic. No orders, ad changes, or messages are submitted by the planning demo. The strategy-call button opens a live Calendly popup; visitors can complete a real booking there. If the widget script fails, a direct booking link is shown. Existing `/forecast`, `/customer-growth`, `/partnership`, and `/advisor-brief` links redirect into the new workspace.
 
 `tests/planning.test.ts` covers reconciliation, deterministic generation, forecast and inventory math, supplier delays, context overrides, exact chart-date comparisons, atomic reset, and 288 SKU/horizon/mode stress combinations. Browser tests cover the nine routes, 1440/1280/mobile layouts, shared scenarios, filtering, keyboard use, chart controls, tooltips, workflow steps, and automated accessibility checks.

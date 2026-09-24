@@ -1670,19 +1670,9 @@ tbody tr:hover {
 .strategy-call {
   margin-bottom: 20px;
 }
-.strategy-call summary {
-  width: fit-content;
-  list-style: none;
-}
-.strategy-call > div {
-  margin-top: 20px;
-  padding: 23px;
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 7px;
-}
-.strategy-call h3 {
-  margin-top: 10px;
+.strategy-call .button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
 }
 .assumption-summary {
   display: grid;

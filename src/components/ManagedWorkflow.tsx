@@ -7,13 +7,13 @@ import {
   CheckCheck,
   Compass,
   Focus,
-  MessageSquareText,
   RefreshCcw,
   Search,
   Sparkles,
   Users,
 } from "lucide-react";
 import { PageHeading, SectionHeading, PlanLink } from "./ui";
+import { StrategyCallButton } from "./StrategyCallButton";
 const steps = [
   {
     name: "Monitor",
@@ -297,23 +297,7 @@ export function ManagedIntelligence() {
             </div>
           ))}
         </div>
-        <details className="strategy-call">
-          <summary className="button">
-            Book A Strategy Call <ArrowRight size={16} />
-          </summary>
-          <div>
-            <MessageSquareText size={22} />
-            <h3>Your first conversation</h3>
-            <p>
-              Bring your current purchasing process, the decisions that are
-              hardest to make, and a list of priority products. Your ScaleSight
-              contact can arrange the strategy session and scope the pilot.
-            </p>
-            <p className="muted">
-              Demo preview: booking and contact submission are not connected.
-            </p>
-          </div>
-        </details>
+        <StrategyCallButton />
         <PlanLink href="/">Return to your weekly planning brief</PlanLink>
       </section>
     </>
