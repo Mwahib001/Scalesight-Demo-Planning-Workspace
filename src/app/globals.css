@@ -1670,10 +1670,6 @@ tbody tr:hover {
 .strategy-call {
   margin-bottom: 20px;
 }
-.strategy-call .button:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-}
 .assumption-summary {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
